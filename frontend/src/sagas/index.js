@@ -39,39 +39,18 @@ import {
     updateUserSuccess,
     updateUserFailed
     } from './../actions/auths';
-import { refeshTempHumiFailed,
-        refeshTempHumiSuccess,
-        refeshPMUSuccess,
-        refeshPMUFailed,
-        refeshPMUPOWERSuccess,
-        refeshPMUPOWERFailed,
-        refeshAIRSuccess,
-        refeshAIRFailed,
-        refeshAIRPOWERSuccess,
-        refeshAIRPOWERFailed,
-        refeshAIRSETTINGSuccess,
-        refeshAIRSETTINGFailed,
-        refeshAIRTEMPSuccess,
-        refeshAIRTEMPFailed,
-        refeshUPSSuccess,
-        refeshUPSFailed,
-        refeshUPSPOWERSuccess,
-        refeshUPSPOWERFailed,
-        refeshPDUSuccess,
-        refeshPDUFailed,
-        refeshPDUPOWERSuccess,
-        refeshPDUPOWERFailed,
-        refeshLEAKSuccess,
-        refeshLEAKFailed,
-        refeshSMOKESuccess,
-        refeshSMOKEFailed,
-        refeshDOORSuccess,
-        refeshDOORFailed,
-        refeshFANSuccess,
-        refeshFANFailed,
-        controlFANSuccess,
-        controlFANFailed,
-
+import { refeshSolar01Failed,
+        refeshSolar01Success,
+        refeshSolar02Success,
+        refeshSolar02Failed,
+        refeshMainSuccess,
+        refeshMainFailed,
+        refeshFishLakeAreaSuccess,
+        refeshFishLakeAreaFailed,
+        refeshHouseAreaSuccess,
+        refeshHouseAreaFailed,
+        refeshAllAreaSuccess,
+        refeshAllAreaFailed,
      } from '../actions/devices';
 /**
  * B1: dispatch action fetchTask
@@ -206,184 +185,6 @@ function* deleteUserSaga({payload}){
     yield delay(100);
     yield put(hideLoading());
 }
-// refesh data temphumi
-function* refeshDataSaga(){
-    const resp = yield call(getListData,'api/v1/temphumi/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshTempHumiSuccess(data));  
-    }else{
-        yield put(refeshTempHumiFailed(data));
-    }
-}
-// refesh data pmu
-function* refeshPmuSaga(){
-    const resp = yield call(getListData,'api/v1/pmu/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshPMUSuccess(data));  
-    }else{
-        yield put(refeshPMUFailed(data));
-    }
-    
-}
-
-// refesh data pmu power
-function* refeshPmuPowerSaga(){
-    const resp = yield call(getListData,'api/v1/pmu/getlast5min','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshPMUPOWERSuccess(data));  
-    }else{
-        yield put(refeshPMUPOWERFailed(data));
-    }
-    
-}
-// refesh data air
-function* refeshAirSaga(){
-    const resp = yield call(getListData,'api/v1/air/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshAIRSuccess(data));  
-    }else{
-        yield put(refeshAIRFailed(data));
-    }
-    
-}
-// refesh data air power
-function* refeshAirPowerSaga(){
-    const resp = yield call(getListData,'api/v1/air/getlast5min','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshAIRPOWERSuccess(data));  
-    }else{
-        yield put(refeshAIRPOWERFailed(data));
-    }
-    
-}
-
-// refesh data air setting
-function* refeshAirSettingSaga({payload}){
-    const {params} = payload;
-    const resp = yield call(updateData,'api/v1/air/setting',params);
-    const {status,data}= resp;
-    if(status === STATUS_CODE.UPDATED){
-        yield put(refeshAIRSETTINGSuccess(data));  
-    }else{
-        yield put(refeshAIRSETTINGFailed(data));
-    }
-    
-} 
-
-// refesh data air temp trend
-function* refeshAirTempSaga(){
-    const resp = yield call(getListData,'api/v1/air/gettemp5min','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshAIRTEMPSuccess(data));  
-    }else{
-        yield put(refeshAIRTEMPFailed(data));
-    }
-} 
-// refesh data UPS
-function* refeshUpsSaga(){
-    const resp = yield call(getListData,'api/v1/ups/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshUPSSuccess(data));  
-    }else{
-        yield put(refeshUPSFailed(data));
-    }
-    
-}
-// refesh data UPS power
-function* refeshUpsPowerSaga(){
-    const resp = yield call(getListData,'api/v1/ups/getlast15min','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshUPSPOWERSuccess(data));  
-    }else{
-        yield put(refeshUPSPOWERFailed(data));
-    }
-    
-}
-// refesh data pdu
-function* refeshPduSaga(){
-    const resp = yield call(getListData,'api/v1/pdu/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshPDUSuccess(data));  
-    }else{
-        yield put(refeshPDUFailed(data));
-    }
-    
-}
- 
-// refesh data pdu power
-function* refeshPduPowerSaga(){
-    const resp = yield call(getListData,'api/v1/pdu/gelast5min','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshPDUPOWERSuccess(data));  
-    }else{
-        yield put(refeshPDUPOWERFailed(data));
-    }
-    
-}
-// refesh data leak
-function* refeshLeakSaga(){
-    const resp = yield call(getListData,'api/v1/leak/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshLEAKSuccess(data));  
-    }else{
-        yield put(refeshLEAKFailed(data));
-    }
-    
-}
-// refesh data door
-function* refeshDoorSaga(){
-    const resp = yield call(getListData,'api/v1/door/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshDOORSuccess(data));  
-    }else{
-        yield put(refeshDOORFailed(data));
-    }
-}
-// refesh data smoke
-function* refeshSmokeSaga(){
-    const resp = yield call(getListData,'api/v1/smoke/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshSMOKESuccess(data));  
-    }else{
-        yield put(refeshSMOKEFailed(data));
-    }
-}
-// refesh data fan
-function* refeshFanSaga(){
-    const resp = yield call(getListData,'api/v1/fan/getlast','');
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-        yield put(refeshFANSuccess(data));  
-    }else{
-        yield put(refeshFANFailed(data));
-    }
-}
-//refesh data fan
-function* controlFanSaga({payload}){
-    const resp = yield call(addData,'api/v1/fan/control',payload);
-    const {status,data}= resp;
-    if(status === STATUS_CODE.SUCCESS){
-        yield put(controlFANSuccess(data));  
-    }else{
-        yield put(controlFANFailed(data));
-    }
-    
-}
-
-
 // refesh data leak
 function* refeshAllArea(){
     // const resp = yield call(getListData,'api/v1/leak/getlast','');
