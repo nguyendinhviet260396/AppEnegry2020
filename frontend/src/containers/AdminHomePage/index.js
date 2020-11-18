@@ -5,7 +5,6 @@ import  {connect} from 'react-redux';
 import * as deviceActions from './../../actions/devices';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
-//import smartcabinet from './../../assets/images/smartcabinet13.png';
 import { Grid } from '@material-ui/core';
 //import temphumiicon from '../../assets/images/temphumi-icon.png'
 //import iconNomal from '../../assets/images/iconNomal.png'
@@ -30,40 +29,14 @@ class AdminHomePage extends Component {
   componentDidMount(){
     const interval = setInterval(() => {
       const {deviceActionsCreators} = this.props;
-      const{refeshPMU,
-          refeshUPS,
-          refeshAIR,
-          refeshPDU,
-          refeshSMOKE,
-          refeshLEAK,
-          refeshDOOR,
-          refeshTempHumi,
-          refeshFAN,
-          } = deviceActionsCreators;
-          refeshFAN();
-          refeshPMU();
-          refeshUPS();
-          refeshAIR();
-          refeshPDU();
-          refeshSMOKE();
-          refeshLEAK();
-          refeshDOOR();
-          refeshTempHumi();
-    },1000000);
+      const{refeshMain} = deviceActionsCreators;
+
+      refeshMain();
+    },1000);
     return () => clearInterval(interval);
     };
     render(){
-        const { classes,
-                listUps,
-                //listPdu,
-                ///listPmu,
-                //listDoor,
-                //listSmoke,
-                //listAir,
-                //listLeak,
-                //listFan,
-                //listTempHumi
-              }=this.props;
+        const { classes,listMain }=this.props;
           return ( 
           <Grid 
           container 
@@ -85,17 +58,17 @@ class AdminHomePage extends Component {
                       <tbody>
                         <tr  >
                           <td> <WhatshotIcon style={{color:'#FF0000'}} />Nhiệt độ:</td>
-                          <td>{listUps.lenght !== 0 ? (false? listUps[0].inpower:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>*C</td>
                         </tr>
                         <tr>
                           <td> <OpacityIcon  style = {{color:'#00CC33'}}/>Độ ẩm:</td>
-                          <td>{listUps.lenght !== 0 ? (false ? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>%</td>
                         </tr>
                         <tr>
                           <td><WbCloudyIcon style = {{color:'#0033FF'}}/>Chất lượng không khí:</td>
-                          <td>{listUps!== 0 ? (false? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>%</td>
                         </tr>
                       </tbody>
@@ -111,17 +84,17 @@ class AdminHomePage extends Component {
                       <tbody>
                         <tr  >
                           <td> <EvStationIcon  style={{color:'#00CC33'}}/>Năng lượng tạo ra:</td>
-                          <td>{listUps.lenght !== 0 ? (false? listUps[0].inpower:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
                           <td> <EvStationIcon style={{color:'#00CC33'}}/>Năng lượng tiêu thụ:</td>
-                          <td>{listUps.lenght !== 0 ? (false ? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
                           <td><EvStationIcon style={{color:'#00CC33'}}/>Năng lượng hòa lưới:</td>
-                          <td>{listUps!== 0 ? (false? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>kWh</td>
                         </tr>
                       </tbody>
@@ -137,22 +110,22 @@ class AdminHomePage extends Component {
                       <tbody>
                         <tr  >
                           <td> <EventIcon  style = {{color:'#FF0000'}} />Ngày:</td>
-                          <td>{listUps.lenght !== 0 ? (false? listUps[0].inpower:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>VNĐ</td>
                         </tr>
                         <tr>
                           <td> <EventIcon style = {{color:'#FF0000'}} />Tuần:</td>
-                          <td>{listUps.lenght !== 0 ? (false ? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>VNĐ</td>
                         </tr>
                         <tr>
                           <td><EventIcon style = {{color:'#FF0000'}} />Tháng:</td>
-                          <td>{listUps!== 0 ? (false? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>VNĐ</td>
                         </tr>
                         <tr>
                           <td><EventIcon style = {{color:'#FF0000'}} />Năm:</td>
-                          <td>{listUps!== 0 ? (false? listUps[0].batvoltage:"NaN"):"NaN"}</td>
+                          <td>{"NaN"}</td>
                           <td>VNĐ</td>
                         </tr>
                       </tbody>
@@ -304,38 +277,15 @@ class AdminHomePage extends Component {
 }
 AdminHomePage.propTypes={
   deviceActionsCreators: PropTypes.shape({
-          refeshPMU:PropTypes.func,
-          refeshUPS:PropTypes.func,
-          refeshAIR:PropTypes.func,
-          refeshPDU:PropTypes.func,
-          refeshSMOKE:PropTypes.func,
-          refeshLEAK:PropTypes.func,
-          refeshDOOR:PropTypes.func,
-          refeshFAN:PropTypes.func,
-          refeshTempHumi:PropTypes.func,
+          refeshMain:PropTypes.func,
   }),
-          listUps:PropTypes.array,
-          listAir:PropTypes.array,
-          listPdu:PropTypes.array,
-          listPmu:PropTypes.array,
-          listDoor:PropTypes.array,
-          listSmoke:PropTypes.array,
-          listLeak:PropTypes.array,
-          listTempHumi:PropTypes.array
+          listMain:PropTypes.array,
+
 }
 const mapStateToProps=(state)=>{
-  console.log(state.devices)
+  console.log(state.devices.listMain)
   return{
       ...state,
-      listFan:state.devices.listFan,
-      listUps:state.devices.listUps,
-      listPdu:state.devices.listPdu,
-      listPmu:state.devices.listPmu,
-      listDoor:state.devices.listDoor,
-      listSmoke:state.devices.listSmoke,
-      listAir:state.devices.listAir,
-      listLeak:state.devices.listLeak,
-      listTempHumi:state.devices.listTempHumi,
   }
 };
 

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styles from './styles';
 import { withStyles} from '@material-ui/core/styles';
+import  {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as deviceActions from './../../../actions/devices';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import hocaImg from './../../../assets/images/hoca.jpg';
@@ -11,7 +14,6 @@ import homeImg from './../../../assets/images/home.jpg';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import PowerIcon from '@material-ui/icons/Power';
-// import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import CropRotateIcon from '@material-ui/icons/CropRotate';
@@ -20,6 +22,17 @@ import PublicIcon from '@material-ui/icons/Public';
 import HomeIcon from '@material-ui/icons/Home';
 import {Link} from 'react-router-dom';
 class AllArea extends Component {
+
+  componentDidMount(){
+        
+    const interval = setInterval(()=>{
+      const {deviceActionsCreators} = this.props;
+      const {refeshAllArea}=deviceActionsCreators;
+      refeshAllArea();
+    },1000);
+    return ()=>clearInterval(interval)
+  } 
+
   render () {
     return (
           <Grid container spacing={1} style= {{width:'100%'}} >
@@ -144,7 +157,22 @@ class AllArea extends Component {
   } 
 }
 AllArea.propTypes={
-    classes:PropTypes.object,
- }
-export default withStyles(styles)(AllArea);
+  classes:PropTypes.object,
+  listAllArea: PropTypes.array,
+  deviceActionsCreators:PropTypes.shape({
+      refeshAllArea:PropTypes.func,
+  }),
+}   
+const mapStateToProps=(state)=>{
+  console.log(state.devices.listAllArea)
+  return{
+      ...state,
+  }
+};
+const mapDispatchToProps =(dispatch,props)=>{
+  return{
+      deviceActionsCreators: bindActionCreators(deviceActions, dispatch),
+  }
+}
+export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(AllArea));
 

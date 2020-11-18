@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styles from './styles';
 import { withStyles} from '@material-ui/core/styles';
+import  {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as deviceActions from './../../../actions/devices';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import PowerIcon from '@material-ui/icons/Power';
@@ -17,6 +20,14 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import SwapHorizontalCircleIcon from '@material-ui/icons/SwapHorizontalCircle';
 
 class DetailHouse extends Component {
+  componentDidMount(){
+    const interval = setInterval(()=>{
+      const {deviceActionsCreators} = this.props;
+      const {refeshHouseArea}=deviceActionsCreators;
+      refeshHouseArea();
+    },1000);
+    return ()=>clearInterval(interval)
+  } 
   render () {
     return (
           <Grid container spacing={1}>
@@ -166,8 +177,23 @@ class DetailHouse extends Component {
   } 
 }
 DetailHouse.propTypes={
-    classes:PropTypes.object,
- }
-export default withStyles(styles)(DetailHouse);
+  classes:PropTypes.object,
+  listHouseArea: PropTypes.array,
+  deviceActionsCreators:PropTypes.shape({
+      refeshHouseArea:PropTypes.func,
+  }),
+}   
+const mapStateToProps=(state)=>{
+  console.log(state.devices.listHouseArea)
+  return{
+      ...state,
+  }
+};
+const mapDispatchToProps =(dispatch,props)=>{
+  return{
+      deviceActionsCreators: bindActionCreators(deviceActions, dispatch),
+  }
+}
+export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(DetailHouse));
 
 
