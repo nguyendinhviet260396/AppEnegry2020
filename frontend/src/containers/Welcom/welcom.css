@@ -1,0 +1,34 @@
+.element {
+    animation: roll 3s infinite;
+  }
+  
+@keyframes roll {
+0% {
+    transform:  scale(1,1);
+}
+100% {
+    transform: scale(5,5);
+}
+}
+.context{
+display: flex;
+justify-content: center;
+padding: 25%;
+}
+.text {
+position: absolute;
+animation: tran 10s infinite;
+top:94%;
+}
+
+@keyframes tran {
+    0% {
+    transform: translateX(5vw);
+    }
+    50% {
+    transform: translateX(40vw);
+    }
+    100%{
+    transform: translateX(5vw);
+    }
+}

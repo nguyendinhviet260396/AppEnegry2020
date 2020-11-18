@@ -1,0 +1,7 @@
+export const FETCH_ALARM ='FETCH_ALARM';
+export const FETCH_ALARM_SUCCESS = 'FETCH_ALARM_SUCCESS';
+export const FETCH_ALARM_FAILED = 'FETCH_ALARM_FAILED';
+
+
+export const FILTER_ALARM = 'FILTER_ALARM';
+
