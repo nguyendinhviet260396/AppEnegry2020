@@ -5,7 +5,6 @@ const initialState = {
     listSolar01:[],
     listSolar02:[],
     listFishLake:[],
-    listAllArea:[],
     listHouseArea:[],
     listMain:[],
 }
@@ -28,24 +27,6 @@ const deviceReducer = (state=initialState,action) =>{
                 ...state,
             }
         }
-        case types.REFESH_ALL_AREA:{
-            return{
-                ...state,
-            }
-        }
-        case types.REFESH_ALL_AREA_SUCCESS:{
-            const {data}=action.payload;
-            return {
-                ...state,
-                listAllArea:data,
-                
-            }
-        }
-        case types.REFESH_ALL_AREA_FAILED:{
-            return {
-                ...state,
-            }
-        }
         case types.REFESH_HOUSE_AREA:{
             return{
                 ...state,
@@ -53,7 +34,6 @@ const deviceReducer = (state=initialState,action) =>{
         }
         case types.REFESH_HOUSE_AREA_SUCCESS:{
             const {data}=action.payload;
-            console.log(data)
             return {
                 ...state,
                 listHouseArea:data,

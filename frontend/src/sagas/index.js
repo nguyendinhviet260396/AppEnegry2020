@@ -3,7 +3,7 @@ import * as alarmTypes from './../constants/alarm';
 import * as authTypes from './../constants/auths';
 import * as deviceTypes from './../constants/devices';
 import {
-    getListAlarm
+    //getListAlarm
     } from './../apis/alarm';
 import {    
     getListUser,
@@ -14,16 +14,16 @@ import {
     } from './../apis/auth';
 
 import {getListData,
-        updateData,
-        addData,
+        //updateData,
+        //addData,
         } from './../apis/devices';
 import {STATUS_CODE} from './../constants/index';
 import {showLoading,hideLoading} from './../actions/ui';
 import {hideModal} from './../actions/modal';
 import {
     fetchListAlarm,
-    fetchListAlarmSuccess,
-    fetchListAlarmFailed,
+    //fetchListAlarmSuccess,
+    //fetchListAlarmFailed,
     } from './../actions/alarm';
 import {
     authSignupSuccess,
@@ -43,14 +43,14 @@ import { refeshSolar01Failed,
         refeshSolar01Success,
         refeshSolar02Success,
         refeshSolar02Failed,
-        refeshMainSuccess,
-        refeshMainFailed,
+        //refeshMainSuccess,
+        //refeshMainFailed,
         refeshFishLakeAreaSuccess,
         refeshFishLakeAreaFailed,
         refeshHouseAreaSuccess,
         refeshHouseAreaFailed,
-        refeshAllAreaSuccess,
-        refeshAllAreaFailed,
+        //refeshAllAreaSuccess,
+        //refeshAllAreaFailed,
      } from '../actions/devices';
 /**
  * B1: dispatch action fetchTask
@@ -61,23 +61,23 @@ import { refeshSolar01Failed,
  * B4:Tắt Loadding
  * B5:thực thi công việc tiếp theo...
  */
-function* watchFetchListAlarmAction(){
-    while (true){
-        const action = yield take(alarmTypes.FETCH_ALARM);// khi FETCH_TASK duoc dispatch thi code tu day tro xuong moi chay
-        yield put(showLoading());
-        const {params}=action.payload;
-        console.log(params)
-        const resp = yield call(getListAlarm,'api/v1/main/getalarm','alarm');
-        const {status,data}= resp;
-        if(status === STATUS_CODE.SUCCESS){
-            yield put(fetchListAlarmSuccess(data));  
-        }else{
-            yield put(fetchListAlarmFailed(data));
-        }
-        yield delay(100);
-        yield put(hideLoading());
-    } 
-}
+// function* watchFetchListAlarmAction(){
+//     while (true){
+//         const action = yield take(alarmTypes.FETCH_ALARM);// khi FETCH_TASK duoc dispatch thi code tu day tro xuong moi chay
+//         yield put(showLoading());
+//         const {params}=action.payload;
+//         console.log(params)
+//         const resp = yield call(getListAlarm,'api/v1/main/getalarm','alarm');
+//         const {status,data}= resp;
+//         if(status === STATUS_CODE.SUCCESS){
+//             yield put(fetchListAlarmSuccess(data));  
+//         }else{
+//             yield put(fetchListAlarmFailed(data));
+//         }
+//         yield delay(100);
+//         yield put(hideLoading());
+//     } 
+// }
 
 function* filterAlarmSaga({payload}){
     yield delay(500);
@@ -185,75 +185,67 @@ function* deleteUserSaga({payload}){
     yield delay(100);
     yield put(hideLoading());
 }
-// refesh data leak
-function* refeshAllArea(){
-    // const resp = yield call(getListData,'api/v1/leak/getlast','');
-    // const {status,data}= resp;
-    // if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-    //     yield put(refeshLEAKSuccess(data));  
-    // }else{
-    //     yield put(refeshLEAKFailed(data));
-    // }
-    
-}
 
 // refesh data leak
 function* refeshHouseArea(){
-    // const resp = yield call(getListData,'api/v1/leak/getlast','');
-    // const {status,data}= resp;
-    // if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-    //     yield put(refeshLEAKSuccess(data));  
-    // }else{
-    //     yield put(refeshLEAKFailed(data));
-    // }
+    const resp = yield call(getListData,'api/v1/spm93/getlast','');
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshHouseAreaSuccess(data));  
+    }else{
+        yield put(refeshHouseAreaFailed(data));
+    }
     
 }
 // refesh data leak
-function* refeshfishLakeArea(){
-    // const resp = yield call(getListData,'api/v1/leak/getlast','');
-    // const {status,data}= resp;
-    // if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-    //     yield put(refeshLEAKSuccess(data));  
-    // }else{
-    //     yield put(refeshLEAKFailed(data));
-    // }
+function* refeshfishLakeArea({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/spm91/getlast',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshFishLakeAreaSuccess(data));  
+    }else{
+        yield put(refeshFishLakeAreaFailed(data));
+    }
     
 }
 // refesh data leak
-function* refeshSolar01Area(){
-    // const resp = yield call(getListData,'api/v1/leak/getlast','');
-    // const {status,data}= resp;
-    // if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-    //     yield put(refeshLEAKSuccess(data));  
-    // }else{
-    //     yield put(refeshLEAKFailed(data));
-    // }
+function* refeshSolar01Area({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/spm91/getlast',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshSolar01Success(data));  
+    }else{
+        yield put(refeshSolar01Failed(data));
+    }
     
 }
 // refesh data leak
-function* refeshSolar02Area(){
-    // const resp = yield call(getListData,'api/v1/leak/getlast','');
-    // const {status,data}= resp;
-    // if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
-    //     yield put(refeshLEAKSuccess(data));  
-    // }else{
-    //     yield put(refeshLEAKFailed(data));
-    // }
+function* refeshSolar02Area({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/spm91/getlast',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshSolar02Success(data));  
+    }else{
+        yield put(refeshSolar02Failed(data));
+    }
     
 }
+
 function* rootSaga() {
-    yield fork(watchFetchListAlarmAction);
+    // yield fork(watchFetchListAlarmAction);
     yield fork(watchFetchListUserAction);
     yield takeLatest(alarmTypes.FILTER_ALARM,filterAlarmSaga);
     yield takeLatest(authTypes.AUTH_LOGIN,loginSaga);
     yield takeLatest(authTypes.AUTH_SIGNUP,signupSaga)
     yield takeLatest(authTypes.SET_USER_DELETE,deleteUserSaga)  
     yield takeLatest (authTypes.UPDATE_USER,updateUserSaga)
-    yield takeLatest (deviceTypes.REFESH_ALL_AREA,refeshAllArea())
-    yield takeLatest (deviceTypes.REFESH_HOUSE_AREA,refeshHouseArea())
-    yield takeLatest (deviceTypes.REFESH_FISH_LAKE_AREA,refeshfishLakeArea())
-    yield takeLatest (deviceTypes.REFESH_SOLAR01_AREA,refeshSolar01Area())
-    yield takeLatest (deviceTypes.REFESH_SOLAR02_AREA,refeshSolar02Area())
+    yield takeLatest (deviceTypes.REFESH_HOUSE_AREA,refeshHouseArea)
+    yield takeLatest (deviceTypes.REFESH_FISH_LAKE_AREA,refeshfishLakeArea)
+    yield takeLatest (deviceTypes.REFESH_SOLAR01_AREA,refeshSolar01Area)
+    yield takeLatest (deviceTypes.REFESH_SOLAR02_AREA,refeshSolar02Area)
     
 }
 

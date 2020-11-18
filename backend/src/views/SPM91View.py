@@ -39,8 +39,13 @@ def getthismonth():
 # get realtime data
 @spm91_api.route('/getlast',methods=['GET'])
 def getlast():
-  df = SPM91Model.getlast()
+  value=request.args.get('params')
+
+  print(request.path)
+  df = SPM91Model.getlast(value)
   df = df.to_dict(orient='records')
+  
+
   return custom_response(df,200)
 
 @spm91_api.route('/', methods=['GET'])

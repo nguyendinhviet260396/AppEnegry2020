@@ -26,10 +26,8 @@ import Gauge from '../Gauge';
 import AreaChart from '../AreaChart';
 class AreaSolar extends Component {
   render () {
-    const {
-      solarImg,
-      title,
-    } = this.props;
+    const {solarImg,title,data,project} = this.props;
+    console.log(data)
     return (
       <Grid container spacing={1} style={{width:'100%'}}>
             <Grid container spacing={1} style={{maxHeight:'40px'}}>
@@ -42,7 +40,7 @@ class AreaSolar extends Component {
                 <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800',textAlign:'center'}}></div>
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
-                <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><PublicIcon style={{color:'#00CC33',fontSize:'inherit'}} />Solar EMS Project: 5kW</div>
+                <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><PublicIcon style={{color:'#00CC33',fontSize:'inherit'}} />{project}</div>
                 <img src={solarImg}
                         alt="solarimg" 
                         style={{
@@ -55,11 +53,11 @@ class AreaSolar extends Component {
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
-                <Gauge series={[80]}/>
+                <Gauge series={[data.length !==0 ? data[0].frequency:"NaN"]}/>
               </Grid>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
-                <Gauge series={[50]}/>
+                <Gauge series={[data.length !==0 ? data[0].frequency:"NaN"]}/>
               </Grid>
             </Grid>
               <Grid item xs={12} md={6}>
@@ -74,12 +72,12 @@ class AreaSolar extends Component {
                           <tbody>
                             <tr>
                               <td style={{maxWidth:'20%'}}> <PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Điện áp:</td>
-                              <td style={{maxWidth:'60%'}}>{220.5}</td>
+                              <td style={{maxWidth:'60%'}}>{data.length !==0 ? data[0].voltage:"NaN"}</td>
                               <td style={{maxWidth:'20%'}}>V</td>
                             </tr>
                             <tr>
                               <td style={{maxWidth:'20%'}}><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Công suất:</td>
-                              <td style={{maxWidth:'60%'}}>{80.5}</td>
+                              <td style={{maxWidth:'60%'}}>{data.length !==0 ? data[0].power:"NaN"}</td>
                               <td style={{maxWidth:'20%'}}>kW</td>
                             </tr>
                           </tbody>
@@ -92,12 +90,12 @@ class AreaSolar extends Component {
                             <tbody>
                               <tr>
                                 <td style={{maxWidth:'20%'}}><FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Dòng điện:</td>
-                                <td style={{maxWidth:'60%'}}>{20.5}</td>
+                                <td style={{maxWidth:'60%'}}>{data.length !==0 ? data[0].current:"NaN"}</td>
                                 <td style={{maxWidth:'20%'}}>A</td>
                               </tr>
                               <tr>
                                 <td style={{maxWidth:'20%'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Sản lượng:</td>
-                                <td style={{maxWidth:'60%'}}>{180.5}</td>
+                                <td style={{maxWidth:'60%'}}>{data.length !==0 ? data[0].enegry:"NaN"}</td>
                                 <td style={{maxWidth:'20%'}}>kWh</td>
                               </tr>
                             </tbody>

@@ -2,7 +2,6 @@
 
 from flask import Flask
 from flask_cors import CORS
-
 from .config import app_config
 from .models import db, bcrypt
 

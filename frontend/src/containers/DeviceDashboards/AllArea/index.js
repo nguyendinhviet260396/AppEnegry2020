@@ -27,13 +27,22 @@ class AllArea extends Component {
         
     const interval = setInterval(()=>{
       const {deviceActionsCreators} = this.props;
-      const {refeshAllArea}=deviceActionsCreators;
-      refeshAllArea();
+      const {
+        refeshHouseArea,
+        refeshFishLakeArea,
+        refeshSolar01,
+        refeshSolar02
+      }=deviceActionsCreators;
+      refeshHouseArea();
+      refeshFishLakeArea("fish_tank_area");
+      refeshSolar01("solar_01");
+      refeshSolar02("solar_02");
     },1000);
     return ()=>clearInterval(interval)
   } 
 
   render () {
+    const {listFishLake,listHouseArea,listSolar01,listSolar02} = this.props;
     return (
           <Grid container spacing={1} style= {{width:'100%'}} >
             <Grid item xs={12} md = {6} >
@@ -57,8 +66,8 @@ class AllArea extends Component {
                       </Link>
                       <div style={{padding:'5px',fontSize:'1.2rem',width:'90%',marginTop:'1%',border: '2px solid #00CC00',fontWeight:'600',borderRadius: '10px'}}>
                         <div><CheckCircleIcon style={{color:'#00CC33'}} />Trạng thái: Bình thường</div> 
-                        <div><PowerIcon style={{color:'#00cc33'}} />Công suất hiện tại: 12.5 kW</div>
-                        <div><EvStationIcon style={{color:'#00cc33'}} />Năng lượng tiêu thụ: 45.5 kWh</div>
+                        <div><PowerIcon style={{color:'#00cc33'}} />Công suất hiện tại:{listHouseArea.length !==0 ? listHouseArea[0].totalactivepower:"NaN"} kW</div>
+                        <div><EvStationIcon style={{color:'#00cc33'}} />Năng lượng tiêu thụ: {listHouseArea.length !==0 ? listHouseArea[0].totalactiveennegry:"NaN"} kWh</div>
                       </div>
                   </Grid>
                 </Grid>
@@ -72,7 +81,8 @@ class AllArea extends Component {
                     <div style={{padding:'5px',fontSize:'1.2rem',textAlign:'center',width:'80%',marginTop:'1%',border: '2px solid #00CC00',fontWeight:'500',borderRadius: '10px'}}>
                         <div><LocationOnIcon style={{color:'#00CC33'}} />Khu vực hồ cá</div>
                         <div><CheckCircleIcon style={{color:'#00CC33'}} />Trạng thái: Bình thường</div> 
-                        <div><PowerIcon style={{color:'#00cc33'}} />Công suất hiện tại: 12.5 kWh</div>
+                        <div><PowerIcon style={{color:'#00cc33'}} />Công suất hiện tại: {listFishLake.length !==0 ? listFishLake[0].power:"NaN"} kW</div>
+                        <div><EvStationIcon style={{color:'#00cc33'}} />Công suất hiện tại: {listFishLake.length !==0 ? listFishLake[0].enegry:"NaN"} kWh</div>
                       </div>
                       <Link 
                       to="/admin/area/hoca"
@@ -84,12 +94,17 @@ class AllArea extends Component {
                         width:'100%',
                       }}/>              
                       </Link>
+                      <div className=" ml-5 mr-5 mb-1 fa-1x w-75">Công suất cung cấp Solar I</div>
+                        <div className="progress ml-5 mr-5  w-75" >
+                            <div className="progress-bar bg-success" style={{width:`${listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar01[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%`,}}>{listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar01[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%</div>
+                      </div>
                   </Grid>
                   <Grid item xs={12} md = {6} style={{display:'flex',flexDirection:'column',alignItems:'center',paddingTop:'1%'}}>
                     <div style={{padding:'5px',fontSize:'1.2rem',textAlign:'center',width:'80%',marginTop:'1%',border: '2px solid #00CC00',fontWeight:'500',borderRadius: '10px'}}>
                         <div><LocationOnIcon style={{color:'#00CC33'}} />Khu vực sân thượng</div>
                         <div><CheckCircleIcon style={{color:'#00CC33'}} />Trạng thái: Bình thường</div> 
-                        <div><PowerIcon style={{color:'#00cc33'}} />Công suất hiện tại: 35.5 kWh</div>
+                        <div><PowerIcon style={{color:'#00cc33'}} />Công suất hiện tại: {listHouseArea.length !==0 ? listHouseArea[0].power:"NaN"} kW</div>
+                        <div><EvStationIcon style={{color:'#00cc33'}} />Công suất hiện tại: {listFishLake.length !==0 ? listFishLake[0].enegry:"NaN"} kWh</div>
                       </div>
                       <Link 
                       to='/admin/area/santhuong'
@@ -102,6 +117,10 @@ class AllArea extends Component {
                         width:'100%',
                       }}/>
                       </Link>
+                      <div className=" ml-5 mr-5 mb-1 fa-1x w-75 ">Công suất cung cấp Solar I</div>
+                        <div className="progress ml-5 mr-5  w-75" >
+                            <div className="progress-bar bg-danger" style={{width:`${listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar02[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%`}} >{listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar02[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%</div>
+                      </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} md = {12} style={{borderBottom: '2px solid #00CC00'}}>
@@ -126,7 +145,7 @@ class AllArea extends Component {
                       </Link>
                       <div className=" ml-5 mr-5 mb-1 fa-1x w-75">Công suất cung cấp Solar I</div>
                         <div className="progress ml-5 mr-5 mb-5 w-75" >
-                            <div className="progress-bar bg-success" style={{width:'80%',}} >80%</div>
+                            <div className="progress-bar bg-success" style={{width:`${listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar01[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%`,}}>{listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar01[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%</div>
                       </div>
                   </Grid>
                   <Grid item xs={12} md = {6} style={{display:'flex',flexDirection:'column',alignItems:'center',paddingTop:'1%'}}>
@@ -147,7 +166,7 @@ class AllArea extends Component {
                       </Link>
                       <div className=" ml-5 mr-5 mb-1 fa-1x w-75 ">Công suất cung cấp Solar I</div>
                         <div className="progress ml-1 mr-1 mb-1  w-75" >
-                            <div className="progress-bar bg-danger" style={{width:'75%',}} >75%</div>
+                            <div className="progress-bar bg-danger" style={{width:`${listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar02[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%`}} >{listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar02[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%</div>
                       </div>
                   </Grid>
                 </Grid>
@@ -158,15 +177,22 @@ class AllArea extends Component {
 }
 AllArea.propTypes={
   classes:PropTypes.object,
-  listAllArea: PropTypes.array,
+  listHouseArea: PropTypes.array,
   deviceActionsCreators:PropTypes.shape({
-      refeshAllArea:PropTypes.func,
+    refeshHouseArea:PropTypes.func,
+    refeshFishLakeArea:PropTypes.func,
+    refeshSolar01:PropTypes.func,
+    refeshSolar02:PropTypes.func,
   }),
 }   
 const mapStateToProps=(state)=>{
-  console.log(state.devices.listAllArea)
+  console.log(state.devices)
   return{
       ...state,
+      listHouseArea:state.devices.listHouseArea,
+      listFishLake:state.devices.listFishLake,
+      listSolar01:state.devices.listSolar01,
+      listSolar02:state.devices.listSolar02,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

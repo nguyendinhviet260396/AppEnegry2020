@@ -11,8 +11,8 @@ import DetailSolar1 from './../containers/DeviceDashboards/DetailSolar1';
 import DetailSolar2 from './../containers/DeviceDashboards/DetailSolar2';
 import NotPound from './../components/NotPound';
 import AlarmPage from './../containers/AlarmPage/index';
-//export const API_ENDPOINT = 'http://192.168.1.166:6768';
-export const API_ENDPOINT = 'http://localhost:3030';
+export const API_ENDPOINT = 'http://192.168.201.25:3030';
+//export const API_ENDPOINT = 'http://localhost:3030';
 
 export const STATUS_CODE={
     SUCCESS:200,

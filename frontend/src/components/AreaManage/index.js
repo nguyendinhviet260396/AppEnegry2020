@@ -19,6 +19,8 @@ class AreaManage extends Component {
   render () {
     const {
       areaImg,
+      titleImg,
+      data,
       title,
     } = this.props;
     return (
@@ -33,7 +35,7 @@ class AreaManage extends Component {
           <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800',textAlign:'center'}}></div>
         </Grid>
         <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
-                <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><LocationOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Solar EMS Project: 5kW</div>
+                <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><LocationOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />{titleImg}</div>
                 <img src={areaImg}
                         alt="areaImg" 
                         style={{
@@ -46,11 +48,11 @@ class AreaManage extends Component {
               </Grid>
         <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
           <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
-          <Gauge series={[80]}/>
+          <Gauge series={[data.length !==0 ? data[0].frequency:"NaN"]}/>
         </Grid>
         <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
           <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
-          <Gauge series={[50]}/>
+          <Gauge series={[data.length !==0 ? data[0].frequency:"NaN"]}/>
         </Grid>
       </Grid>
         <Grid item xs={12} md={6}>
@@ -75,19 +77,19 @@ class AreaManage extends Component {
           </Grid>
           <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
             <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Điện áp:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>220.5 V</div>
+            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].voltage:"NaN"} V</div>
           </Grid>
           <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
             <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Dòng điện:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>3.7 A</div>
+            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].current:"NaN"} A</div>
           </Grid>
           <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
             <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Công suất:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>24.5 kW</div>
+            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].power:"NaN"} kW</div>
           </Grid>
           <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
             <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>1.25 kWh</div>
+            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].enegry:"NaN"} kWh</div>
           </Grid>
         </Grid>
     </Grid>

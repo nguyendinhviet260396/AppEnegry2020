@@ -21,28 +21,6 @@ export const refeshMainFailed =(error)=>({
         error,
     }
 });
-// Action request all area
-export const refeshAllArea =(params={})=>({
-    type:deviceTypes.REFESH_MAIN,
-    payload:{
-        params,
-       
-    }
-});
-
-export const refeshAllAreaSuccess = (data) => ({
-    type: deviceTypes.REFESH_ALL_AREA_SUCCESS,
-    payload:{
-        data,
-    }
-});
-
-export const refeshAllAreaFailed =(error)=>({
-    type:deviceTypes.REFESH_ALL_AREA_FAILED,
-    payload:{
-        error,
-    }
-});
 
 // Action request house area
 export const refeshHouseArea =(params={})=>({
@@ -61,6 +39,7 @@ export const refeshHouseAreaSuccess = (data) => ({
 });
 
 export const refeshHouseAreaFailed =(error)=>({
+    
     type:deviceTypes.REFESH_HOUSE_AREA_FAILED,
     payload:{
         error,

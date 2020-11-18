@@ -58,12 +58,13 @@ class SPM91Model (db.Model):
     return pd.read_sql(query,con=connection)
   
   @staticmethod 
-  def getlast():
+  def getlast(value):
     query = """
             SELECT *
             FROM spm91table
+            WHERE device_id = '%s'
             ORDER BY id DESC LIMIT 1
-            """
+            """%(value)
     return pd.read_sql(query,con=connection)
 
   @staticmethod

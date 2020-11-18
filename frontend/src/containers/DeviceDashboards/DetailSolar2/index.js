@@ -12,14 +12,17 @@ class DetailSolar2 extends Component {
     const interval = setInterval(()=>{
       const {deviceActionsCreators} = this.props;
       const {refeshSolar02}=deviceActionsCreators;
-      refeshSolar02();
+      refeshSolar02("solar_02");
     },1000);
     return ()=>clearInterval(interval)
   } 
   render () {
+    const {listSolar02}=this.props;
     return (
       <AreaSolar 
       title = {"Delail Solar II"}
+      data = {listSolar02}
+      project = {"Solar: SAVINA Project 15kW "}
       solarImg = {solar02}/>
     )
   } 
@@ -32,9 +35,9 @@ DetailSolar2.propTypes={
   }),
 }   
 const mapStateToProps=(state)=>{
-  console.log(state.devices.listSolar02)
   return{
       ...state,
+      listSolar02:state.devices.listSolar02,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

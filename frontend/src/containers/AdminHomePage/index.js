@@ -36,7 +36,7 @@ class AdminHomePage extends Component {
     return () => clearInterval(interval);
     };
     render(){
-        const { classes,listMain }=this.props;
+        const { classes }=this.props;
           return ( 
           <Grid 
           container 

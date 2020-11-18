@@ -29,6 +29,7 @@ class DetailHouse extends Component {
     return ()=>clearInterval(interval)
   } 
   render () {
+    const {listHouseArea}= this.props;
     return (
           <Grid container spacing={1}>
             <Grid container spacing={1} style={{maxHeight:'40px'}}>
@@ -42,15 +43,15 @@ class DetailHouse extends Component {
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
-                <Gauge series={[80]}/>
+                <Gauge series={[listHouseArea.length !==0 ?listHouseArea[0].frequency:"NaN"]}/>
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
-                <Gauge series={[50]}/>
+                <Gauge series={[listHouseArea.length !==0 ? listHouseArea[0].frequency:"NaN"]}/>
               </Grid>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ</div>
-                <div style={{padding:'15%',fontSize:'2rem',fontWeight:'800',textAlign:'center'}}>45.86 kWh</div>
+                <div style={{padding:'15%',fontSize:'2rem',fontWeight:'800',textAlign:'center'}}>{listHouseArea.length !==0 ?listHouseArea[0].totalactiveennegry:"NaN"} kWh</div>
               </Grid>
             </Grid>
               <Grid item xs={12} md={6}>
@@ -80,17 +81,17 @@ class DetailHouse extends Component {
                       <tbody>
                         <tr>
                           <td style={{maxWidth:'20%'}}><PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Pha A</td>
-                          <td style={{maxWidth:'60%'}}>{220.5}</td>
+                          <td style={{maxWidth:'60%'}}>{listHouseArea.length !==0 ?listHouseArea[0].voltage_pa:"NaN"} </td>
                           <td style={{maxWidth:'20%'}}>V</td>
                         </tr>
                         <tr>
                           <td style={{maxWidth:'20%'}}> <PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha B</td>
-                          <td style={{maxWidth:'60%'}}>{235.1}</td>
+                          <td style={{maxWidth:'60%'}}>{listHouseArea.length !==0 ?listHouseArea[0].voltage_pb:"NaN"} </td>
                           <td style={{maxWidth:'20%'}}>V</td>
                         </tr>
                         <tr>
                           <td style={{maxWidth:'20%'}}> <PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha C</td>
-                          <td style={{maxWidth:'60%'}}>{223.5}</td>
+                          <td style={{maxWidth:'60%'}}>{listHouseArea.length !==0 ?listHouseArea[0].voltage_pc:"NaN"} </td>
                           <td style={{maxWidth:'20%'}}>V</td>
                         </tr>
                       </tbody>
@@ -104,17 +105,17 @@ class DetailHouse extends Component {
                       <tbody>
                         <tr  >
                           <td> <FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha A</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].current_pa:"NaN"} </td>
                           <td>A</td>
                         </tr>
                         <tr>
                           <td><FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha B</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].current_pb:"NaN"} </td>
                           <td>A</td>
                         </tr>
                         <tr>
                           <td><FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha C</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].current_pc:"NaN"} </td>
                           <td>A</td>
                         </tr>
                       </tbody>
@@ -123,23 +124,23 @@ class DetailHouse extends Component {
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Công suất tác dụng</div>
-                  <div style={{padding:'10px',fontSize:'1.2rem',fontWeight:'800',textAlign:'center'}}>35.4 kW</div>
+                  <div style={{padding:'10px',fontSize:'1.2rem',fontWeight:'800',textAlign:'center'}}>{listHouseArea.length !==0 ?listHouseArea[0].totalactivepower:"NaN"}  kW</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
                     <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
                       <tbody>
                         <tr  >
                           <td> <PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha A</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].activepower_pa:"NaN"} </td>
                           <td>kW</td>
                         </tr>
                         <tr>
                           <td><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha B</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].activepower_pb:"NaN"} </td>
                           <td>kW</td>
                         </tr>
                         <tr>
                           <td><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha C</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].activepower_pc:"NaN"} </td>
                           <td>kW</td>
                         </tr>
                       </tbody>
@@ -148,23 +149,23 @@ class DetailHouse extends Component {
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><SwapHorizontalCircleIcon style={{color:'#00CC33',fontSize:'inherit'}} />Công suất phản kháng:</div>
-                  <div style={{padding:'10px',fontSize:'1.2rem',fontWeight:'800',textAlign:'center'}}>25 kVAr</div>
+                  <div style={{padding:'10px',fontSize:'1.2rem',fontWeight:'800',textAlign:'center'}}>{listHouseArea.length !==0 ?listHouseArea[0].totalreactivepower:"NaN"}kVAr</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
                     <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
                       <tbody>
                         <tr  >
-                          <td> <SwapHorizontalCircleIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha A</td>
-                          <td>{"NaN"}</td>
+                          <td> <SwapHorizontalCircleIcon style={{color:'#00CC33',fontSize:'inherit'}}/>Pha A</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].reactivepower_pa:"NaN"} </td>
                           <td>kVAr</td>
                         </tr>
                         <tr>
-                          <td><SwapHorizontalCircleIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha B</td>
-                          <td>{"NaN"}</td>
+                          <td><SwapHorizontalCircleIcon style={{color:'#00CC33',fontSize:'inherit'}}/>Pha B</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].reactivepower_pb:"NaN"} </td>
                           <td>kVAr</td>
                         </tr>
                         <tr>
                           <td><SwapHorizontalCircleIcon style={{color:'#00CC33',fontSize:'inherit'}} />Pha C</td>
-                          <td>{"NaN"}</td>
+                          <td>{listHouseArea.length !==0 ?listHouseArea[0].reactivepower_pc:"NaN"}</td>
                           <td>kVAr</td>
                         </tr>
                       </tbody>
@@ -184,9 +185,9 @@ DetailHouse.propTypes={
   }),
 }   
 const mapStateToProps=(state)=>{
-  console.log(state.devices.listHouseArea)
   return{
       ...state,
+      listHouseArea:state.devices.listHouseArea,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{
