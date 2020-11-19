@@ -5,7 +5,7 @@ from src.db import run,connection
 import pandas as pd
 import random
 
-class SPM91Model (db.Model):
+class SPM91Model:
   """
   SPM91 Model
   """
