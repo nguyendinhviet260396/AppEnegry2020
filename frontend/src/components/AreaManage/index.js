@@ -13,14 +13,15 @@ import SpeedIcon from '@material-ui/icons/Speed';
 import MapIcon from '@material-ui/icons/Map';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import AreaChart from './../AreaChart';
 import Gauge from '../Gauge';
-import AreaChart from '../AreaChart';
 class AreaManage extends Component {
   render () {
     const {
       areaImg,
       titleImg,
       data,
+      datapower,
       title,
     } = this.props;
     return (
@@ -64,11 +65,11 @@ class AreaManage extends Component {
           </Grid>
           <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
             <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><TimelineIcon style={{color:'#00CC33',fontSize:'inherit'}} />Biểu đồ công suất tổng</div>
-            <AreaChart/>
+            <AreaChart data = {datapower.length !==0 ? datapower[0]:[]}/>
           </Grid>
           <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
             <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><TimelineIcon style={{color:'#00CC33',fontSize:'inherit'}} />Biểu đồ năng lượng tổng</div>
-            <AreaChart/>
+            <AreaChart data = {datapower.length !==0 ? datapower[1]:[]}/>
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>

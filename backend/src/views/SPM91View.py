@@ -40,12 +40,8 @@ def getthismonth():
 @spm91_api.route('/getlast',methods=['GET'])
 def getlast():
   value=request.args.get('params')
-
-  print(request.path)
   df = SPM91Model.getlast(value)
   df = df.to_dict(orient='records')
-  
-
   return custom_response(df,200)
 
 @spm91_api.route('/', methods=['GET'])
@@ -56,6 +52,22 @@ def get_all():
   df = SPM91Model.getall()
   df = df.to_dict(orient='records')
   return custom_response(df, 200)
+@spm91_api.route('/getlast5min', methods=['GET'])
+def getlast15min():
+  value=request.args.get('params')
+  from_date,to_date = gettoday()
+  df = SPM91Model.getlast5min(from_date,to_date,value)
+  df = df.to_dict(orient='records')
+  df_new = []
+  df_power = []
+  df_enegry = []
+  if len(df):
+    for i in df:
+      df_power.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['power']])
+      df_enegry.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['enegry']])
+    df_new.append(df_power)
+    df_new.append(df_enegry)
+  return custom_response(df_new, 200)
 
 def custom_response(res, status_code):
   """

@@ -26,7 +26,7 @@ import Gauge from '../Gauge';
 import AreaChart from '../AreaChart';
 class AreaSolar extends Component {
   render () {
-    const {solarImg,title,data,project} = this.props;
+    const {solarImg,title,data,datapower,project} = this.props;
     console.log(data)
     return (
       <Grid container spacing={1} style={{width:'100%'}}>
@@ -106,11 +106,11 @@ class AreaSolar extends Component {
                   </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><TimelineIcon style={{color:'#00CC33',fontSize:'inherit'}} />Biểu đồ công suất tổng</div>
-                  <AreaChart/>
+                  <AreaChart data = {datapower.length !==0 ? datapower[0]:[]}/>
                 </Grid>
                 <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><TimelineIcon style={{color:'#00CC33',fontSize:'inherit'}} />Biểu đồ năng lượng tổng</div>
-                  <AreaChart/>
+                  <AreaChart data = {datapower.length !==0 ? datapower[1]:[]}/>
                 </Grid>
               </Grid>
               <Grid item xs={12} md={3}>

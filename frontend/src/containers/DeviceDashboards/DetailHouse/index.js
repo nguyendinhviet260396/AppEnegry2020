@@ -23,13 +23,15 @@ class DetailHouse extends Component {
   componentDidMount(){
     const interval = setInterval(()=>{
       const {deviceActionsCreators} = this.props;
-      const {refeshHouseArea}=deviceActionsCreators;
+      const {refeshHouseArea,refeshPowerHouseArea}=deviceActionsCreators;
       refeshHouseArea();
+      refeshPowerHouseArea();
     },1000);
     return ()=>clearInterval(interval)
   } 
   render () {
-    const {listHouseArea}= this.props;
+    const {listHouseArea,listPowerHouseArea}= this.props;
+    console.log(listPowerHouseArea[0])
     return (
           <Grid container spacing={1}>
             <Grid container spacing={1} style={{maxHeight:'40px'}}>
@@ -63,11 +65,11 @@ class DetailHouse extends Component {
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><TimelineIcon style={{color:'#00CC33',fontSize:'inherit'}} />Biểu đồ công suất tổng</div>
-                  <AreaChart/>
+                  <AreaChart data = {listPowerHouseArea.length !==0 ? listPowerHouseArea[0]:[]}/>
                 </Grid>
                 <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><TimelineIcon style={{color:'#00CC33',fontSize:'inherit'}} />Biểu đồ năng lượng tổng</div>
-                  <AreaChart/>
+                  <AreaChart data = {listPowerHouseArea.length !==0 ? listPowerHouseArea[1]:[]}/>
                 </Grid>
               </Grid>
               <Grid item xs={12} md={3}>
@@ -180,14 +182,17 @@ class DetailHouse extends Component {
 DetailHouse.propTypes={
   classes:PropTypes.object,
   listHouseArea: PropTypes.array,
+  listPowerHouseArea: PropTypes.array,
   deviceActionsCreators:PropTypes.shape({
       refeshHouseArea:PropTypes.func,
+      refeshPowerHouseArea:PropTypes.func,
   }),
 }   
 const mapStateToProps=(state)=>{
   return{
       ...state,
       listHouseArea:state.devices.listHouseArea,
+      listPowerHouseArea:state.devices.listPowerHouseArea,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

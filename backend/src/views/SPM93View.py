@@ -51,18 +51,19 @@ def get_all():
   return custom_response(df, 200)
 
 @spm93_api.route('/getlast5min', methods=['GET'])
-def getlast15min():
+def getlast5min():
   from_date,to_date = gettoday()
-  df = SPM93Model.getlast15min(from_date,to_date)
+  df = SPM93Model.getlast5min(from_date,to_date)
   df = df.to_dict(orient='records')
   df_new = []
   df_power = []
   df_enegry = []
-  for i in df:
-    df_power.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['totalactivepower']/1000])
-    df_enegry.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['totalactiveennegry']/1000])
-  df_new.append(df_power)
-  df_new.append(df_enegry)
+  if len(df):
+    for i in df:
+      df_power.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['totalactivepower']])
+      df_enegry.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['totalactiveennegry']])
+    df_new.append(df_power)
+    df_new.append(df_enegry)
   return custom_response(df_new, 200)
 
 

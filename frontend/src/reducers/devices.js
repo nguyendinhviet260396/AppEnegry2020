@@ -6,6 +6,10 @@ const initialState = {
     listSolar02:[],
     listFishLake:[],
     listHouseArea:[],
+    listPowerSolar01:[],
+    listPowerSolar02:[],
+    listPowerFishLake:[],
+    listPowerHouseArea:[],
     listMain:[],
 }
 const deviceReducer = (state=initialState,action) =>{
@@ -45,6 +49,24 @@ const deviceReducer = (state=initialState,action) =>{
                 ...state,
             }
         }
+        case types.REFESH_POWER_HOUSE_AREA:{
+            return{
+                ...state,
+            }
+        }
+        case types.REFESH_POWER_HOUSE_AREA_SUCCESS:{
+            const {data}=action.payload;
+            return {
+                ...state,
+                listPowerHouseArea:data,
+                
+            }
+        }
+        case types.REFESH_POWER_HOUSE_AREA_FAILED:{
+            return {
+                ...state,
+            }
+        }
         case types.REFESH_FISH_LAKE_AREA:{
             return{
                 ...state,
@@ -59,6 +81,24 @@ const deviceReducer = (state=initialState,action) =>{
             }
         }
         case types.REFESH_FISH_LAKE_AREA_FAILED:{
+            return {
+                ...state,
+            }
+        }
+        case types.REFESH_POWER_FISH_LAKE_AREA:{
+            return{
+                ...state,
+            }
+        }
+        case types.REFESH_POWER_FISH_LAKE_AREA_SUCCESS:{
+            const {data}=action.payload;
+            return {
+                ...state,
+                listPowerFishLake:data,
+                
+            }
+        }
+        case types.REFESH_POWER_FISH_LAKE_AREA_FAILED:{
             return {
                 ...state,
             }
@@ -81,6 +121,24 @@ const deviceReducer = (state=initialState,action) =>{
                 ...state,
             }
         }
+        case types.REFESH_POWER_SOLAR01_AREA:{
+            return{
+                ...state,
+            }
+        }
+        case types.REFESH_POWER_SOLAR01_AREA_SUCCESS:{
+            const {data}=action.payload;
+            return {
+                ...state,
+                listPowerSolar01:data,
+                
+            }
+        }
+        case types.REFESH_POWER_SOLAR01_AREA_FAILED:{
+            return {
+                ...state,
+            }
+        }
         case types.REFESH_SOLAR02_AREA:{
             return{
                 ...state,
@@ -95,6 +153,24 @@ const deviceReducer = (state=initialState,action) =>{
             }
         }
         case types.REFESH_SOLAR02_AREA_FAILED:{
+            return {
+                ...state,
+            }
+        }
+        case types.REFESH_POWER_SOLAR02_AREA:{
+            return{
+                ...state,
+            }
+        }
+        case types.REFESH_POWER_SOLAR02_AREA_SUCCESS:{
+            const {data}=action.payload;
+            return {
+                ...state,
+                listPowerSolar02:data,
+                
+            }
+        }
+        case types.REFESH_POWER_SOLAR02_AREA_FAILED:{
             return {
                 ...state,
             }

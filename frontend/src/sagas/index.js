@@ -41,14 +41,22 @@ import {
     } from './../actions/auths';
 import { refeshSolar01Failed,
         refeshSolar01Success,
+        refeshPowerSolar01Failed,
+        refeshPowerSolar01Success,
         refeshSolar02Success,
         refeshSolar02Failed,
+        refeshPowerSolar02Failed,
+        refeshPowerSolar02Success,
         //refeshMainSuccess,
         //refeshMainFailed,
         refeshFishLakeAreaSuccess,
         refeshFishLakeAreaFailed,
+        refeshPowerFishLakeAreaSuccess,
+        refeshPowerFishLakeAreaFailed,
         refeshHouseAreaSuccess,
         refeshHouseAreaFailed,
+        refeshPowerHouseAreaSuccess,
+        refeshPowerHouseAreaFailed,
         //refeshAllAreaSuccess,
         //refeshAllAreaFailed,
      } from '../actions/devices';
@@ -194,18 +202,40 @@ function* refeshHouseArea(){
         yield put(refeshHouseAreaSuccess(data));  
     }else{
         yield put(refeshHouseAreaFailed(data));
-    }
-    
+    } 
+}
+function* refeshPowerHouseArea(){
+    const resp = yield call(getListData,'api/v1/spm93/getlast5min','');
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshPowerHouseAreaSuccess(data));  
+    }else{
+        yield put(refeshPowerHouseAreaFailed(data));
+    } 
 }
 // refesh data leak
 function* refeshfishLakeArea({payload}){
     const {params} = payload;
     const resp = yield call(getListData,'api/v1/spm91/getlast',{params});
     const {status,data}= resp;
+
     if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
         yield put(refeshFishLakeAreaSuccess(data));  
     }else{
         yield put(refeshFishLakeAreaFailed(data));
+    }
+    
+}
+// refesh data leak
+function* refeshPowerfishLakeArea({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/spm91/getlast5min',{params});
+    const {status,data}= resp;
+    console.log(data)
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshPowerFishLakeAreaSuccess(data));  
+    }else{
+        yield put(refeshPowerFishLakeAreaFailed(data));
     }
     
 }
@@ -222,6 +252,18 @@ function* refeshSolar01Area({payload}){
     
 }
 // refesh data leak
+function* refeshPowerSolar01Area({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/spm91/getlast5min',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshPowerSolar01Success(data));  
+    }else{
+        yield put(refeshPowerSolar01Failed(data));
+    }
+    
+}
+// refesh data leak
 function* refeshSolar02Area({payload}){
     const {params} = payload;
     const resp = yield call(getListData,'api/v1/spm91/getlast',{params});
@@ -230,6 +272,18 @@ function* refeshSolar02Area({payload}){
         yield put(refeshSolar02Success(data));  
     }else{
         yield put(refeshSolar02Failed(data));
+    }
+    
+}
+// refesh data leak
+function* refeshPowerSolar02Area({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/spm91/getlast5min',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshPowerSolar02Success(data));  
+    }else{
+        yield put(refeshPowerSolar02Failed(data));
     }
     
 }
@@ -243,9 +297,13 @@ function* rootSaga() {
     yield takeLatest(authTypes.SET_USER_DELETE,deleteUserSaga)  
     yield takeLatest (authTypes.UPDATE_USER,updateUserSaga)
     yield takeLatest (deviceTypes.REFESH_HOUSE_AREA,refeshHouseArea)
+    yield takeLatest (deviceTypes.REFESH_POWER_HOUSE_AREA,refeshPowerHouseArea)
     yield takeLatest (deviceTypes.REFESH_FISH_LAKE_AREA,refeshfishLakeArea)
+    yield takeLatest (deviceTypes.REFESH_POWER_FISH_LAKE_AREA,refeshPowerfishLakeArea)
     yield takeLatest (deviceTypes.REFESH_SOLAR01_AREA,refeshSolar01Area)
+    yield takeLatest (deviceTypes.REFESH_POWER_SOLAR01_AREA,refeshPowerSolar01Area)
     yield takeLatest (deviceTypes.REFESH_SOLAR02_AREA,refeshSolar02Area)
+    yield takeLatest (deviceTypes.REFESH_POWER_SOLAR02_AREA,refeshPowerSolar02Area)
     
 }
 

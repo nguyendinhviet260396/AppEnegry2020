@@ -52,7 +52,7 @@ class SPM91Model (db.Model):
   @staticmethod
   def getall():
     query = """
-            SELECT *
+            SELECT enegry,timestamp
             FROM spm91table
             """
     return pd.read_sql(query,con=connection)
@@ -68,20 +68,23 @@ class SPM91Model (db.Model):
     return pd.read_sql(query,con=connection)
 
   @staticmethod
-  def getlast15min(from_date, to_date):
+  def getlast5min(from_date, to_date, value):
     df_new = pd.DataFrame([])
     query = """
-            SELECT timestamp,ipower,enegry
+            SELECT timestamp,power,enegry
             FROM spm91table
-            WHERE timestamp BETWEEN '%s' AND '%s'
-            """ % (from_date, to_date)
+            WHERE timestamp BETWEEN '%s' AND '%s' AND device_id = '%s'
+            """ % (from_date, to_date,value)
     df = pd.read_sql(query, con=connection)
     if len(df) > 0 :
-      df = df.groupby(pd.Grouper(key='timestamp', freq='15min')).first().reset_index()
+      df['power'] = (df['power']).round(2)
+      df['enegry'] = (df['enegry']).round(2)
+      df = df.groupby(pd.Grouper(key='timestamp', freq='1min')).first().reset_index()
       df = df.fillna(0)
       df['timestamp'] = df['timestamp'].astype(str)
       df_new = pd.concat([df_new, df])
     return df_new
+
 
   
   def __repr(self):

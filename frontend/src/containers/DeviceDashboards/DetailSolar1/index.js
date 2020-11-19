@@ -11,18 +11,19 @@ class DetailSolar1 extends Component {
   componentDidMount(){
     const interval = setInterval(()=>{
       const {deviceActionsCreators} = this.props;
-      const {refeshSolar01}=deviceActionsCreators;
+      const {refeshSolar01,refeshPowerSolar01}=deviceActionsCreators;
       refeshSolar01("solar_01");
+      refeshPowerSolar01("solar_01");
     },1000);
     return ()=>clearInterval(interval)
   } 
   render () {
-    const {listSolar01} = this.props;
-
+    const {listSolar01,listPowerSolar01} = this.props;
     return (
       <AreaSolar 
       title = {"Delail Solar I"}
       data = {listSolar01}
+      datapower = {listPowerSolar01}
       project = {"Solar: EMS Project 5kW "}
       solarImg = {solar01}/>
     )
@@ -31,14 +32,18 @@ class DetailSolar1 extends Component {
 DetailSolar1.propTypes={
   classes:PropTypes.object,
   listSolar01: PropTypes.array,
+  listPowerSolar01: PropTypes.array,
   deviceActionsCreators:PropTypes.shape({
       refeshSolar01:PropTypes.func,
+      refeshPowerSolar01:PropTypes.func,
   }),
 }   
 const mapStateToProps=(state)=>{
+  console.log(state.devices.listPowerSolar01)
   return{
       ...state,
       listSolar01 :state.devices.listSolar01,
+      listPowerSolar01 :state.devices.listPowerSolar01,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

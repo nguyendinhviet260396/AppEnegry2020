@@ -67,7 +67,7 @@ class SPM93Model(db.Model):
     INSERT INTO spm93table (device_id,voltage_pa,voltage_pb,voltage_pc,current_pa,current_pb,current_pc,frequency,totalapparentpower,
     totalactiveennegry,totalreactiveennegry,activepower_pa,activepower_pb,activepower_pc,totalactivepower,reactivepower_pa,reactivepower_pb,
     reactivepower_pc,totalreactivepower,timestamp) 
-    VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s, %s,%s, %s, %s, %s, %s,%s, %s, %s, %s, %s,)
+    VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s, %s,%s, %s, %s, %s, %s,%s, %s, %s, %s, %s)
     """
     params = (self.device_id,self.voltage_pa,self.voltage_pb,self.voltage_pc,self.current_pa,self.current_pb,self.current_pc,self.frequency,
     self.totalapparentpower,self.totalactiveennegry,self.totalreactiveennegry,self.activepower_pa,self.activepower_pb,self.activepower_pc,
@@ -103,21 +103,24 @@ class SPM93Model(db.Model):
       df_new = pd.concat([df_new,df])
     return df_new
     
-  @staticmethod
-  def getlast15min(from_date, to_date):
+  @staticmethod 
+  def getlast5min(from_date, to_date):
     df_new = pd.DataFrame([])
     query = """
             SELECT *
             FROM spm93table
             WHERE timestamp BETWEEN '%s' AND '%s'
-            """ % (from_date, to_date)
+            """ % (from_date,to_date)
     df = pd.read_sql(query, con=connection)
     if len(df) > 0:
-      df = df.groupby(pd.Grouper(key='timestamp', freq='5min')).first().reset_index()
+      df['totalactivepower'] = (df['totalactivepower']).round(2)
+      df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)
+      df = df.groupby(pd.Grouper(key='timestamp', freq='1min')).first().reset_index()
       df = df.fillna(0)
       df['timestamp'] = df['timestamp'].astype(str)
       df_new = pd.concat([df_new, df])
-    return df_new[['timestamp','totalactivepower','totalactiveennegry']]
+      df_new = df_new[['timestamp','totalactivepower','totalactiveennegry']]
+    return df_new
 
     
   def __repr(self):
