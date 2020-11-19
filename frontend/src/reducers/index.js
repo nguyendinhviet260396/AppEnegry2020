@@ -4,6 +4,7 @@ import uiReducer from './ui';
 import modalReducer from './modal';
 import authReducer from './auths';
 import deviceReducer from './devices';
+import weatherReducer from './weather';
 import { reducer as formReducer } from 'redux-form'
 
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     modal:modalReducer,
     form: formReducer,
     auth:authReducer,
-    devices:deviceReducer
+    devices:deviceReducer,
+    weather:weatherReducer
 });
 export default rootReducer;

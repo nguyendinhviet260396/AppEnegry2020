@@ -22,11 +22,14 @@ import VpnLockIcon from '@material-ui/icons/VpnLock';
 import NatureIcon from '@material-ui/icons/Nature';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import GradeIcon from '@material-ui/icons/Grade';
+import LooksIcon from '@material-ui/icons/Looks';
 import Gauge from '../Gauge';
 import AreaChart from '../AreaChart';
 class AreaSolar extends Component {
   render () {
-    const {solarImg,title,data,datapower,project} = this.props;
+    const {solarImg,title,data,datapower,project,dataweather} = this.props;
     console.log(data)
     return (
       <Grid container spacing={1} style={{width:'100%'}}>
@@ -118,26 +121,41 @@ class AreaSolar extends Component {
                   <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}></div>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
-                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><WbCloudyIcon style={{color:'#0000FF',fontSize:'inherit'}} />Thời tiết hôm nay:</div>
+                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><WbCloudyIcon style={{color:'#0000FF',fontSize:'inherit'}} />Thời tiết hôm nay:  {dataweather.length !==0?dataweather[0].name+" <---> "+dataweather[0].country:"NaN"}<GradeIcon style={{color:'#FF0000'}} /></div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
-                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
+                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px',marginBottom:'5%'}}>
                       <tbody>
-                        <tr>
-                          <td style={{maxWidth:'20%'}}><WhatshotIcon style={{color:'#FF0000',fontSize:'inherit'}} /> Nhiệt độ:</td>
-                          <td style={{maxWidth:'60%'}}>{23.5}</td>
-                          <td style={{maxWidth:'20%'}}>*C</td>
+                        <tr  >
+                          <td> <WhatshotIcon style={{color:'#FF0000'}} />Nhiệt độ:</td>
+                          <td>{dataweather.length !==0?dataweather[0].temp:"NaN"}</td>
+                          <td>*C</td>
                         </tr>
                         <tr>
-                          <td style={{maxWidth:'20%'}}><OpacityIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Độ ẩm:</td>
-                          <td style={{maxWidth:'60%'}}>{80.5}</td>
-                          <td style={{maxWidth:'20%'}}>%</td>
+                          <td> <OpacityIcon  style = {{color:'#00CC33'}}/>Độ ẩm:</td>
+                          <td>{dataweather.length !==0?dataweather[0].humi:"NaN"}</td>
+                          <td>%</td>
                         </tr>
                         <tr>
-                          <td style={{maxWidth:'20%'}}><WbCloudyIcon style={{color:'#0000FF',fontSize:'inherit'}} /> Chất lượng không khí:</td>
-                          <td style={{maxWidth:'60%'}}>{40.8}</td>
-                          <td style={{maxWidth:'20%'}}>%</td>
+                          <td><SpeedIcon style = {{color:'#0033FF'}}/>Tốc độ gió:</td>
+                          <td>{dataweather.length !==0?dataweather[0].wind_speed:"NaN"}</td>
+                          <td>km/h</td>
                         </tr>
-                      </tbody>
+                        <tr  >
+                          <td> <AccessAlarmIcon style={{color:'#FF0000'}} />Mặt trời mọc:</td>
+                          <td>{dataweather.length !==0?dataweather[0].sunrise:"NaN"}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td> <AccessAlarmIcon  style = {{color:'#00CC33'}}/>Mặt trời lặn:</td>
+                          <td>{dataweather.length !==0?dataweather[0].sunset:"NaN"}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td><LooksIcon style = {{color:'#0033FF'}}/>Bầu trời:</td>
+                          <td>{dataweather.length !==0?dataweather[0].description:"NaN"}</td>
+                          <td><WbCloudyIcon style = {{color:'#0033FF'}}/></td>
+                        </tr>
+                        </tbody>
                     </table> 
                   </div>
                 </Grid>

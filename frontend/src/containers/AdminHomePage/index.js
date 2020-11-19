@@ -3,16 +3,10 @@ import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import  {connect} from 'react-redux';
 import * as deviceActions from './../../actions/devices';
+import * as weatherActions from './../../actions/weather';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
-//import temphumiicon from '../../assets/images/temphumi-icon.png'
-//import iconNomal from '../../assets/images/iconNomal.png'
-//import iconWarring from '../../assets/images/iconWarring.png'
-//import iconError from '../../assets/images/iconError.png';
-////import iconFan from './../../assets/images/iconfan.png'; 
-//import Button from '@material-ui/core/Button';
-//import {Link} from 'react-router-dom';
 import EvStationIcon from '@material-ui/icons/EvStation';
 import EventIcon from '@material-ui/icons/Event';
 import WbCloudyIcon from '@material-ui/icons/WbCloudy';
@@ -21,6 +15,10 @@ import OpacityIcon from '@material-ui/icons/Opacity';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import AreaChart from './../../components/AreaChart/index';
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import GradeIcon from '@material-ui/icons/Grade';
+import LooksIcon from '@material-ui/icons/Looks';
+import SpeedIcon from '@material-ui/icons/Speed';
 import Gauge from './../../components/Gauge/index';
 import './main.css';
 
@@ -28,15 +26,16 @@ class AdminHomePage extends Component {
  
   componentDidMount(){
     const interval = setInterval(() => {
-      const {deviceActionsCreators} = this.props;
+      const {deviceActionsCreators,weatherActionsCreators} = this.props;
+      const {refeshWeather} = weatherActionsCreators;
       const{refeshMain} = deviceActionsCreators;
-
       refeshMain();
-    },1000);
+      refeshWeather("Hanoi");
+    },2000);
     return () => clearInterval(interval);
     };
     render(){
-        const { classes }=this.props;
+        const { classes,listWeather }=this.props;
           return ( 
           <Grid 
           container 
@@ -50,7 +49,7 @@ class AdminHomePage extends Component {
                 </Grid>
               <Grid container spacing={1}>
                 <Grid item xs={12} style={{marginRight:'4%',marginLeft:'4%'}}>
-                  <div style={{marginTop:'5px', fontSize:'1rem'}}> Thời tiết hôm nay:</div>
+                  <div style={{marginTop:'5px', fontSize:'1rem'}}> Thời tiết hôm nay:  {listWeather.length !==0?listWeather[0].name+" <---> "+listWeather[0].country:"NaN"}<GradeIcon style={{color:'#FF0000'}} /> </div>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
@@ -58,18 +57,33 @@ class AdminHomePage extends Component {
                       <tbody>
                         <tr  >
                           <td> <WhatshotIcon style={{color:'#FF0000'}} />Nhiệt độ:</td>
-                          <td>{"NaN"}</td>
+                          <td>{listWeather.length !==0?listWeather[0].temp:"NaN"}</td>
                           <td>*C</td>
                         </tr>
                         <tr>
                           <td> <OpacityIcon  style = {{color:'#00CC33'}}/>Độ ẩm:</td>
-                          <td>{"NaN"}</td>
+                          <td>{listWeather.length !==0?listWeather[0].humi:"NaN"}</td>
                           <td>%</td>
                         </tr>
                         <tr>
-                          <td><WbCloudyIcon style = {{color:'#0033FF'}}/>Chất lượng không khí:</td>
-                          <td>{"NaN"}</td>
-                          <td>%</td>
+                          <td><SpeedIcon style = {{color:'#0033FF'}}/>Tốc độ gió:</td>
+                          <td>{listWeather.length !==0?listWeather[0].wind_speed:"NaN"}</td>
+                          <td>km/h</td>
+                        </tr>
+                        <tr  >
+                          <td> <AccessAlarmIcon style={{color:'#FF0000'}} />Mặt trời mọc:</td>
+                          <td>{listWeather.length !==0?listWeather[0].sunrise:"NaN"}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td> <AccessAlarmIcon  style = {{color:'#00CC33'}}/>Mặt trời lặn:</td>
+                          <td>{listWeather.length !==0?listWeather[0].sunset:"NaN"}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td><LooksIcon style = {{color:'#0033FF'}}/>Bầu trời:</td>
+                          <td>{listWeather.length !==0?listWeather[0].description:"NaN"}</td>
+                          <td><WbCloudyIcon style = {{color:'#0033FF'}}/></td>
                         </tr>
                       </tbody>
                     </table> 
@@ -234,13 +248,13 @@ class AdminHomePage extends Component {
               <Grid container spacing={1}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',borderTop: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1rem'}}><TimelineIcon  style = {{color:'#00CC33'}}/>Biểu đồ phụ tải</div>
-                  <AreaChart /> 
+                  {/* <AreaChart />  */}
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1rem'}}><TimelineIcon  style = {{color:'#00CC33'}}/>Biểu đồ năng lượng tiêu thụ</div>
-                  <AreaChart /> 
+                  {/* <AreaChart />  */}
                 </Grid>
               </Grid>
             </Grid>
@@ -277,21 +291,27 @@ class AdminHomePage extends Component {
 }
 AdminHomePage.propTypes={
   deviceActionsCreators: PropTypes.shape({
-          refeshMain:PropTypes.func,
-  }),
-          listMain:PropTypes.array,
+    refeshMain:PropTypes.func,
+    }),
+    listMain:PropTypes.array,
+  weatherActionsCreators: PropTypes.shape({
+    refeshWeather:PropTypes.func,
+    }),
+    listWeather:PropTypes.array,
 
 }
 const mapStateToProps=(state)=>{
-  console.log(state.devices.listMain)
+  console.log(state.weather.listWeather)
   return{
       ...state,
+      listWeather: state.weather.listWeather,
   }
 };
 
 const mapDispatchToProps =(dispatch,props)=>{
   return{
       deviceActionsCreators: bindActionCreators(deviceActions, dispatch),
+      weatherActionsCreators: bindActionCreators(weatherActions, dispatch)
   }
 }
 export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(AdminHomePage));

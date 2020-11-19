@@ -1,7 +1,15 @@
 import {fork,take,call,put,delay,takeLatest,select} from 'redux-saga/effects';//select to listTask from store
 import * as alarmTypes from './../constants/alarm';
+import * as weatherTypes from './../constants/weather';
 import * as authTypes from './../constants/auths';
 import * as deviceTypes from './../constants/devices';
+import {
+    refeshWeatherSuccess,
+    refeshWeatherFailed,
+    } from './../actions/weather';
+import {
+    getListWeather
+    } from './../apis/weather';
 import {
     //getListAlarm
     } from './../apis/alarm';
@@ -193,6 +201,17 @@ function* deleteUserSaga({payload}){
     yield delay(100);
     yield put(hideLoading());
 }
+// refesh data weather
+function* refeshWeatherSaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListWeather,{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshWeatherSuccess(data));  
+    }else{
+        yield put(refeshWeatherFailed(data));
+    } 
+}
 
 // refesh data leak
 function* refeshHouseArea(){
@@ -296,6 +315,7 @@ function* rootSaga() {
     yield takeLatest(authTypes.AUTH_SIGNUP,signupSaga)
     yield takeLatest(authTypes.SET_USER_DELETE,deleteUserSaga)  
     yield takeLatest (authTypes.UPDATE_USER,updateUserSaga)
+    yield takeLatest (weatherTypes.REFESH_WEATHER,refeshWeatherSaga)
     yield takeLatest (deviceTypes.REFESH_HOUSE_AREA,refeshHouseArea)
     yield takeLatest (deviceTypes.REFESH_POWER_HOUSE_AREA,refeshPowerHouseArea)
     yield takeLatest (deviceTypes.REFESH_FISH_LAKE_AREA,refeshfishLakeArea)
