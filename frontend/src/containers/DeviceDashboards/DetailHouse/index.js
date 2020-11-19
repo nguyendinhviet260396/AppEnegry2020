@@ -14,7 +14,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import SpeedIcon from '@material-ui/icons/Speed';
 import MapIcon from '@material-ui/icons/Map';
-import Gauge from './../../../components/Gauge';
+import Gauge1 from './../../../components/Gauge1';
 import AreaChart from './../../../components/AreaChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SwapHorizontalCircleIcon from '@material-ui/icons/SwapHorizontalCircle';
@@ -45,11 +45,11 @@ class DetailHouse extends Component {
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
-                <Gauge series={[listHouseArea.length !==0 ?listHouseArea[0].frequency:"NaN"]}/>
+                    <Gauge1 data ={listHouseArea.length !==0 ?(listHouseArea[0].frequency/100).toFixed(2):0} id ={'gauge-chart1'} level = {30} />
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
-                <Gauge series={[listHouseArea.length !==0 ? listHouseArea[0].frequency:"NaN"]}/>
+                <Gauge1 data ={listHouseArea.length !==0 ? (listHouseArea[0].frequency/100).toFixed(2):0} id ={'gauge-chart2'} level = {60}/>
               </Grid>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ</div>

@@ -121,7 +121,7 @@ class AreaSolar extends Component {
                   <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}></div>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
-                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><WbCloudyIcon style={{color:'#0000FF',fontSize:'inherit'}} />Thời tiết hôm nay:  {dataweather.length !==0?dataweather[0].name+" <---> "+dataweather[0].country:"NaN"}<GradeIcon style={{color:'#FF0000'}} /></div>
+                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><WbCloudyIcon style={{color:'#0000FF',fontSize:'inherit'}} />Thời tiết hôm nay:  {dataweather.length !==0 ? dataweather[0].name+" <---> "+dataweather[0].country:"NaN"}<GradeIcon style={{color:'#FF0000'}} /></div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
                     <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px',marginBottom:'5%'}}>
                       <tbody>
@@ -141,12 +141,12 @@ class AreaSolar extends Component {
                           <td>km/h</td>
                         </tr>
                         <tr  >
-                          <td> <AccessAlarmIcon style={{color:'#FF0000'}} />Mặt trời mọc:</td>
+                          <td> <AccessAlarmIcon style={{color:'#00CC33'}} />Mặt trời mọc:</td>
                           <td>{dataweather.length !==0?dataweather[0].sunrise:"NaN"}</td>
                           <td></td>
                         </tr>
                         <tr>
-                          <td> <AccessAlarmIcon  style = {{color:'#00CC33'}}/>Mặt trời lặn:</td>
+                          <td> <AccessAlarmIcon  style = {{color:'#ff0000'}}/>Mặt trời lặn:</td>
                           <td>{dataweather.length !==0?dataweather[0].sunset:"NaN"}</td>
                           <td></td>
                         </tr>
@@ -224,17 +224,17 @@ class AreaSolar extends Component {
                       <tbody>
                         <tr  >
                           <td><EmojiTransportationIcon style={{color:'#FF0000',fontSize:'inherit'}} /> Lượng khí CO2 giảm:</td>
-                          <td>{135.5}</td>
+                          <td>{data.length !==0 ? ((data[0].enegry)*0.997).toFixed(2):"NaN"}</td>
                           <td>Kg</td>
                         </tr>
                         <tr>
                           <td><NatureIcon style={{color:'#00CC33',fontSize:'inherit'}} />Diện tích rừng </td>
-                          <td>{152.6}</td>
+                          <td>{data.length !==0 ?((data[0].enegry)*0.4*18.5/(85.55*0.41)).toFixed(2):"NaN"}</td>
                           <td>m2</td>
                         </tr>
                         <tr>
                           <td><BubbleChartIcon style={{color:'#000000',fontSize:'inherit'}} />Lượng than giảm:</td>
-                          <td>{1568.5}</td>
+                          <td>{data.length !==0 ?((data[0].enegry)*0.4).toFixed(2):"NaN"}</td>
                           <td>Kg</td>
                         </tr>
                       </tbody>

@@ -28,14 +28,33 @@ class AdminHomePage extends Component {
     const interval = setInterval(() => {
       const {deviceActionsCreators,weatherActionsCreators} = this.props;
       const {refeshWeather} = weatherActionsCreators;
-      const{refeshMain} = deviceActionsCreators;
-      refeshMain();
+      const{refeshMainLast,
+        refeshMainEnegry,
+        refeshMainEnegryDayly,
+        refeshMainEnegryHourly,
+        refeshMainEnegryWeekly,
+        refeshMainEnegryMonthly,
+      } = deviceActionsCreators;
+      refeshMainLast('');
+      refeshMainEnegry('');
+      refeshMainEnegryDayly('');
+      refeshMainEnegryHourly('');
+      refeshMainEnegryWeekly('');
+      refeshMainEnegryMonthly('');
       refeshWeather("Hanoi");
     },2000);
     return () => clearInterval(interval);
     };
     render(){
-        const { classes,listWeather }=this.props;
+        const { classes,
+          listWeather,
+          listMainEnegry,
+          listMainLast,
+          listMainEnegryHourly,
+          listMainEnegryDayly,
+          listMainEnegryWeekly,
+          listMainEnegryMonthly,
+        }=this.props;
           return ( 
           <Grid 
           container 
@@ -71,12 +90,12 @@ class AdminHomePage extends Component {
                           <td>km/h</td>
                         </tr>
                         <tr  >
-                          <td> <AccessAlarmIcon style={{color:'#FF0000'}} />Mặt trời mọc:</td>
+                          <td> <AccessAlarmIcon style={{color:'#00CC33'}} />Mặt trời mọc:</td>
                           <td>{listWeather.length !==0?listWeather[0].sunrise:"NaN"}</td>
                           <td></td>
                         </tr>
                         <tr>
-                          <td> <AccessAlarmIcon  style = {{color:'#00CC33'}}/>Mặt trời lặn:</td>
+                          <td> <AccessAlarmIcon  style = {{color:'#FF0000'}}/>Mặt trời lặn:</td>
                           <td>{listWeather.length !==0?listWeather[0].sunset:"NaN"}</td>
                           <td></td>
                         </tr>
@@ -98,17 +117,17 @@ class AdminHomePage extends Component {
                       <tbody>
                         <tr  >
                           <td> <EvStationIcon  style={{color:'#00CC33'}}/>Năng lượng tạo ra:</td>
-                          <td>{"NaN"}</td>
+                          <td>{listMainLast.length !==0 ? (listMainLast[0][0].enegry+listMainLast[1][0].enegry).toFixed(2):"NaN"}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
                           <td> <EvStationIcon style={{color:'#00CC33'}}/>Năng lượng tiêu thụ:</td>
-                          <td>{"NaN"}</td>
+                          <td>{listMainLast.length !==0 ? (listMainLast[2][0].totalactiveennegry).toFixed(2):"NaN"}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
                           <td><EvStationIcon style={{color:'#00CC33'}}/>Năng lượng hòa lưới:</td>
-                          <td>{"NaN"}</td>
+                          <td>{listMainLast.length !==0 ? (-listMainLast[2][0].totalactiveennegry+listMainLast[0][0].enegry+listMainLast[1][0].enegry).toFixed(2):"NaN"}</td>
                           <td>kWh</td>
                         </tr>
                       </tbody>
@@ -167,7 +186,7 @@ class AdminHomePage extends Component {
                             padding:'5px',
                             border: '1px solid #00CC00',}}>
                               <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
-                        Current energy: 25.6 kW
+                        Hourly energy: {listMainEnegryHourly.length !==0 ? listMainEnegryHourly[0].totalactiveennegry:'NaN'} kWh
                     </div>
                     <div style ={{        
                             textAlign: 'center',
@@ -179,37 +198,7 @@ class AdminHomePage extends Component {
                             padding:'5px',
                             border: '1px solid #00CC00',}}> 
                             <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
-                        Last day energy: 25.6 kW
-                    </div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                    <div style ={{        
-                            textAlign: 'center',
-                            fontSize: '1rem',
-                            margin: '5px',
-                            height:'30px',
-                            width:'95%',
-                            borderRadius:'5px',
-                            padding:'5px',
-                            border: '1px solid #00CC00',}}> 
-                            <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
-                        To day energy: 25.6 kW
-                    </div>
-                    <div style ={{        
-                            textAlign: 'center',
-                            fontSize: '1rem',
-                            margin: '5px',
-                            height:'30px',
-                            width:'95%',
-                            borderRadius:'5px',
-                            padding:'5px',
-                            border: '1px solid #00CC00',}}> 
-                            <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
-                        Last week energy: 25.6 kW
+                            To day energy: {listMainEnegryDayly.length !==0? listMainEnegryDayly[0].totalactiveennegry:'NaN'} kWh
                     </div>
                     </Grid>
                   </Grid>
@@ -227,7 +216,7 @@ class AdminHomePage extends Component {
                             padding:'5px',
                             border: '1px solid #00CC00',}}> 
                             <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
-                        Total energy: 25.6 kW
+                            Last day energy: {listMainEnegryDayly.length !==0? listMainEnegryDayly[0].totalactiveennegry:'NaN'} kWh
                     </div>
                     <div style ={{        
                             textAlign: 'center',
@@ -239,7 +228,37 @@ class AdminHomePage extends Component {
                             padding:'5px',
                             border: '1px solid #00CC00',}}> 
                             <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
-                        Last month energy: 25.6 kW
+                        Last week energy: {listMainEnegryWeekly.length !==0? listMainEnegryWeekly[0].totalactiveennegry:'NaN'} kWh
+                    </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                    <div style ={{        
+                            textAlign: 'center',
+                            fontSize: '1rem',
+                            margin: '5px',
+                            height:'30px',
+                            width:'95%',
+                            borderRadius:'5px',
+                            padding:'5px',
+                            border: '1px solid #00CC00',}}> 
+                            <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
+                        Total energy: {listMainLast.length !==0? listMainLast[2][0].totalactiveennegry:'NaN'} kWh
+                    </div>
+                    <div style ={{        
+                            textAlign: 'center',
+                            fontSize: '1rem',
+                            margin: '5px',
+                            height:'30px',
+                            width:'95%',
+                            borderRadius:'5px',
+                            padding:'5px',
+                            border: '1px solid #00CC00',}}> 
+                            <EvStationIcon style={{color:'#00cc33',fontSize:'inherit'}} /> 
+                        Last month energy: {listMainEnegryMonthly.length !==0? listMainEnegryMonthly[0].totalactiveennegry:'NaN'} kWh
                     </div>
                     </Grid>
                   </Grid>
@@ -248,13 +267,13 @@ class AdminHomePage extends Component {
               <Grid container spacing={1}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',borderTop: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1rem'}}><TimelineIcon  style = {{color:'#00CC33'}}/>Biểu đồ phụ tải</div>
-                  {/* <AreaChart />  */}
+                  <AreaChart data = {listMainEnegry.length !==0 ? listMainEnegry[0]:[]} /> 
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1rem'}}><TimelineIcon  style = {{color:'#00CC33'}}/>Biểu đồ năng lượng tiêu thụ</div>
-                  {/* <AreaChart />  */}
+                  <AreaChart data = {listMainEnegry.length !==0 ? listMainEnegry[1]:[]}/> 
                 </Grid>
               </Grid>
             </Grid>
@@ -265,22 +284,22 @@ class AdminHomePage extends Component {
             <Grid container spacing={1}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}><WbSunnyIcon  style = {{color:'#ff0000'}}/> Solar On Top I</div>
-                  <Gauge series={[35]}/>
+                  <Gauge series={[listMainLast.length !==0 ? ((listMainLast[0][0].power)/50).toFixed(2):0]}/>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div style={{height:'80px',textAlign:'center',fontSize:'1rem',paddingTop:'28px'}}>
                     <EvStationIcon  style = {{color:'#00CC33'}}/>
-                    Total generation energy : 12.56 kWh
+                    Total generation energy : {listMainLast.length !==0 ? listMainLast[0][0].enegry:0} kWh
                   </div>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}><WbSunnyIcon  style = {{color:'#ff0000'}}/> Solar On Top II</div>
-                  <Gauge series={[80]}/>
+                  <Gauge series={[listMainLast.length !==0 ? ((listMainLast[1][0].power)/80).toFixed(2):0]}/>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div style={{height:'80px',textAlign:'center',fontSize:'1rem',paddingTop:'28px'}}>
                     <EvStationIcon  style = {{color:'#00CC33'}}/>
-                    Total generation energy : 36.8 kWh
+                    Total generation energy : {listMainLast.length !==0 ? listMainLast[1][0].enegry:0} kWh
                   </div>
                 </Grid>
               </Grid>
@@ -291,9 +310,14 @@ class AdminHomePage extends Component {
 }
 AdminHomePage.propTypes={
   deviceActionsCreators: PropTypes.shape({
-    refeshMain:PropTypes.func,
+    refeshMainLast:PropTypes.func,
     }),
-    listMain:PropTypes.array,
+    listMainLast:PropTypes.array,
+    listMainEnegry:PropTypes.array,
+    listMainEnegryHourly:PropTypes.array,
+    listMainEnegryDayly:PropTypes.array,
+    listMainEnegryWeekly:PropTypes.array,
+    listMainEnegryMonthly:PropTypes.array,
   weatherActionsCreators: PropTypes.shape({
     refeshWeather:PropTypes.func,
     }),
@@ -301,10 +325,17 @@ AdminHomePage.propTypes={
 
 }
 const mapStateToProps=(state)=>{
-  console.log(state.weather.listWeather)
+  console.log(state.devices)
   return{
       ...state,
       listWeather: state.weather.listWeather,
+      listMainLast:state.devices.listMainLast,
+      listMainEnegry:state.devices.listMainEnegry,
+      listMainEnegryHourly:state.devices.listMainEnegryHourly,
+      listMainEnegryDayly:state.devices.listMainEnegryDayly,
+      listMainEnegryWeekly:state.devices.listMainEnegryWeekly,
+      listMainEnegryMonthly:state.devices.listMainEnegryMonthly,
+      
   }
 };
 

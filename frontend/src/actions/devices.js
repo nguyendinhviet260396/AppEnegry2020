@@ -1,26 +1,144 @@
 import * as deviceTypes from './../constants/devices';
-// Action request main
-export const refeshMain =(params={})=>({
-    type:deviceTypes.REFESH_MAIN,
+// Action request main last
+export const refeshMainLast =(params={})=>({
+    type:deviceTypes.REFESH_MAIN_LAST,
     payload:{
         params,
        
     }
 });
 
-export const refeshMainSuccess = (data) => ({
-    type: deviceTypes.REFESH_MAIN_SUCCESS,
+export const refeshMainLastSuccess = (data) => ({
+    type: deviceTypes.REFESH_MAIN_LAST_SUCCESS,
     payload:{
         data,
     }
 });
 
-export const refeshMainFailed =(error)=>({
-    type:deviceTypes.REFESH_MAIN_FAILED,
+export const refeshMainLastFailed =(error)=>({
+    type:deviceTypes.REFESH_MAIN_LAST_FAILED,
     payload:{
         error,
     }
 });
+
+
+// Action request main hourly
+export const refeshMainEnegryHourly=(params={})=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_HOURLY,
+    payload:{
+        params,
+       
+    }
+});
+
+export const refeshMainEnegryHourlySuccess = (data) => ({
+    type: deviceTypes.REFESH_MAIN_ENEGRY_HOURLY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const refeshMainEnegryHourlyFailed =(error)=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_HOURLY_FAILED,
+    payload:{
+        error,
+    }
+});
+// Action request main dayly
+export const refeshMainEnegryDayly=(params={})=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_DAYLY,
+    payload:{
+        params,
+       
+    }
+});
+
+export const refeshMainEnegryDaylySuccess = (data) => ({
+    type: deviceTypes.REFESH_MAIN_ENEGRY_DAYLY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const refeshMainEnegryDaylyFailed =(error)=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_DAYLY_FAILED,
+    payload:{
+        error,
+    }
+});
+
+// Action request main weekly
+export const refeshMainEnegryWeekly=(params={})=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_WEEKLY,
+    payload:{
+        params,
+       
+    }
+});
+
+export const refeshMainEnegryWeeklySuccess = (data) => ({
+    type: deviceTypes.REFESH_MAIN_ENEGRY_WEEKLY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const refeshMainEnegryWeeklyFailed =(error)=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_WEEKLY_FAILED,
+    payload:{
+        error,
+    }
+});
+
+
+// Action request main mothly
+export const refeshMainEnegryMonthly=(params={})=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_MONTHLY,
+    payload:{
+        params,
+       
+    }
+});
+
+export const refeshMainEnegryMonthlySuccess = (data) => ({
+    type: deviceTypes.REFESH_MAIN_ENEGRY_MONTHLY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const refeshMainEnegryMonthlyFailed =(error)=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_MONTHLY_FAILED,
+    payload:{
+        error,
+    }
+});
+
+
+// Action request main 5 min
+export const refeshMainEnegry=(params={})=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY,
+    payload:{
+        params,
+       
+    }
+});
+
+export const refeshMainEnegrySuccess = (data) => ({
+    type: deviceTypes.REFESH_MAIN_ENEGRY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const refeshMainEnegryFailed =(error)=>({
+    type:deviceTypes.REFESH_MAIN_ENEGRY_FAILED,
+    payload:{
+        error,
+    }
+});
+
 
 // Action request house area
 export const refeshHouseArea =(params={})=>({

@@ -56,7 +56,7 @@ class Gauge extends Component {
           stroke: {
             dashArray: 4
           },
-          labels: ['Performance'],
+          labels: ['Hiệu Suất'],
         }
       
         return (

@@ -55,8 +55,18 @@ import { refeshSolar01Failed,
         refeshSolar02Failed,
         refeshPowerSolar02Failed,
         refeshPowerSolar02Success,
-        //refeshMainSuccess,
-        //refeshMainFailed,
+        refeshMainLastSuccess,
+        refeshMainLastFailed,
+        refeshMainEnegrySuccess,
+        refeshMainEnegryFailed,
+        refeshMainEnegryHourlySuccess,
+        refeshMainEnegryHourlyFailed,
+        refeshMainEnegryDaylySuccess,
+        refeshMainEnegryDaylyFailed,
+        refeshMainEnegryWeeklySuccess,
+        refeshMainEnegryWeeklyFailed,
+        refeshMainEnegryMonthlySuccess,
+        refeshMainEnegryMonthlyFailed,
         refeshFishLakeAreaSuccess,
         refeshFishLakeAreaFailed,
         refeshPowerFishLakeAreaSuccess,
@@ -65,8 +75,6 @@ import { refeshSolar01Failed,
         refeshHouseAreaFailed,
         refeshPowerHouseAreaSuccess,
         refeshPowerHouseAreaFailed,
-        //refeshAllAreaSuccess,
-        //refeshAllAreaFailed,
      } from '../actions/devices';
 /**
  * B1: dispatch action fetchTask
@@ -307,6 +315,75 @@ function* refeshPowerSolar02Area({payload}){
     
 }
 
+// refesh data main last
+function* refeshMainLastSaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/main/getlast',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshMainLastSuccess(data));  
+    }else{
+        yield put(refeshMainLastFailed(data));
+    } 
+}
+// refesh data main min
+function* refeshMainEnegrySaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/main/getlast5min',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshMainEnegrySuccess(data));  
+    }else{
+        yield put(refeshMainEnegryFailed(data));
+    } 
+}
+// refesh data main min
+function* refeshMainEnegryDaylySaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/main/getlastenegrybytoday',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshMainEnegryDaylySuccess(data));  
+    }else{
+        yield put(refeshMainEnegryDaylyFailed(data));
+    } 
+}
+// refesh data main min
+function* refeshMainEnegryHourlySaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/main/getlastenegrybyhour',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshMainEnegryHourlySuccess(data));  
+    }else{
+        yield put(refeshMainEnegryHourlyFailed(data));
+    } 
+}
+// refesh data main min
+function* refeshMainEnegryWeeklySaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/main/getlastenegrybyweek',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshMainEnegryWeeklySuccess(data));  
+    }else{
+        yield put(refeshMainEnegryWeeklyFailed(data));
+    } 
+}
+
+// refesh data main min
+function* refeshMainEnegryMonthlySaga({payload}){
+    const {params} = payload;
+    const resp = yield call(getListData,'api/v1/main/getlastenegrybymothly',{params});
+    const {status,data}= resp;
+    if(status === STATUS_CODE.SUCCESS && data.lenght !== 0){
+        yield put(refeshMainEnegryMonthlySuccess(data));  
+    }else{
+        yield put(refeshMainEnegryMonthlyFailed(data));
+    } 
+}
+
+
 function* rootSaga() {
     // yield fork(watchFetchListAlarmAction);
     yield fork(watchFetchListUserAction);
@@ -316,6 +393,12 @@ function* rootSaga() {
     yield takeLatest(authTypes.SET_USER_DELETE,deleteUserSaga)  
     yield takeLatest (authTypes.UPDATE_USER,updateUserSaga)
     yield takeLatest (weatherTypes.REFESH_WEATHER,refeshWeatherSaga)
+    yield takeLatest (deviceTypes.REFESH_MAIN_LAST,refeshMainLastSaga)
+    yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY,refeshMainEnegrySaga)
+    yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY_DAYLY,refeshMainEnegryDaylySaga)
+    yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY_HOURLY,refeshMainEnegryHourlySaga)
+    yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY_WEEKLY,refeshMainEnegryWeeklySaga)
+    yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY_MONTHLY,refeshMainEnegryMonthlySaga)
     yield takeLatest (deviceTypes.REFESH_HOUSE_AREA,refeshHouseArea)
     yield takeLatest (deviceTypes.REFESH_POWER_HOUSE_AREA,refeshPowerHouseArea)
     yield takeLatest (deviceTypes.REFESH_FISH_LAKE_AREA,refeshfishLakeArea)
