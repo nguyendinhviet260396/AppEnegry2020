@@ -1,6 +1,5 @@
 # src/models/MainData.py
 import datetime
-from . import db, bcrypt
 from src.db import run,connection
 import pandas as pd
 
@@ -23,7 +22,6 @@ class MainData:
   
   @staticmethod 
   def getlastsolar(value):
-
     query = """
             SELECT power,enegry
             FROM spm91table

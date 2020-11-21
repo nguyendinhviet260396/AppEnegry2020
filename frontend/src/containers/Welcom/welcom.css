@@ -18,7 +18,7 @@ padding: 25%;
 .text {
 position: absolute;
 animation: tran 10s infinite;
-top:94%;
+top:90%;
 }
 
 @keyframes tran {

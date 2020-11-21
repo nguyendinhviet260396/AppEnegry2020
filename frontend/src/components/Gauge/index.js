@@ -19,14 +19,14 @@ class Gauge extends Component {
               endAngle: 135,
               dataLabels: {
                 name: {
-                  fontSize: '20px',
+                  fontSize: '150%',
                   color: '#0000EE',
                   offsetY: 120,
                   fontWeight: 800
                 },
                 value: {
                   offsetY: 0,
-                  fontSize: '30px',
+                  fontSize: '120%',
                   color: '#0000EE',
                   formatter: function (val) {
                     return val + "%";

@@ -36,7 +36,7 @@ class DetailHouse extends Component {
           <Grid container spacing={1}>
             <Grid container spacing={1} style={{maxHeight:'40px'}}>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%',marginTop:'0.5%'}}>
-              <div style={{fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}><MapIcon style={{color:'#00CC33',fontSize:'inherit'}} />Detail the House</div>
+              <div style={{fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}><MapIcon style={{color:'#00CC33',fontSize:'inherit'}} />CHI TIẾT VỀ TOÀN NHÀ</div>
               </Grid>
             </Grid>
             <Grid item xs={12} md={3}>
@@ -53,7 +53,26 @@ class DetailHouse extends Component {
               </Grid>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ</div>
-                <div style={{padding:'15%',fontSize:'2rem',fontWeight:'800',textAlign:'center'}}>{listHouseArea.length !==0 ?listHouseArea[0].totalactiveennegry:"NaN"} kWh</div>
+                <div style ={{
+                  marginTop:'5%',
+                        marginLeft:'27%',
+                        borderColor:'#ff0000',
+                        marginRight:'27%',
+                        padding:'22%',
+                        fontWeight:'800',
+                        fontSize:'1.5rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                        color:'#FF0000',
+                        background: '#00CC33',
+                        clipPath: 'circle(50%)',
+                        height: '5em',
+                        width: '5em',
+                      }}>
+                        {listHouseArea.length !==0 ?(listHouseArea[0].totalactiveennegry).toFixed(2):"NaN"} kWh
+                      </div>
               </Grid>
             </Grid>
               <Grid item xs={12} md={6}>

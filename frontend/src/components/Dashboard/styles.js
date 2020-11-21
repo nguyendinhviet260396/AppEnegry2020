@@ -6,7 +6,7 @@ const styles=()=>({
     header:{
         width: '100%',
         position: 'fixed', 
-        zIndex: '10000',
+        zIndex: '100',
     },
     wrapper:{
         margin:  '0px',

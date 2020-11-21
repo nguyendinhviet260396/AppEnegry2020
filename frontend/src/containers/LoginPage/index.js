@@ -105,7 +105,7 @@ class LoginPage extends Component {
                         </CardContent>
                     </Card>
                 </div>
-                <div style={{color:'#fff', fontSize:'1.2vw',fontWeight:'500',padding:'2%'}}>
+                <div style={{color:'#fff', fontSize:'1.2vw',fontWeight:'500',paddingBottom:'2%'}}>
                     sales@emsvietnam.com.vn @ Địa Chỉ: Phòng 12A09, Tòa nhà 17T7, Hoàng Đạo Thúy, Quận Thanh Xuân, Hà Nội                
                 </div>
             </div>

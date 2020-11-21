@@ -52,10 +52,10 @@ class AllArea extends Component {
               <Grid container spacing={1} style={{marginTop:'1%',marginBottom:'2%'}}>
                   <Grid item xs={12} md = {12} style={{display:'flex',flexDirection:'column',alignItems:'center',paddingTop:'1%'}}>
                     <div style={{padding:'5px',fontSize:'1.3rem',textAlign:'center',width:'90%',marginTop:'1%',borderBottom: '2px solid #00CC00',fontWeight:'600'}}>
-                        <div><HomeIcon style ={{color:'#00CC33'}} />Home</div>
+                        <div><HomeIcon style ={{color:'#00CC33'}} />TOÀN NHÀ</div>
                       </div>
                       <Link 
-                      to="/admin/area/house"
+                      to="/housearea"
                       style={{marginRight:'5%',marginLeft:'5%'}}>
                       <img src={homeImg}
                         alt="solar01" 
@@ -85,7 +85,7 @@ class AllArea extends Component {
                         <div><EvStationIcon style={{color:'#00cc33'}} />Công suất hiện tại: {listFishLake.length !==0 ? listFishLake[0].enegry:"NaN"} kWh</div>
                       </div>
                       <Link 
-                      to="/admin/area/hoca"
+                      to="/hocaarea"
                       style={{marginRight:'10%',marginLeft:'10%'}}>
                       <img src={hocaImg}
                         alt="solar01" 
@@ -94,7 +94,7 @@ class AllArea extends Component {
                         width:'100%',
                       }}/>              
                       </Link>
-                      <div className=" ml-5 mr-5 mb-1 fa-1x w-75">Công suất cung cấp Solar I</div>
+                      <div className=" ml-5 mr-5 mb-1 fa-1x w-75">%Công suất tiêu thụ :</div>
                         <div className="progress ml-5 mr-5  w-75" >
                             <div className="progress-bar bg-success" style={{width:`${listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar01[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%`,}}>{listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar01[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%</div>
                       </div>
@@ -107,7 +107,7 @@ class AllArea extends Component {
                         <div><EvStationIcon style={{color:'#00cc33'}} />Công suất hiện tại: {listFishLake.length !==0 ? listFishLake[0].enegry:"NaN"} kWh</div>
                       </div>
                       <Link 
-                      to='/admin/area/santhuong'
+                      to='/santhuongarea'
                       style={{marginRight:'10%',marginLeft:'10%'}}
                       >
                       <img src={santhuongImg}
@@ -117,7 +117,7 @@ class AllArea extends Component {
                         width:'100%',
                       }}/>
                       </Link>
-                      <div className=" ml-5 mr-5 mb-1 fa-1x w-75 ">Công suất cung cấp Solar I</div>
+                      <div className=" ml-5 mr-5 mb-1 fa-1x w-75 ">% Công suất tiêu thụ:</div>
                         <div className="progress ml-5 mr-5  w-75" >
                             <div className="progress-bar bg-danger" style={{width:`${listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar02[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%`}} >{listSolar01.length !==0 && listSolar02.length !==0 ? ((listSolar02[0].power)*100/(listSolar01[0].power+listSolar02[0].power)).toFixed(2):"NaN"}%</div>
                       </div>
@@ -129,12 +129,12 @@ class AllArea extends Component {
                 <Grid container spacing={1} style={{marginTop:'1%'}}>
                   <Grid item xs={12} md = {6} style={{display:'flex',flexDirection:'column',alignItems:'center',paddingTop:'1%'}}>
                     <div style={{padding:'5px',fontSize:'1.2rem',textAlign:'center',width:'80%',marginTop:'1%',border: '2px solid #00CC00',fontWeight:'500',borderRadius: '10px'}}>
-                        <div><WbSunnyIcon style={{color:'#FF0000'}} />Solar: EMS Project</div>
+                        <div><WbSunnyIcon style={{color:'#FF0000'}} />Solar: Dự án Công ty EMS</div>
                         <div><BorderColorIcon style={{color:'#00CC33'}} />Công suất thiết kế: 5 kW</div> 
                         <div><CropRotateIcon style={{color:'#00CC33'}} />Inverter: sungrow</div>
                       </div>
                       <Link 
-                      to="/admin/area/solar1"
+                      to="/solar1area"
                       style={{marginRight:'10%',marginLeft:'10%'}}>
                       <img src={solar01}
                         alt="solar01" 
@@ -150,12 +150,12 @@ class AllArea extends Component {
                   </Grid>
                   <Grid item xs={12} md = {6} style={{display:'flex',flexDirection:'column',alignItems:'center',paddingTop:'1%'}}>
                     <div style={{padding:'5px',fontSize:'1.2rem',textAlign:'center',width:'80%',marginTop:'1%',border: '2px solid #00CC00',fontWeight:'500',borderRadius: '10px'}}>
-                        <div><WbSunnyIcon style={{color:'#FF0000'}} />Solar: SAVINA Project</div>
+                        <div><WbSunnyIcon style={{color:'#FF0000'}} />Solar: Dự án công ty SAVINA</div>
                         <div><BorderColorIcon style={{color:'#00CC33'}} />Công suất thiết kế: 15.8 kW</div> 
                         <div><CropRotateIcon style={{color:'#00CC33'}} />Inverter: ABB</div>
                       </div>
                       <Link 
-                      to='/admin/area/solar2'
+                      to='/solar2area'
                       style={{marginRight:'10%',marginLeft:'10%'}}>
                       <img src={solar02}
                         alt="solar01" 

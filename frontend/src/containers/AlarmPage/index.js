@@ -14,16 +14,16 @@ import styles from './styles';
 class AlarmPage extends Component {
 
     componentDidMount(){
-        const { alarmActionCreators }=this.props;
-        const { fetchListAlarm } = alarmActionCreators;
-        fetchListAlarm();
+        // const { alarmActionCreators }=this.props;
+        // const { fetchListAlarm } = alarmActionCreators;
+        // fetchListAlarm();
     }
     
     handleSubmitForm = data => {
         // const {devicename,formdate,todate,type}= data;
-        const { alarmActionCreators }=this.props;
-        const { filterAlarm } = alarmActionCreators;
-        filterAlarm(data);
+        // const { alarmActionCreators }=this.props;
+        // const { filterAlarm } = alarmActionCreators;
+        // filterAlarm(data);
     };
     render() {
         const {handleSubmit}=this.props; 

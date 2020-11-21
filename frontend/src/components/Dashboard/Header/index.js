@@ -73,6 +73,7 @@ class Header extends Component {
         return(
             <Menu
                 anchorEl={mobileMoreAnchorEl}
+                style={{ zIndex:10000}}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 id={mobileMenuId}
                 keepMounted
@@ -89,7 +90,7 @@ class Header extends Component {
                         >
                         <AccountCircle />
                     </IconButton>
-                    Profile
+                    Thông tin
                 </MenuItem>
                 <MenuItem onClick={this.handleLogout} style={{fontSize:'1em'}} >
                     <IconButton
@@ -100,7 +101,7 @@ class Header extends Component {
                         >
                         <AccountCircle />
                     </IconButton>
-                    Logout
+                    Đăng xuất
                 </MenuItem>
             </Menu>
         );
@@ -127,7 +128,7 @@ class Header extends Component {
                             style={{ textDecoration:'none'}} 
                             to='/admin'>
                                 <HomeRoundedIcon className={classes.icon}/>
-                                Home 
+                                Trang chủ
                                 <span className="sr-only">
                                     (current)
                                 </span>
@@ -137,9 +138,9 @@ class Header extends Component {
                             <Link 
                             className={classes.link}  
                             style={{ textDecoration:'none',marginRight: '5px'}}        
-                            to="/admin/area">
+                            to="/allarea">
                                 <IconDashboard className={classes.icon} />
-                                Dashboard
+                                Giao diện
                             </Link>
                             <Link 
                             className="dropdown-toggle custom " 
@@ -151,60 +152,60 @@ class Header extends Component {
                             aria-expanded="false">
                             </Link>
                             <div className="dropdown-menu" aria-labelledby="dropdownId" style={{backgroundColor:'#262f43',fontSize: 'small'}}>
-                                <Link   className='dropdown-item p-0 ' to='/admin/area/house'>  <DirectionsIcon className={classes.icon} />Detail House</Link>
-                                <Link   className='dropdown-item p-0 '  to='/admin/area/hoca'> <DirectionsIcon className={classes.icon} />Detail Hồ cá</Link>
-                                <Link   className='dropdown-item p-0 '  to='/admin/area/santhuong'> <DirectionsIcon className={classes.icon} />Detail Sân thượng</Link>
-                                <Link   className='dropdown-item p-0 '  to='/admin/area/solar1'> <DirectionsIcon className={classes.icon} />Detail Solar I</Link>
-                                <Link   className='dropdown-item p-0 '  to='/admin/area/solar2'> <DirectionsIcon className={classes.icon} />Detail Solar II</Link>
+                                <Link   className='dropdown-item p-0 ' to='/housearea'>  <DirectionsIcon className={classes.icon} />Toàn nhà</Link>
+                                <Link   className='dropdown-item p-0 '  to='/hocaarea'> <DirectionsIcon className={classes.icon} />Hồ cá</Link>
+                                <Link   className='dropdown-item p-0 '  to='/santhuongarea'> <DirectionsIcon className={classes.icon} />Sân thượng</Link>
+                                <Link   className='dropdown-item p-0 '  to='/solar1area'> <DirectionsIcon className={classes.icon} />Solar I</Link>
+                                <Link   className='dropdown-item p-0 '  to='/solar2area'> <DirectionsIcon className={classes.icon} />Solar II</Link>
                             </div>
                         </li>
                         <li className="nav-item" style={{marginRight: '10px',marginLeft: '10px'}}>
                             <Link 
                             className={classes.link}  
                             style={{ textDecoration:'none'}}        
-                            to='/admin/analytics'>
+                            to='/analytics'>
                                 <IconBarChart className={classes.icon}/>
-                                Analytics
+                                Phân tích
                             </Link>
                         </li>
                         <li className="nav-item" style={{marginRight: '10px',marginLeft: '10px'}}>
                             <Link 
                             className={classes.link}  
                             style={{ textDecoration:'none'}}  
-                            to='/admin/alarm'>
+                            to='/alarm'>
                                  <ErrorIcon className={classes.icon}/>
-                                Alarm
+                                Cảnh báo
                             </Link>
                         </li>
                         <li className="nav-item" style={{marginRight: '10px',marginLeft: '10px'}}>
                             <Link 
                             className={classes.link}  
                             style={{ textDecoration:'none'}}  
-                            to='/admin/config'>
+                            to='/config'>
                                  <SettingsIcon className={classes.icon}/>
-                                System
+                                Cài đặt 
                             </Link>
                         </li>
                         <li className="nav-item" style={{marginRight: '10px',marginLeft: '10px'}}>
                             <Link 
                             className={classes.link}  
                             style={{ textDecoration:'none'}} 
-                            to='/admin/account'>
+                            to='/account'>
                                  <IconPeople className={classes.icon}/>
-                                Account
+                                Tài khoản
                             </Link>
                         </li>
                     </ul>
                     <div className={classes.sectionDesktop}>
                             <IconButton aria-label="new mails" style={{color:'#F8F8FF'}} >
-                                    <Link to='/admin/alarm' style={{color: '#fff'}}>
+                                    <Link to='/alarm' style={{color: '#fff'}}>
                                         <Badge badgeContent={number+1} color="secondary">
                                         <MailIcon />
                                         </Badge>
                                     </Link>
                             </IconButton>
                             <IconButton aria-label=" new notifications" style={{color:'#F8F8FF'}}>
-                                    <Link to='/admin/alarm' style={{ color: '#fff'}}>
+                                    <Link to='/alarm' style={{ color: '#fff'}}>
                                         <Badge badgeContent={number} color="secondary">
                                             <NotificationsIcon />
                                         </Badge>

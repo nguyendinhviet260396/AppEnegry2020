@@ -53,8 +53,8 @@ class AreaChart extends Component {
             title: {    
               //text:"Trend Power",
               align: 'left',
-              margin: 10,
-              offsetX: 0,
+              margin: 1,
+              offsetX: 5,
               offsetY: 0,
               floating: false,
               style: {
@@ -73,6 +73,7 @@ class AreaChart extends Component {
             },
             xaxis: {
               type: 'datetime',
+              tickPlacement: 'on'
               //max: new Date().getTime(),
             },
             yaxis: {
@@ -101,6 +102,13 @@ class AreaChart extends Component {
                 }
               }
             ],
+            dropShadow: {
+              enabled: true,
+              top: 0,
+              left: 0,
+              blur: 3,
+              opacity: 0.5
+            },
             fill: {
               type: 'gradient',
               gradient: {

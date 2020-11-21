@@ -13,7 +13,7 @@ class Development(object):
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS=False
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI ='postgresql://postgres:0000@127.0.0.1:5432/powermanagesystem'
+    SQLALCHEMY_DATABASE_URI =os.getenv('DATABASE_URL')
 
 class Production(object):
     """
@@ -22,7 +22,7 @@ class Production(object):
     DEBUG = False
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS=False
-    SQLALCHEMY_DATABASE_URI ='postgresql://postgres:0000@127.0.0.1:5432/powermanagesystem'
+    SQLALCHEMY_DATABASE_URI =os.getenv('DATABASE_URL')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 
 class Testing(object):
@@ -31,7 +31,7 @@ class Testing(object):
     """
     TESTING = True
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:0000@127.0.0.1:5432/powermanagesystem'
+    SQLALCHEMY_DATABASE_URI =os.getenv('DATABASE_TEST_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 
 app_config = {

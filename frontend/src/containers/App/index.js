@@ -4,7 +4,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 //import TaskBoard from './../TaskBoards';
 import styles from './styles.js';
 import theme from './../../commons/theme';
-import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Provider} from 'react-redux';
 import configureStore from './../../redux/configureStore';
@@ -52,7 +51,6 @@ class  App extends Component {
                 <BrowserRouter>
                     <ThemeProvider theme={theme}>
                         <CssBaseline>
-                            <ToastContainer/>
                             <GlobalLoading/>
                             <Switch>
                                 {this.renderAdminRoutes()} 

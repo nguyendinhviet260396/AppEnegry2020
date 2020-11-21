@@ -1,15 +1,25 @@
+
+import os
 import psycopg2 as pg
+from urllib.parse import urlparse
+
+result = urlparse(os.getenv('DATABASE_URL'))
 
 
-# config soucer database
-db_host = 'localhost'
-db_name = 'powermanagesystem'
-db_user = 'postgres'
-db_pass = '0000'
+#parse url database
+username = result.username
+password = result.password
+database = result.path[1:]
+hostname = result.hostname
 
 # connect to database postgresSQL
 
-connection = pg.connect("host='"+db_host+"' dbname='"+db_name+"' user='"+db_user+"' password='"+db_pass+"'")
+connection = pg.connect(
+    database = database,
+    user = username,
+    password = password,
+    host = hostname
+)
 
 # funcion query database
 def run(query, params):

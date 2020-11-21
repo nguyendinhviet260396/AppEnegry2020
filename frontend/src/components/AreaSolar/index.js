@@ -159,7 +159,7 @@ class AreaSolar extends Component {
                     </table> 
                   </div>
                 </Grid>
-                <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'30%'}}>
+                <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'26%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><ImportContactsIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tính toán năng lượng:</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
                     <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
@@ -188,7 +188,7 @@ class AreaSolar extends Component {
                     </table> 
                   </div>
                 </Grid>
-                <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'30%'}}>
+                <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'26%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><ReceiptIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tính toán doanh thu:</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
                     <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>

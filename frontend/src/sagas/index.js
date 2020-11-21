@@ -392,7 +392,6 @@ function* rootSaga() {
     yield takeLatest(authTypes.AUTH_SIGNUP,signupSaga)
     yield takeLatest(authTypes.SET_USER_DELETE,deleteUserSaga)  
     yield takeLatest (authTypes.UPDATE_USER,updateUserSaga)
-    yield takeLatest (weatherTypes.REFESH_WEATHER,refeshWeatherSaga)
     yield takeLatest (deviceTypes.REFESH_MAIN_LAST,refeshMainLastSaga)
     yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY,refeshMainEnegrySaga)
     yield takeLatest (deviceTypes.REFESH_MAIN_ENEGRY_DAYLY,refeshMainEnegryDaylySaga)
@@ -407,6 +406,7 @@ function* rootSaga() {
     yield takeLatest (deviceTypes.REFESH_POWER_SOLAR01_AREA,refeshPowerSolar01Area)
     yield takeLatest (deviceTypes.REFESH_SOLAR02_AREA,refeshSolar02Area)
     yield takeLatest (deviceTypes.REFESH_POWER_SOLAR02_AREA,refeshPowerSolar02Area)
+    yield takeLatest (weatherTypes.REFESH_WEATHER,refeshWeatherSaga)
     
 }
 

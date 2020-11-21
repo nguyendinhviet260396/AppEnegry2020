@@ -42,7 +42,7 @@ class AdminHomePage extends Component {
       refeshMainEnegryWeekly('');
       refeshMainEnegryMonthly('');
       refeshWeather("Hanoi");
-    },2000);
+    },1000);
     return () => clearInterval(interval);
     };
     render(){
@@ -60,11 +60,10 @@ class AdminHomePage extends Component {
           container 
           spacing={1} 
           className={classes.maincontainer} 
-          //style={{backgroundImage: `url(${smartcabinet})`}}
           >
             <Grid item xs={12} md ={3} style={{backgroundColor:'#FFFFFF'}}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
-                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}>Calculate</div>
+                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}>Tính toán</div>
                 </Grid>
               <Grid container spacing={1}>
                 <Grid item xs={12} style={{marginRight:'4%',marginLeft:'4%'}}>
@@ -170,7 +169,7 @@ class AdminHomePage extends Component {
             </Grid>
             <Grid item xs={12} md ={6} style={{backgroundColor:'#FFFFFF'}}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
-                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}>Overview of energy consumption</div>
+                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}>Tổng quan năng lượng tiêu thụ</div>
                 </Grid>
               <Grid container spacing={1} style={{marginTop:'1%',marginBottom:'1%'}}>
                 <Grid item xs={12} md={4}>
@@ -271,7 +270,7 @@ class AdminHomePage extends Component {
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
-              <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
+              <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1rem'}}><TimelineIcon  style = {{color:'#00CC33'}}/>Biểu đồ năng lượng tiêu thụ</div>
                   <AreaChart data = {listMainEnegry.length !==0 ? listMainEnegry[1]:[]}/> 
                 </Grid>
@@ -279,27 +278,27 @@ class AdminHomePage extends Component {
             </Grid>
             <Grid item xs={12} md ={3} style={{backgroundColor:'#FFFFFF'}}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
-                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}> Overview Solar</div>
+                  <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}> Tổng quan năng lượng mặt trời</div>
                 </Grid>
             <Grid container spacing={1}>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
-                  <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}><WbSunnyIcon  style = {{color:'#ff0000'}}/> Solar On Top I</div>
+                  <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}><WbSunnyIcon  style = {{color:'#ff0000'}}/>Năng lượng mặt trời I</div>
                   <Gauge series={[listMainLast.length !==0 ? ((listMainLast[0][0].power)/50).toFixed(2):0]}/>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div style={{height:'80px',textAlign:'center',fontSize:'1rem',paddingTop:'28px'}}>
                     <EvStationIcon  style = {{color:'#00CC33'}}/>
-                    Total generation energy : {listMainLast.length !==0 ? listMainLast[0][0].enegry:0} kWh
+                    Tổng năng lượng tạo ra  : {listMainLast.length !==0 ? listMainLast[0][0].enegry:0} kWh
                   </div>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
-                  <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}><WbSunnyIcon  style = {{color:'#ff0000'}}/> Solar On Top II</div>
+                  <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}><WbSunnyIcon  style = {{color:'#ff0000'}}/> Năng lượng mặt trời II</div>
                   <Gauge series={[listMainLast.length !==0 ? ((listMainLast[1][0].power)/80).toFixed(2):0]}/>
                 </Grid>
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'4%',marginLeft:'4%'}}>
                   <div style={{height:'80px',textAlign:'center',fontSize:'1rem',paddingTop:'28px'}}>
                     <EvStationIcon  style = {{color:'#00CC33'}}/>
-                    Total generation energy : {listMainLast.length !==0 ? listMainLast[1][0].enegry:0} kWh
+                    Tổng năng lượng tạo ra : {listMainLast.length !==0 ? listMainLast[1][0].enegry:0} kWh
                   </div>
                 </Grid>
               </Grid>

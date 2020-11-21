@@ -6,7 +6,7 @@ const styles=(theme)=>({
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        minHeight: '93.85vh',
+        minHeight: '100vh',
         flex:'1 0 auto',
     },
     signup:{
