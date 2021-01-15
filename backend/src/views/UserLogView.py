@@ -2,7 +2,7 @@
 #/src/views/UserLogView
 from flask import request, json, Response, Blueprint
 from ..models.UserLogModel import UserLogModel
-from datetime import datetime
+from datetime import datetime,timedelta
 
 time_now =datetime.now()
 userlog_api = Blueprint('userlog_api', __name__)
@@ -42,6 +42,16 @@ def getlast():
   df = df.to_dict(orient='records')
   return custom_response(df,200)
 
+@userlog_api.route('/<int:id>', methods=['DELETE'])
+#@Auth.auth_required
+def delete(id):
+  """
+  Delete a user
+  """
+  uselogmodel = UserLogModel()
+  uselogmodel.id = [id]
+  uselogmodel.delete()
+  return custom_response({'message': 'deleted'}, 204)
 @userlog_api.route('/', methods=['GET'])
 def get_all():
   """
@@ -49,7 +59,6 @@ def get_all():
   """
   df = UserLogModel.getall()
   df = df.to_dict(orient='records')
-  df_new =[]
   return custom_response(df, 200)
 
 def custom_response(res, status_code):

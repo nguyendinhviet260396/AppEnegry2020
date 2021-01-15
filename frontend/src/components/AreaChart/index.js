@@ -17,9 +17,23 @@ class AreaChart extends Component {
               id: 'area-datetime',
               type: 'area',
               zoom: {
-                autoScaleYaxis: true
-              }
+                enabled: true,
+                type: 'x',  
+                autoScaleYaxis: false,  
+                zoomedArea: {
+                  fill: {
+                    color: '#90CAF9',
+                    opacity: 0.4
+                  },
+                  stroke: {
+                    color: '#0D47A1',
+                    opacity: 0.4,
+                    width: 1
+                  }
+                }
+             }
             },
+            colors:['#00CC33'],
             toolbar: {
               show: true,
               offsetX: 0,
@@ -80,6 +94,11 @@ class AreaChart extends Component {
               title: {
                 //text: 'power'
               },
+              labels: {
+                formatter: function (y) {
+                  return y.toFixed(0) + "kW";
+                }
+              },
               min: 0,
             },
             tooltip: {
@@ -126,7 +145,7 @@ class AreaChart extends Component {
                 options={options}
                 series={series}
                 type="area"
-                height={290}
+                height={320}
                 width='100%'
               />
           );

@@ -17,7 +17,6 @@ class Dashboard extends Component {
                 <div className={classes.header}>
                     <Header/>
                 </div>
-                <Header/>
                 <div className={classes.wrapper}>
                     <div className={classes.wrapperContent}>
                         {children}
@@ -43,6 +42,7 @@ Dashboard.propTypes={
 const mapStateToProps=(state) =>{
     return {
         openSideBar: state.ui.showSideBar,
+        edirectToReferrer:state.auth.redirectToReferrer,
     };
 }
 

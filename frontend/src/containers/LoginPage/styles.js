@@ -6,7 +6,9 @@ const styles=(theme)=>({
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        minHeight: '100vh',
+        width: '100%',
+        margin:'0px',
+        height: '95vh',
         flex:'1 0 auto',
     },
     signup:{
@@ -22,7 +24,7 @@ const styles=(theme)=>({
         maxHeight: '40%',
     },
     typography:{
-        fontSize: '1.3em',
+        fontSize: '1em',
     },
     textField:{
         fontSize: '60%',
@@ -30,7 +32,8 @@ const styles=(theme)=>({
     button:{
         margin: 10,
         width: '40%',
-        fontSize: '70%'
+        fontSize: '70%',
+        
     }
 });
 export default styles;

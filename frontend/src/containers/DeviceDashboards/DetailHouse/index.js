@@ -5,6 +5,7 @@ import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as deviceActions from './../../../actions/devices';
 import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import PowerIcon from '@material-ui/icons/Power';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
@@ -30,10 +31,12 @@ class DetailHouse extends Component {
     return ()=>clearInterval(interval)
   } 
   render () {
-    const {listHouseArea,listPowerHouseArea}= this.props;
-    console.log(listPowerHouseArea[0])
+    const {listHouseArea,listPowerHouseArea,redirectToReferrer}= this.props;
+    if (redirectToReferrer === false && localStorage.getItem("token:") === null) {
+      return (<Redirect to={'/'}/>)
+  }
     return (
-          <Grid container spacing={1}>
+          <Grid container spacing={1} style={{width:'100%',paddingTop:'50px'}}>
             <Grid container spacing={1} style={{maxHeight:'40px'}}>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%',marginTop:'0.5%'}}>
               <div style={{fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}><MapIcon style={{color:'#00CC33',fontSize:'inherit'}} />CHI TIẾT VỀ TOÀN NHÀ</div>
@@ -44,17 +47,17 @@ class DetailHouse extends Component {
                 <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800',textAlign:'center'}}></div>
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
-                <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
-                    <Gauge1 data ={listHouseArea.length !==0 ?(listHouseArea[0].frequency/100).toFixed(2):0} id ={'gauge-chart1'} level = {30} />
+                <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
+                    <Gauge1 data ={listHouseArea.length !==0 ?((listHouseArea[0].frequency/100).toFixed(3)):0} id ={'gauge-chart1'} level = {30} unit = {'Hz'}/>
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
-                <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
-                <Gauge1 data ={listHouseArea.length !==0 ? (listHouseArea[0].frequency/100).toFixed(2):0} id ={'gauge-chart2'} level = {60}/>
+                <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
+                <Gauge1 data ={listHouseArea.length !==0 ? ((listHouseArea[0].frequency/100).toFixed(3)):0} id ={'gauge-chart2'} level = {60} unit = {'%'}/>
               </Grid>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ</div>
                 <div style ={{
-                  marginTop:'5%',
+                        marginTop:'5%',
                         marginLeft:'27%',
                         borderColor:'#ff0000',
                         marginRight:'27%',
@@ -65,7 +68,7 @@ class DetailHouse extends Component {
                         alignItems: 'center',
                         justifyContent: 'center',
                         textAlign: 'center',
-                        color:'#FF0000',
+                        color:'#FFF',
                         background: '#00CC33',
                         clipPath: 'circle(50%)',
                         height: '5em',
@@ -212,6 +215,7 @@ const mapStateToProps=(state)=>{
       ...state,
       listHouseArea:state.devices.listHouseArea,
       listPowerHouseArea:state.devices.listPowerHouseArea,
+      redirectToReferrer:state.auth.redirectToReferrer,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

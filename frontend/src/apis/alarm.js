@@ -3,7 +3,7 @@ import {API_ENDPOINT} from '../constants/index';
 import qs from 'query-string';
 
 // api http://localhost:6768/alarm/?q:params METHOD : GET
-export const getListAlarm =(url,params={})=>{
+export const getList =(url,params={})=>{
     let queryParams='';
     if(Object.keys(params).length >0){
         queryParams=`?${qs.stringify(params)}`;
@@ -11,10 +11,10 @@ export const getListAlarm =(url,params={})=>{
     return AxiosService.get(`${API_ENDPOINT}/${url}${queryParams}`)
 }
 
-// // api http://localhost:6768/alarm/ METHOD: POST
-// export const addTask=(data)=>{
-//     return AxiosService.post(`${API_ENDPOINT}/${url}`,data)
-// }
+// api http://localhost:6768/alarm/ METHOD: POST
+export const addList=(url,data)=>{
+    return AxiosService.post(`${API_ENDPOINT}/${url}`,data)
+}
 
 // // api http://localhost:6768/alarm/ METHOD: PUT// truyen vao url va data
 // export const updateTask=(data,id)=>{

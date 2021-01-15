@@ -1,8 +1,9 @@
 
 import React, { Component } from 'react';
-import { withStyles, Card, CardContent, Button, FormControlLabel, Checkbox} from '@material-ui/core';
+import { withStyles, Card, CardContent, Button, FormControlLabel, Checkbox,Box} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {compose,bindActionCreators} from 'redux';
+import { Grid } from '@material-ui/core';
 import {connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import renderTextField from '../../../components/FormHelper/TextField/index';
@@ -46,8 +47,8 @@ class SignupForm extends Component {
             submitting}=this.props;
             const userEditting = initialValues;   
         return(
-            <div className={classes.background}>
-                <div className={classes.signup}>
+            <Grid container spacing={0}className={classes.background}>
+                <Grid item xs={12} md={12} className={classes.signup}>
                     <Card className={classes.card}>
                         <CardContent className={classes.cardContent}>
                             <form onSubmit={handleSubmit(this.handleSubmitForm)}>
@@ -56,8 +57,8 @@ class SignupForm extends Component {
                                 label="Name"
                                 name="name"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 type="text"
                                 fullWidth
                                 margin="normal"
@@ -70,9 +71,10 @@ class SignupForm extends Component {
                                 label="Email"
                                 name="email"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 type="text"
+                                size="small"
                                 fullWidth
                                 margin="normal"
                                 component={renderTextField}
@@ -84,10 +86,11 @@ class SignupForm extends Component {
                                 type="operator"
                                 name="operator"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 fullWidth
                                 margin="normal"
+                                size="small"
                                 component={renderTextField}
                                 value={userEditting ? userEditting.operator :''}
                                 />
@@ -97,10 +100,11 @@ class SignupForm extends Component {
                                 type="password"
                                 name="password"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 fullWidth
                                 margin="normal"
+                                size="small"
                                 component={renderTextField}
                                 value={userEditting ? userEditting.password :''}
                                 />
@@ -109,23 +113,30 @@ class SignupForm extends Component {
                                 label="ConfirmPassword"
                                 type="password"
                                 name="cPassword"
+                                size="small"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 fullWidth
                                 margin="normal"
                                 component={renderTextField}
                                 value={userEditting ? userEditting.cPassword:''}
                                 />
                                 <FormControlLabel
-                                control={ <Checkbox value="agree" />}
-                                label="Tôi đã đọc và đồng ý với điều khoản !"
+                                control={ <Checkbox value="agree"/>}
+                                label={
+                                    <Box component="div" fontSize={12}>
+                                       Tôi đồng ý với điều khoản !
+                                     </Box>
+                               }
                                 onChange={this.handleChecked}
                                 className={classes.Checkbox}
+                                disabled={submitting || invalid }
                                 />
                                 <Button
                                 className={classes.button}
                                 color = "primary"
+                                size="small"
                                 variant="contained"
                                 type="submit"
                                 disabled={onButton||submitting || invalid }
@@ -135,6 +146,7 @@ class SignupForm extends Component {
                                 <Button
                                 className={classes.button}
                                 color = "secondary"
+                                size="small"
                                 variant="contained"
                                 type="submit"
                                 onClick={this.handleCloseForm}
@@ -144,8 +156,8 @@ class SignupForm extends Component {
                             </form>
                         </CardContent>
                     </Card>
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         );
     }
 }

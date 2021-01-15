@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles';
 import { withStyles} from '@material-ui/core/styles';
 import  {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import * as deviceActions from './../../../actions/devices';
 import PropTypes from 'prop-types';
@@ -18,7 +19,10 @@ class DetailHoCa extends Component {
     return ()=>clearInterval(interval)
   } 
   render () {
-    const {listFishLake,listPowerFishLake} = this.props;
+    const {listFishLake,listPowerFishLake,redirectToReferrer} = this.props;
+    if (redirectToReferrer === false &&  localStorage.getItem("token:") === null) {
+      return (<Redirect to={'/'}/>)
+  }
     return (
       <AreaManage 
       title = {"CHI TIẾT VỀ HỒ CÁ"}
@@ -43,6 +47,7 @@ const mapStateToProps=(state)=>{
       ...state,
       listFishLake:state.devices.listFishLake,
       listPowerFishLake:state.devices.listPowerFishLake,
+      redirectToReferrer:state.auth.redirectToReferrer,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

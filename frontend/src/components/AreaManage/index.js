@@ -25,7 +25,7 @@ class AreaManage extends Component {
       title,
     } = this.props;
     return (
-      <Grid container spacing={1} style={{width:'100%'}}>
+      <Grid container spacing={1} style={{width:'100%',paddingTop:'50px'}}>
       <Grid container spacing={1} style={{maxHeight:'40px'}}>
         <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%',marginTop:'0.5%'}}>
         <div style={{fontSize:'1.5rem',fontWeight:'800',textAlign:'center'}}><MapIcon style={{color:'#00CC33',fontSize:'inherit'}} />{title}</div>

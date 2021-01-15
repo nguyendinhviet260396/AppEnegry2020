@@ -12,8 +12,7 @@ const styles=()=>({
     text:{
         fontSize: '1.5rem',
         textAlign: 'center',
-        fontWeight: '500',
-        color: 'Blue',
+        fontWeight: '800',
         
     },
     modalDelete:{
@@ -27,9 +26,7 @@ const styles=()=>({
     box:{
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'row-reverse',
-        paddingRight:'20%',
-        paddingLeft:'20%',
+        justifyContent: 'center',
     },
     modalConfimTextBold:{
         color:'#FF0000',
@@ -38,6 +35,7 @@ const styles=()=>({
     },
     button1:{
         fontSize: '50%',
+        margin: "2px",
         marginBottom: '20%',
     },
     textTd:{

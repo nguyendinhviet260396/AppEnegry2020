@@ -2,107 +2,181 @@
 import React, { Component } from 'react';
 import { withStyles, Button} from '@material-ui/core';
 import PropTypes from 'prop-types';
-import {compose} from 'redux';
+import {compose,bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { Field, reduxForm } from 'redux-form'; 
+import {Redirect} from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 import Grid from '@material-ui/core/Grid';
 import renderTextField from '../../components/FormHelper/TextField/index';
+import RealTimeColumn from './../../components/RealTimeColumn';
+import validate from '../../commons/Validation/';
+import AreaChart from './../../components/AreaChart';
+import * as analyticsActions from './../../actions/analytics';
 import styles from './styles';
 
 class Analytics extends Component {
+    componentDidMount(){
+        
+    }
     
     handleCloseForm=()=>{
     }
     handleSubmitForm = data => {
-        //const {name,email,password,operator}= data;
+        const {analyticsActionsCreators} = this.props;
+        const {fetchListAnalytics} = analyticsActionsCreators;
         console.log(data)
+        fetchListAnalytics(data);
 
     };
     render() {
-        const {
-            handleSubmit}=this.props; 
+        const {handleSubmit,redirectToReferrer,invalid,initialValues,listAnalytics}=this.props; 
+        console.log(listAnalytics);
+        if (redirectToReferrer === false &&  localStorage.getItem("token:") === null) {
+            return (<Redirect to={'/'}/>)
+        }
         return(
-                <div className="p-3">
+                <div className="pr-3 pl-3 pt-1">
                     <form onSubmit={handleSubmit(this.handleSubmitForm)}>
-                        <Grid container spacing={1} className="mr-3 p-4">
-                            <Grid item xs={12}  className="textAlign: center" >
-                                <label className="font-weight-bolder ">Analytics Devices</label>
+                        <Grid container spacing={1} className="mr-3 p-2">
+                            <Grid item xs={12} style={{borderBottom: '2px solid #00CC00'}}>
+                                <label style={{fontWeight:600,fontSize:'1rem'}}>Tang phân tích, báo cáo</label>
                             </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="devicename"
-                                    label="Device Name"
-                                    name="devicename"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    InputLabelProps={{style: {fontSize: 15}}} // font size of input label
-                                    type="text"  
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
+                            <Grid container spacing={1}>
+                                <Grid item sx={12} md={4}>
+                                    <Grid container spacing={1} className="pt-4">
+                                        <Grid item xs={6} md ={3}>
+                                            <label style={{fontSize:'1rem'}}>Khu vực phân tích</label>
+                                        </Grid>
+                                        <Grid item sx={6} md={3}>
+                                            <Field name="area" component="select" required="required"> 
+                                                <option/> 
+                                                <option value="allarea">Toàn ngôi nhà  </option>
+                                                <option value="fish_tank_area">Hồ cá  </option>
+                                                <option value="solar_01">Solar 1  </option>
+                                                <option value="solar_02">Solar 2  </option>
+                                            </Field>
+
+                                        </Grid>
+                                        <Grid item xs={6} md ={3}>
+                                            <label style={{fontSize:'1rem'}}>Kiểu phân tích</label>
+                                        </Grid>
+                                        <Grid item sx={6} md={3}>
+                                            <Field name="type"   component="select" required="required">
+                                                <option/>
+                                                <option value="enegry" >Năng lượng</option>
+                                                <option value="power">Công suất</option>
+                                                <option value="current">Dòng điện</option>
+                                            </Field>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item sx={12} md={4}>
+                                    <Grid container spacing={1}>
+                                        <Grid item sx={12} md={6}>
+                                            <Field
+                                            id="fromtime"
+                                            label="Từ thời gian"
+                                            name="fromtime"
+                                            inputProps={{style: {fontSize: 15}}} // font size of input text
+                                            // InputLabelProps={{}} // font size of input label
+                                            type="time"
+                                            fullWidth
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            style: {fontSize: 15}
+                                            }}
+                                            size="small"
+                                            component={renderTextField}
+                                            value={initialValues ? initialValues.name :'00:00:00'}
+                                            />
+                                        </Grid>
+                                        <Grid item sx={12} md={6}>
+                                            <Field
+                                                id="fromdate"
+                                                label="Đến ngày"
+                                                name="fromdate"
+                                                fullWidth
+                                                inputProps={{style: {fontSize: 15}}} // font size of input text
+                                                // InputLabelProps={{style: {fontSize: 12}}} // font size of input label
+                                                type="date"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                    style: {fontSize: 15}
+                                                    }}
+                                                size="small"
+                                                component={renderTextField}
+                                                value={initialValues ? initialValues.name :'2020-11-23'}
+                                                />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item sx={12} md={4}>
+                                    <Grid container spacing={1}>
+                                        <Grid item sx={12} md={6}>
+                                            <Field
+                                            id="totime"
+                                            label="tới thời gian"
+                                            name="totime"
+                                            inputProps={{style: {fontSize: 15}}} // font size of input text
+                                            // InputLabelProps={{}} // font size of input label
+                                            type="time"
+                                            fullWidth
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            style: {fontSize: 15}
+                                            }}
+                                            size="small"
+                                            component={renderTextField}
+                                            value={initialValues ? initialValues.name :''}
+                                            />
+                                        </Grid>
+                                        <Grid item sx={12} md={6}>
+                                            <Field
+                                            id="todate"
+                                            label="Đến ngày"
+                                            name="todate"
+                                            fullWidth
+                                            inputProps={{style: {fontSize: 15}}} // font size of input text
+                                            // InputLabelProps={{style: {fontSize: 12}}} // font size of input label
+                                            type="date"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                                style: {fontSize: 15}
+                                                }}
+                                            size="small"
+                                            component={renderTextField}
+                                            value={initialValues ? initialValues.name :''}
+                                            />
+                                        </Grid>
+                                    </Grid>
                             </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="fromdate"
-                                    label="From Date"
-                                    name="fromdate"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    // InputLabelProps={{}} // font size of input label
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    style: {fontSize: 15}
-                                    }}
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
                             </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="todate"
-                                    label="Todate"
-                                    name="todate"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    // InputLabelProps={{style: {fontSize: 12}}} // font size of input label
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        style: {fontSize: 15}
-                                        }}
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
+                            <Grid item xs={12} className="pb-2">
+                                <Grid item sx={12}>
+                                    <Button
+                                        className="mt-3"
+                                        variant="contained"
+                                        type="submit"
+                                        disabled={invalid }
+                                        size='small'
+                                        style={{color:'#fff',fontSize:'0.7rem',backgroundColor:`${invalid === true ? "#ff0000":'#00cc00'}`}}
+                                        >
+                                            apply
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="type"
-                                    label="Type Analytics"
-                                    name="type"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    InputLabelProps={{style: {fontSize: 15}}} // font size of input label
-                                    type="text"
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
-                            </Grid>
-                            <Button
-                                className="mt-3"
-                                color = "primary"
-                                variant="contained"
-                                type="submit"
-                                size='small'
-                                >
-                                    apply
-                            </Button>
                         </Grid>
                     </form>
-                    <Grid container spacing={1} className=" mr-4 p-4 " style={{border: '2px solid #00BFFF',minHeight:'500px'}}>
-                        <label className="font-weight-bolder h6" style={{height:'fit-content',maxHeight:'40vh' }}> Result of Analytics Devices</label>
+                    <Grid container spacing={1} className=" mr-2 p-2 mb-2" style={{border: '2px solid #00CC00',minHeight:'30%'}}>
+                        <label className="font-weight-bolder h6" style={{height:'fit-content',maxHeight:'40vh' }}> Kết quả phân tích:</label>
+                        <Grid item xs={12} md ={12}>
+                           <AreaChart data = {listAnalytics}/>
+                        </Grid>
                     </Grid>
-                    <Grid container spacing={1} className="mr-3 p-4 " style={{minHeight:'265px'}}>
+                    <Grid container spacing={1} className="mr-2 p-2  " style={{border: '2px solid #00CC00',minHeight:'30%'}}>
+                        <Grid item xs={12} md ={12}>
+                        <RealTimeColumn data = {listAnalytics}/>
+                        </Grid>
                     </Grid>
                 </div>
         );
@@ -115,8 +189,8 @@ Analytics.propTypes={
     invalid:PropTypes.bool,
     submitting:PropTypes.bool,
     onButton:PropTypes.bool,
-    infauth:PropTypes.string,
-    userEditting:PropTypes.object,
+    redirectToReferrer:PropTypes.bool,
+    initialValues:PropTypes.object,
     authActionCreators:PropTypes.shape({
         onButtonSubmit:PropTypes.func,
         authSignup:PropTypes.func,
@@ -128,18 +202,17 @@ Analytics.propTypes={
 const FORM_ANALYTICS ="TASK_ANALYTICS";
 const withReduxForm = reduxForm({
     form: FORM_ANALYTICS,
+    validate:validate,
 });
 const mapStateToProps=state=>{
     return{
-        // onButton:state.auth.onButton,
-        // initialValues:state.auth.userEditting,
-        // userEditting :state.auth.userEditting,
+        listAnalytics:state.analytics.listAnalytics,
+        redirectToReferrer:state.auth.redirectToReferrer,
     }
 };
 const mapDispatchToProps=(dispatch,props)=>{
     return{
-        // authActionCreators:bindActionCreators(authActions,dispatch),
-        // modalActionCreators:bindActionCreators(modalActions,dispatch),
+        analyticsActionsCreators:bindActionCreators(analyticsActions,dispatch),
     }
 };
 const withConnect=connect(mapStateToProps,mapDispatchToProps);

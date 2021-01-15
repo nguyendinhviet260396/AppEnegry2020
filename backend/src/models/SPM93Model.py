@@ -115,7 +115,7 @@ class SPM93Model(db.Model):
     if len(df) > 0:
       df['totalactivepower'] = (df['totalactivepower']).round(2)
       df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)
-      df = df.groupby(pd.Grouper(key='timestamp', freq='1min')).first().reset_index()
+      df = df.groupby(pd.Grouper(key='timestamp', freq='5min')).first().reset_index()
       df = df.fillna(0)
       df['timestamp'] = df['timestamp'].astype(str)
       df_new = pd.concat([df_new, df])

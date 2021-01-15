@@ -1,309 +1,220 @@
-
 import React, { Component } from 'react';
-import { withStyles, Button} from '@material-ui/core';
+import { withStyles, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import {compose,bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import { Field, reduxForm } from 'redux-form'; 
+import { compose, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 import Grid from '@material-ui/core/Grid';
 import renderTextField from '../../components/FormHelper/TextField/index';
 import * as alarmActions from './../../actions/alarm';
+import Table from './../../components/Table';
 import styles from './styles';
 
-
 class AlarmPage extends Component {
+  componentDidMount() {
+    const { alarmActionCreators } = this.props;
+    const { fetchListAlarm } = alarmActionCreators;
+    fetchListAlarm();
+  }
 
-    componentDidMount(){
-        // const { alarmActionCreators }=this.props;
-        // const { fetchListAlarm } = alarmActionCreators;
-        // fetchListAlarm();
+  handleSubmitForm = data => {
+    const { alarmActionCreators } = this.props;
+    const { filterAlarm } = alarmActionCreators;
+    filterAlarm(data);
+  };
+  render() {
+    const { handleSubmit, redirectToReferrer, listAlarm } = this.props;
+    const rows = listAlarm;
+    const columns = [
+      { id: 'id', label: 'id', minWidth: 10, align: 'center' },
+      { id: 'area', label: 'Khu vực', minWidth: 100, align: 'center' },
+      {
+        id: 'code',
+        label: 'Code',
+        minWidth: 170,
+        align: 'center',
+      },
+      {
+        id: 'time',
+        label: 'Thời gian',
+        minWidth: 170,
+        align: 'center',
+      },
+      {
+        id: 'type',
+        label: 'Loại',
+        minWidth: 170,
+        align: 'center',
+      },
+      {
+        id: 'discription',
+        label: 'Mô tả',
+        minWidth: 170,
+        align: 'center',
+      },
+      {
+        id: 'Solution',
+        label: 'Giải pháp',
+        minWidth: 170,
+        align: 'center',
+      },
+    ];
+
+    if (
+      redirectToReferrer === false &&
+      localStorage.getItem('token:') === null
+    ) {
+      return <Redirect to={'/'} />;
     }
-    
-    handleSubmitForm = data => {
-        // const {devicename,formdate,todate,type}= data;
-        // const { alarmActionCreators }=this.props;
-        // const { filterAlarm } = alarmActionCreators;
-        // filterAlarm(data);
-    };
-    render() {
-        const {handleSubmit}=this.props; 
-        return(
-                <div className="p-3 " style={{minHeight:'960px',maxHeight:'960px'}}>
-                    <form onSubmit={handleSubmit(this.handleSubmitForm)}>
-                        <Grid container spacing={1} className="mr-3 p-4">
-                            <Grid item xs={12}  className="textAlign: center" >
-                                <label className="font-weight-bolder ">AlarmPage Devices</label>
-                            </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="devicename"
-                                    label="Device Name"
-                                    name="devicename"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    InputLabelProps={{style: {fontSize: 15}}} // font size of input label
-                                    type="text"  
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
-                            </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="fromdate"
-                                    label="From Date"
-                                    name="fromdate"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    // InputLabelProps={{}} // font size of input label
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    style: {fontSize: 15}
-                                    }}
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
-                            </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="todate"
-                                    label="Todate"
-                                    name="todate"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    // InputLabelProps={{style: {fontSize: 12}}} // font size of input label
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        style: {fontSize: 15}
-                                        }}
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
-                            </Grid>
-                            <Grid item sx={12} md={3}>
-                                <Field
-                                    id="type"
-                                    label="Type Alarm"
-                                    name="type"
-                                    inputProps={{style: {fontSize: 15}}} // font size of input text
-                                    InputLabelProps={{style: {fontSize: 15}}} // font size of input label
-                                    type="text"
-                                    size="small"
-                                    component={renderTextField}
-                                    // value={userEditting ? userEditting.name :''}
-                                    />
-                            </Grid>
-                            <Button
-                                className="mt-3"
-                                color = "primary"
-                                variant="contained"
-                                type="submit"
-                                size='small'
-                                >
-                                    apply
-                            </Button>
-                        </Grid>
-                    </form>
-                    <Grid container spacing={1} className="mr-3 p-4 " style={{backgroundColor:'rgba( 0, 0, 0, 0.2)',border: '2px solid #00BFFF'}}>
-                        <label className="font-weight-bolder h6" style={{height:'fit-content',maxHeight:'40vh' }}> Result of Alarm Devices</label>
-                        <table className="table overflow-scroll overflow-auto text-center table-bordered table-hover table-sm data-page-size=5 ">
-                            <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col">stt</th>
-                                    <th> Device Name</th>
-                                    <th> Code</th>
-                                    <th> Time</th>
-                                    <th> Type</th>
-                                    <th> Name</th>
-                                    <th> Solution</th>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                     <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                     <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                    <tr>
-                                        <td >1</td>
-                                        <td >ups</td>
-                                        <td >2</td>
-                                        <td >12/09/2020 19:35:45</td>
-                                        <td >Warring</td>
-                                        <td >Low Battery</td>
-                                        <td >Ckeck or replace battery</td>
-                                    </tr>
-                                
-                                </tbody>
-                            </table>
-                    </Grid>
-                </div>
-        );
-    }
+
+    return (
+      <div className="pl-3 pr-3 pt-5 pb-5 " style={{}}>
+        <form onSubmit={handleSubmit(this.handleSubmitForm)}>
+          <Grid container spacing={1} className="mr-3 p-4">
+            <Grid item xs={12} style={{borderBottom: '2px solid #00CC00'}}>
+              <label className="font-weight-bolder ">AlarmPage Devices</label>
+            </Grid>
+
+            <Grid item sx={12} md={3}>
+              <Grid container className="mr-3 p-4">
+                <Grid item xs={6} md={3}>
+                  <label style={{ fontSize: '1rem' }}>Area Name</label>
+                </Grid>
+                <Grid item sx={6} md={3}>
+                  <Field name="area" component="select" required="required">
+                    <option />
+                    <option value="allarea">Toàn ngôi nhà </option>
+                    <option value="fish_tank_area">Hồ cá </option>
+                    <option value="solar_01">Solar 1 </option>
+                    <option value="solar_02">Solar 2 </option>
+                  </Field>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item sx={12} md={3}>
+              <Grid container className="mr-3 p-4">
+                <Grid item xs={6} md={3}>
+                  <label style={{ fontSize: '1rem' }}>Type</label>
+                </Grid>
+                <Grid item sx={6} md={3}>
+                  <Field name="type" component="select" required="required">
+                    <option />
+                    <option value="alarm">Alarm </option>
+                    <option value="warning">Warning</option>
+                  </Field>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item sx={12} md={3}>
+              <Field
+                id="fromdate"
+                label="From Date"
+                name="fromdate"
+                inputProps={{ style: { fontSize: 15 } }} // font size of input text
+                // InputLabelProps={{}} // font size of input label
+                type="date"
+                InputLabelProps={{
+                  shrink: true,
+                  style: { fontSize: 15 },
+                }}
+                size="small"
+                component={renderTextField}
+                // value={userEditting ? userEditting.name :''}
+              />
+            </Grid>
+            <Grid item sx={12} md={3}>
+              <Field
+                id="todate"
+                label="Todate"
+                name="todate"
+                inputProps={{ style: { fontSize: 15 } }} // font size of input text
+                // InputLabelProps={{style: {fontSize: 12}}} // font size of input label
+                type="date"
+                InputLabelProps={{
+                  shrink: true,
+                  style: { fontSize: 15 },
+                }}
+                size="small"
+                component={renderTextField}
+                // value={userEditting ? userEditting.name :''}
+              />
+            </Grid>
+            <Button
+              className="mt-3"
+              style={{backgroundColor:'#00CC00'}}
+              variant="contained"
+              type="submit"
+              size="small"
+            >
+              Filter
+            </Button>
+          </Grid>
+        </form>
+        <Grid
+          container
+          spacing={1}
+          className="mr-3 p-2 mb-0 max-h-50"
+          style={{
+            border: '2px solid #00CC00',
+          }}
+        >
+          <label
+            className="font-weight-bolder h6"
+            style={{ height: 'fit-content', maxHeight: '40vh' }}
+          >
+            Result of Alarm Devices
+          </label>
+          <Table
+            columns={columns}
+            rows={rows.filter(
+              row =>
+                row.type
+                  .trim()
+                  .toLowerCase()
+                  .includes(''.toString().trim().toLowerCase()) &
+                row.area
+                  .trim()
+                  .toLowerCase()
+                  .includes(''.toString().trim().toLowerCase()) &
+                row.time.includes(''),
+            )}
+          />
+        </Grid>
+      </div>
+    );
+  }
 }
 
-AlarmPage.propTypes={
-    classes:PropTypes.object,
-    handleSubmit:PropTypes.func,
-    invalid:PropTypes.bool,
-    submitting:PropTypes.bool,
-    listAlarm:PropTypes.array,
-    alarmActionCreators:PropTypes.shape({
-        fetchListAlarm:PropTypes.func,
-    }),
-}
+AlarmPage.propTypes = {
+  classes: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  invalid: PropTypes.bool,
+  submitting: PropTypes.bool,
+  listAlarm: PropTypes.array,
+  alarmActionCreators: PropTypes.shape({
+    fetchListAlarm: PropTypes.func,
+  }),
+};
 
-const FORM_ALARM ="TASK_ALARM";
+const FORM_ALARM = 'TASK_ALARM';
 const withReduxForm = reduxForm({
-    form: FORM_ALARM,
+  form: FORM_ALARM,
 });
-const mapStateToProps=state=>{
-    console.log(state.alarm.listAlarm)
-    return{
-        listAlarm:state.alarm.listAlarm,
-    }
+const mapStateToProps = state => {
+  return {
+    listAlarm: state.alarm.listAlarm,
+    redirectToReferrer: state.auth.redirectToReferrer,
+  };
 };
-const mapDispatchToProps=(dispatch,props)=>{
-    return{
-        alarmActionCreators:bindActionCreators(alarmActions,dispatch),
-    }
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    alarmActionCreators: bindActionCreators(alarmActions, dispatch),
+  };
 };
-const withConnect=connect(mapStateToProps,mapDispatchToProps);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 export default compose(
-    withStyles(styles),
-    withConnect,
-    withReduxForm,
+  withStyles(styles),
+  withConnect,
+  withReduxForm,
 )(AlarmPage);
-
-

@@ -3,6 +3,7 @@ import styles from './styles';
 import { withStyles} from '@material-ui/core/styles';
 import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {Redirect} from 'react-router-dom';
 import * as deviceActions from './../../../actions/devices';
 import * as weatherActions from './../../../actions/weather';
 import PropTypes from 'prop-types';
@@ -21,7 +22,10 @@ class DetailSolar1 extends Component {
     return ()=>clearInterval(interval)
   } 
   render () {
-    const {listSolar01,listPowerSolar01,listWeather} = this.props;
+    const {listSolar01,listPowerSolar01,listWeather,redirectToReferrer} = this.props;
+    if (redirectToReferrer === false && localStorage.getItem("token:") === null) {
+      return (<Redirect to={'/'}/>)
+  }
     return (
       <AreaSolar 
       title = {"Delail Solar I"}
@@ -53,6 +57,7 @@ const mapStateToProps=(state)=>{
       listSolar01 :state.devices.listSolar01,
       listPowerSolar01 :state.devices.listPowerSolar01,
       listWeather: state.weather.listWeather,
+      redirectToReferrer:state.auth.redirectToReferrer,
       
   }
 };

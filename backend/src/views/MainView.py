@@ -14,7 +14,7 @@ def getlasthour():
 
 def gettoday():
     today = datetime.now()
-    return today.strftime("%Y-%m-%d 00:00:00"), today.strftime("%Y-%m-%d 23:59:59")
+    return today.strftime("%Y-%m-%d 00:00:00"), today.strftime("%Y-%m-%d %H:%M:%S")
 
 def getyesterday():
     yesterday = datetime.now() - timedelta(days=1)
@@ -36,12 +36,14 @@ def getthismonth():
     return today.strftime("%Y-%m-01 00:00:00"), today.strftime("%Y-%m-%d 23:59:59")
 
 
-# get realtime data
+
 @main_api.route('/',methods=['GET'])
 def getall():
   df = MainData.getall()
   df = df.to_dict(orient='records')
   return custom_response(df,200)
+
+  
 #get last main data
 @main_api.route('/getlast',methods=['GET'])
 def getlast():
@@ -108,6 +110,36 @@ def getlastenegrybymothly():
   df = MainData.getlastenegrybymothly(from_date,to_date)
   df = df.to_dict(orient='records')
   return custom_response(df,200)
+
+
+
+@main_api.route('/analytics',methods=['GET'])
+def getanalytics():
+  area=request.args.get('area')
+  _type=request.args.get('type')
+  from_date = request.args.get('fromdate')+" "+request.args.get('fromtime')+":00"
+  to_date = request.args.get('todate')+" "+request.args.get('totime')+":00"
+  df = MainData.getanalytics(from_date,to_date,area,_type)
+  df = df.to_dict(orient='records')
+  df_new = []
+  if len(df):
+    if area == "allarea":
+      for i in df:
+        if _type == "power":
+          df_new.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['totalactivepower']])
+        elif _type == "enegry":
+          df_new.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['totalactiveennegry']])
+        elif _type == "current":
+          df_new.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['current_pa']])
+    else:
+      for i in df:
+        if _type == "enegry":
+          df_new.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['enegry']])
+        elif _type == "power":
+          df_new.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['power']])
+        elif _type == "current":
+          df_new.append([datetime.strptime(i['timestamp'], "%Y-%m-%d  %H:%M:%S"),i['current']])
+  return custom_response(df_new,200)
 
 
 def custom_response(res, status_code):

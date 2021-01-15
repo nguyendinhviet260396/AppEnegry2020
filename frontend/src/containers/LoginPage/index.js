@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { withStyles, Card, CardContent, Typography, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 import {Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {compose,bindActionCreators} from 'redux';
@@ -32,13 +33,14 @@ class LoginPage extends Component {
         const {classes,
             handleSubmit,
             invalid,
+            infAuth,
             redirectToReferrer,
             submitting}=this.props;
-        if (redirectToReferrer) {
-            return (<Redirect to={'/admin'}/>)
-              }
+        if (redirectToReferrer === true || localStorage.getItem("token:") !== null ) {
+            return <Redirect to={'/admin'}/>
+        }
         return (
-            <div className={classes.background}
+            <Grid container spacing={0} className={classes.background}
             style={{
             backgroundImage: `url(${enegry})`,
             backgroundSize: 'cover',
@@ -52,15 +54,15 @@ class LoginPage extends Component {
                                     <Typography variant="caption" className={classes.typography}>
                                          Đăng nhập
                                     </Typography><br/>
-                                    {/* <span styles="fontSize: 10 textAlign:center">{infAuth}</span> */}
+                                    <div style={{fontSize:"10px", color:"#FF0000", fontStyle: 'italic'}}>{infAuth}</div>
                                 </div>
                                 <Field
                                 id="email"
                                 label="Email"
                                 name="email"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 type="text"
                                 fullWidth
                                 margin="normal"
@@ -72,26 +74,28 @@ class LoginPage extends Component {
                                 type="password"
                                 name="password"
                                 className={classes.textField}
-                                inputProps={{style: {fontSize: 15}}} // font size of input text
-                                InputLabelProps={{style: {fontSize: 15}}} // font size of input label
+                                inputProps={{style: {fontSize: 12}}} // font size of input text
+                                InputLabelProps={{style: {fontSize: 12}}} // font size of input label
                                 fullWidth
                                 margin="normal"
                                 component={renderTextField}
                                 />
                                 <Button
                                 className={classes.button}
-                                color = "primary"
                                 variant="contained"
                                 type="submit"
+                                style={{backgroundColor:`${invalid === false?'#00CC00':'#9C9C9C'}`,fontSize:'0.7rem',color:'#fff'}}
+                                size='small'
                                 disabled={submitting || invalid }
                                 >
                                     đăng nhập
                                 </Button>
                                 <Button
                                 className={classes.button}
-                                color = "secondary"
                                 variant="contained"
+                                style={{backgroundColor:'#ff0000',fontSize:'0.7rem',color:'#fff'}}
                                 type="submit"
+                                size='small'
                                 onClick={this.handleCloseForm}
                                 >
                                      hủy bỏ 
@@ -99,16 +103,19 @@ class LoginPage extends Component {
                             </form>
                             <div>
                                 <Link to ="/">
-                                    <Button >hướng dẫn đăng nhập !</Button>
+                                    <Button 
+                                    size='small'
+                                    style={{fontSize:'0.7rem',color:'#111'}}
+                                    >hướng dẫn đăng nhập !</Button>
                                 </Link>
                             </div>
                         </CardContent>
                     </Card>
                 </div>
-                <div style={{color:'#fff', fontSize:'1.2vw',fontWeight:'500',paddingBottom:'2%'}}>
+                <div style={{color:'#fff', fontSize:'1vw',fontWeight:'500',paddingBottom:'2%'}}>
                     sales@emsvietnam.com.vn @ Địa Chỉ: Phòng 12A09, Tòa nhà 17T7, Hoàng Đạo Thúy, Quận Thanh Xuân, Hà Nội                
                 </div>
-            </div>
+            </Grid>
         );
     }
 }
@@ -118,6 +125,7 @@ LoginPage.propTypes={
     handleSubmit:PropTypes.func,
     invalid:PropTypes.bool,
     submitting:PropTypes.bool,
+    redirectToReferrer:PropTypes.bool,
     authActionCreators:PropTypes.shape({
         onButtonSubmit:PropTypes.func,
         authLogin:PropTypes.func,

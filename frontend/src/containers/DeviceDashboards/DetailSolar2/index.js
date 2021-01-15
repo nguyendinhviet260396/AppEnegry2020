@@ -5,6 +5,7 @@ import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as deviceActions from './../../../actions/devices';
 import * as weatherActions from './../../../actions/weather';
+import {Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import solar02 from './../../../assets/images/solar2.jpg';
 import AreaSolar from '../../../components/AreaSolar';
@@ -21,7 +22,10 @@ class DetailSolar2 extends Component {
     return ()=>clearInterval(interval)
   } 
   render () {
-    const {listSolar02,listPowerSolar02,listWeather}=this.props;
+    const {listSolar02,listPowerSolar02,listWeather,redirectToReferrer}=this.props;
+    if (redirectToReferrer === false && localStorage.getItem("token:") === null) {
+      return (<Redirect to={'/'}/>)
+  }
     return (
       <AreaSolar 
       title = {"Delail Solar II"}
@@ -49,6 +53,7 @@ const mapStateToProps=(state)=>{
       listSolar02 :state.devices.listSolar02,
       listPowerSolar02 :state.devices.listPowerSolar02,
       listWeather: state.weather.listWeather,
+      redirectToReferrer:state.auth.redirectToReferrer,
   }
 };
 const mapDispatchToProps =(dispatch,props)=>{

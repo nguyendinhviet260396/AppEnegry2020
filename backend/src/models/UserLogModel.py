@@ -14,6 +14,7 @@ class UserLogModel(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(128), nullable=False)
   email = db.Column(db.String(128), nullable=False)
+  status = db.Column(db.String(128), nullable=False)
   timestamp = db.Column(db.DateTime)
   # class constructor
   def __init__(self):
@@ -22,19 +23,20 @@ class UserLogModel(db.Model):
     """
     self.name = ''
     self.email = ''
+    self.status = ''
     self.timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
   def insert(self):
     query = """
-    INSERT INTO users(name, email,timestamp) 
-    VALUES (%s, %s, %s)
+    INSERT INTO userlogtable(name, email,status,timestamp) 
+    VALUES (%s, %s, %s, %s)
     """
-    params = (self.name, self.email,self.timestamp)
+    params = (self.name, self.email,self.status,self.timestamp)
     return run(query, params)
 
   def delete(self):
     query = """
-    DELETE  FROM users
+    DELETE  FROM userlogtable
     WHERE id = %s;
     """
     params = (self.id)

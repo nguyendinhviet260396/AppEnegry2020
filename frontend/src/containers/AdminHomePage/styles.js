@@ -1,9 +1,6 @@
 
 const styles=()=>({
       maincontainer:{
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
       padding: '5px',
       width: '100%',
       margin: '0px'

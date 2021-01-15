@@ -18,7 +18,7 @@ class CustomModal extends Component {
                         <span className={classes.itemTitle}>{title}</span>
                         <CloseIcon className={classes.itemIcon} onClick={hideModal} />
                     </div>
-                    <div classes={classes.content}>
+                    <div>
                         {component}
                     </div>
                 </div> 

@@ -1,5 +1,15 @@
 
 const styles=(theme)=>({
+    background:{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        width: '100%',
+        margin:'0px',
+        flex:'1 0 auto',
+    },
     signup:{
         display: 'flex',
         flexDirection: 'column',
@@ -9,7 +19,7 @@ const styles=(theme)=>({
         flex:'1 0 auto',
     },
     cardContent:{
-        fontSize: '1em',
+        // fontSize: '1em',
     },
     card:{
         maxWidth: '100%',
@@ -18,7 +28,6 @@ const styles=(theme)=>({
         fontSize: '1.3em',
     },
     textField:{
-        fontSize: '60%',
     },
     button:{
         margin: 10,
@@ -26,8 +35,7 @@ const styles=(theme)=>({
         fontSize: '70%'
     },
     Checkbox:{
-        fontSize: '0.6em'
-
+        fontSize: '0.5em'
     }
 });
 export default styles;

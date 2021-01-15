@@ -13,3 +13,5 @@ from .UserLogModel import UserLogModel
 from .SPM91Model import SPM91Model
 from .SPM93Model import SPM93Model
 from .MainData import MainData
+from .PriceModel import PriceModel
+from .AlarmModel import AlarmModel

@@ -3,9 +3,8 @@ import datetime
 from . import db, bcrypt
 from src.db import run,connection
 import pandas as pd
-import random
 
-class SPM91Model:
+class SPM91Model(db.Model):
   """
   SPM91 Model
   """

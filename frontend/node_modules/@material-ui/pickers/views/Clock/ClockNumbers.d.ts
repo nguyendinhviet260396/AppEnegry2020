@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { IUtils } from '@date-io/core/IUtils';
 import { MaterialUiPickersDate } from '../../typings/date';
 export declare const getHourNumbers: ({ ampm, utils, date, }: {

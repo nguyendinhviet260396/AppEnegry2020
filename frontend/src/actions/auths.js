@@ -24,6 +24,56 @@ export const authLoginFaild =(error)=>({
     }
 });
 
+
+export const authLogout =()=>({
+    type:authTypes.AUTH_LOGOUT,
+});
+
+
+export const authLogHistory =()=>({
+    type:authTypes.AUTH_HISTORY,
+    payload:{
+       
+    }
+});
+
+export const authLogHistorySuccess = (data) => ({
+    type: authTypes.AUTH_HISTORY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const authLogHistoryFaild =(error)=>({
+    type:authTypes.AUTH_HISTORY_FAILD,
+    payload:{
+        error,
+    }
+});
+
+
+export const authLogDeleteHistory =(id)=>({
+    type:authTypes.AUTH_DELETE_HISTORY,
+    payload:{
+       id,
+    }
+});
+
+export const authLogDeleteHistorySuccess = (data) => ({
+    type: authTypes.AUTH_DELETE_HISTORY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const authLogDeleteHistoryFaild =(error)=>({
+    type:authTypes.AUTH_DELETE_HISTORY_FAILD,
+    payload:{
+        error,
+    }
+});
+
+
 export const authSignup = (name,email,password,operator) => ({
     type: authTypes.AUTH_SIGNUP,
     payload:{

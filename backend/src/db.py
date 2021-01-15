@@ -1,10 +1,10 @@
 
+
 import os
 import psycopg2 as pg
 from urllib.parse import urlparse
 
 result = urlparse(os.getenv('DATABASE_URL'))
-
 
 #parse url database
 username = result.username
@@ -28,5 +28,6 @@ def run(query, params):
             cursor.execute(query, params)
             connection.commit()
             return True
+
 
 

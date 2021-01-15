@@ -34,7 +34,7 @@ class Welcom extends Component {
                         
                     </Grid >
                     <Grid item xs = {12} md ={12}>
-                        <div className ="text" style={{color:'#FFF', fontSize:'1.2vw',fontWeight:'600'}}>
+                        <div className ="text" style={{color:'#FFF', fontSize:'1vw',fontWeight:'600'}}>
                                 sales@emsvietnam.com.vn @ Địa Chỉ: Phòng 12A09, Tòa nhà 17T7, Hoàng Đạo Thúy, Quận Thanh Xuân, Hà Nội                
                         </div>
 

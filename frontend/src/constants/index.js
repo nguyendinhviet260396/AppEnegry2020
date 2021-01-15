@@ -11,13 +11,14 @@ import DetailSolar1 from './../containers/DeviceDashboards/DetailSolar1';
 import DetailSolar2 from './../containers/DeviceDashboards/DetailSolar2';
 import NotPound from './../components/NotPound';
 import AlarmPage from './../containers/AlarmPage/index';
-export const API_ENDPOINT = '';
+export const API_ENDPOINT ='http://localhost:5000';
 
 export const STATUS_CODE={
     SUCCESS:200,
     CREATED:201,
     UPDATED:202,
     ERROR :404,
+    BADREQUEST:400,
     NO_CONTENT:204,
 }
 
