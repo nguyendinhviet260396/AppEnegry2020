@@ -2,7 +2,6 @@
 from flask import request, json, Response, Blueprint
 from ..models.AlarmModel import AlarmModel
 from datetime import datetime,timedelta
-from flask_mail import Mail, Message
 import random
 
 time_now =datetime.now()

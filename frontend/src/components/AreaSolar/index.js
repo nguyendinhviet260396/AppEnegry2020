@@ -56,7 +56,7 @@ class AreaSolar extends Component {
               </Grid>
               <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><SpeedIcon style={{color:'#00CC33',fontSize:'inherit'}} />Hệ số công suất</div>
-                <Gauge series={[data.length !==0 ? data[0].frequency:"NaN"]}/>
+                <Gauge series={[data.length !==0 ? (true ? (data[0].power*10/(data[0].voltage*data[0].current)).toFixed(2) :"NaN") :"NaN"]}/>
               </Grid>
               <Grid item xs={12} style={{marginRight:'0.5%',marginLeft:'0.5%'}}>
                 <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800'}}><AccessTimeIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tần số</div>
@@ -67,11 +67,11 @@ class AreaSolar extends Component {
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
                   <div style={{padding:'5px',fontSize:'1.3rem',fontWeight:'800',textAlign:'center'}}></div>
                 </Grid>
-                <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
+                <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>  
                   <Grid container spacing={1} style = {{marginTop:'2%'}}>
                     <Grid item xs={12} md = {6}>
                       <div className="container- pr-2 pl-2 pt-1 w-100 ">
-                        <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
+                        <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px'}}>
                           <tbody>
                             <tr>
                               <td style={{maxWidth:'20%'}}> <PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Điện áp:</td>
@@ -80,7 +80,7 @@ class AreaSolar extends Component {
                             </tr>
                             <tr>
                               <td style={{maxWidth:'20%'}}><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Công suất:</td>
-                              <td style={{maxWidth:'60%'}}>{data.length !==0 ? data[0].power:"NaN"}</td>
+                              <td style={{maxWidth:'60%'}}>{data.length !==0 ? (data[0].power/1000).toFixed(4):"NaN"}</td>
                               <td style={{maxWidth:'20%'}}>kW</td>
                             </tr>
                           </tbody>
@@ -162,25 +162,30 @@ class AreaSolar extends Component {
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'26%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><ImportContactsIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tính toán năng lượng:</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
-                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
+                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px'}}>
                       <tbody>
                         <tr  >
-                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Năng lượng tạo ra hôm nay:</td>
+                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} /> Năng lượng tạo ra hôm qua:</td>
                           <td>{125.6}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
-                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ hôm nay:</td>
+                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tạo ra hôm nay:</td>
                           <td>{25.6}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
-                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tổng năng lượng tạo ra:</td>
+                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tạo ra tuần này:</td>
                           <td>{1568.5}</td>
                           <td>kWh</td>
                         </tr>
                         <tr>
-                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tổng năng lượng tiêu thụ:</td>
+                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tạo ra tháng này:</td>
+                          <td>{569.5}</td>
+                          <td>kWh</td>
+                        </tr>
+                        <tr>
+                          <td><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tạo ra năm này:</td>
                           <td>{569.5}</td>
                           <td>kWh</td>
                         </tr>
@@ -191,7 +196,7 @@ class AreaSolar extends Component {
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'26%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><ReceiptIcon style={{color:'#00CC33',fontSize:'inherit'}} />Tính toán doanh thu:</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
-                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
+                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px'}}>
                       <tbody>
                         <tr  >
                           <td> <TodayIcon style={{color:'#00CC33',fontSize:'inherit'}} />Ngày:</td>
@@ -220,7 +225,7 @@ class AreaSolar extends Component {
                 <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
                   <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><VpnLockIcon style={{color:'#00CC33',fontSize:'inherit'}} />Bảo vệ môi trường:</div>
                   <div className="container- pr-2 pl-2 pt-1 w-100 ">
-                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px', textAlign:'center'}}>
+                    <table className="table table-sm table-hover" style={{color:'#111',fontSize:'1rem',borderRadius:'10px'}}>
                       <tbody>
                         <tr  >
                           <td><EmojiTransportationIcon style={{color:'#FF0000',fontSize:'inherit'}} /> Lượng khí CO2 giảm:</td>

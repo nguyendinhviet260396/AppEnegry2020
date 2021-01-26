@@ -96,7 +96,7 @@ class AreaChart extends Component {
               },
               labels: {
                 formatter: function (y) {
-                  return y.toFixed(0) + "kW";
+                  return y.toFixed(2) + "kW";
                 }
               },
               min: 0,

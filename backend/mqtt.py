@@ -15,16 +15,6 @@ _host = "m16.cloudmqtt.com"
 _port = 15018
 _user_name = "lktyyrfw"
 _pass_word = "bELQ4fq5UcYn"
-# # check internet
-# def is_connected():
-#     try:
-#         # connect to the Host -- tells us if the Host is actually
-#         socket.create_connection(("www.google.com", 80))
-#         return True
-#     except OSError:
-#         pass
-#     return False
-# The function send email alarm
 
 
 def send_email(data):
@@ -50,7 +40,6 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 
-
 def on_message(client, userdata, msg):
     topic = msg.topic
     content = msg.payload.decode('utf-8')
@@ -72,7 +61,7 @@ def on_message(client, userdata, msg):
         """
         params = (objpayload["device_id"], objpayload["frequency"], objpayload["voltage"], objpayload["current"],
                   objpayload["power"], objpayload["enegry"], datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        if objpayload["frequency"] > 49:
+        if objpayload["frequency"] > 0:
             send_email(str(objpayload))
     run(query, params)
 

@@ -53,7 +53,7 @@ def get_all():
   df = df.to_dict(orient='records')
   return custom_response(df, 200)
 @spm91_api.route('/getlast5min', methods=['GET'])
-def getlast15min():
+def getlast5min():
   value=request.args.get('params')
   from_date,to_date = gettoday()
   df = SPM91Model.getlast5min(from_date,to_date,value)

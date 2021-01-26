@@ -4,7 +4,6 @@ from flask import Flask, json, Response
 from flask_cors import CORS
 from .config import app_config
 from .models import db, bcrypt
-from flask_mail import Mail, Message
 
 # import user_api blueprint
 from .views.MainView import main_api as main_blueprint
@@ -26,7 +25,6 @@ def create_app(env_name):
     app = Flask(__name__, static_folder='build', static_url_path='')
     CORS(app)
     app.config.from_object(app_config[env_name])
-    mail = Mail(app)
     # initializing bcrypt and db
     bcrypt.init_app(app)
     db.init_app(app)
@@ -51,17 +49,5 @@ def create_app(env_name):
     @app.route('/favicon.ico', methods=["GET"])
     def favicon():
         return app.send_static_file('favicon.ico')
-
-    @app.route('/send/alarm', methods=['GET'])
-    def sendemail():
-        msg = Message('Hello', sender='vietnguyen940@gmail.com',
-                      recipients=['vietnguyen260396@gmail.com'])
-        msg.body = "Hello Flask message sent from Flask-Mail "
-        mail.send(msg)
-        return Response(
-            mimetype="application/json",
-            response=json.dumps({"status": msg.body}),
-            status=200
-        )
 
     return app
