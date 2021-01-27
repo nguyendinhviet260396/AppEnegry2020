@@ -1,9 +1,11 @@
 
-import psycopg2 as pg
+
 import os
+import socket
 import json
 import datetime
 import pandas as pd
+import psycopg2 as pg
 import paho.mqtt.client as mqtt
 from datetime import datetime
 # config broker
@@ -24,8 +26,20 @@ db_host = 'localhost'
 db_name = 'powermanagesystem'
 db_user = 'postgres'
 db_pass = '0000'
+# check internet
 
+
+def is_connected():
+    try:
+        # connect to the Host -- tells us if the Host is actually
+        # reachable
+        socket.create_connection(("www.google.com", 80))
+        return True
+    except OSError:
+        pass
+    return False
 # connect to database postgresSQL
+
 
 connection = pg.connect("host='"+db_host+"' dbname='" +
                         db_name+"' user='"+db_user+"' password='"+db_pass+"'")
@@ -59,16 +73,22 @@ def on_message(client, userdata, msg):
              INSERT INTO assets(topic,data,timestamp)
              VALUES (%s,%s,%s)
          """
-        if int(objpayload["time"]) > 0:
-            params = (topic, json.dumps(objpayload["sensorDatas"]),
-                      datetime.fromtimestamp(int(objpayload["time"])))
-            run(query, params)
+        params = (topic, json.dumps(objpayload["sensorDatas"]),
+                  datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        run(query, params)
 
 
-# connect to broker
-client = mqtt.Client()
-client.connect(_host, _port, 60)
-client.username_pw_set(_user_name, _pass_word)
-client.on_connect = on_connect
-client.on_message = on_message
-client.loop_forever()
+if __name__ == '__main__':
+    try:
+        if is_connected():
+            # connect to broker
+            client = mqtt.Client()
+            client.connect(_host, _port, 60)
+            client.username_pw_set(_user_name, _pass_word)
+            client.on_connect = on_connect
+            client.on_message = on_message
+            client.loop_forever()
+        else:
+            print("No internet ...!, check your network !")
+    except OSError:
+        print(" No internet...!")
