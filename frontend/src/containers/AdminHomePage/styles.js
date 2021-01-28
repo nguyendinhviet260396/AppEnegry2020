@@ -2,8 +2,10 @@
 const styles=()=>({
       maincontainer:{
       padding: '5px',
+      paddingTop: '50px',
       width: '100%',
-      margin: '0px'
+      margin: '0px',
+
     },
     content:{
       textAlign: 'center',

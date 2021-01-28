@@ -8,6 +8,7 @@ import pandas as pd
 import psycopg2 as pg
 import paho.mqtt.client as mqtt
 from datetime import datetime
+from urllib.parse import urlparse
 # config broker
 # _host = "m16.cloudmqtt.com"
 # _port = 16584
@@ -21,12 +22,13 @@ _user_name = "vietnguyen940@gmail.com"
 _pass_word = "Anhvjet96"
 
 
-# config soucer database
-db_host = 'localhost'
-db_name = 'powermanagesystem'
-db_user = 'postgres'
-db_pass = '0000'
-# check internet
+result = urlparse(os.getenv('DATABASE_URL'))
+
+# parse url database
+username = result.username
+password = result.password
+database = result.path[1:]
+hostname = result.hostname
 
 
 def is_connected():
@@ -41,8 +43,12 @@ def is_connected():
 # connect to database postgresSQL
 
 
-connection = pg.connect("host='"+db_host+"' dbname='" +
-                        db_name+"' user='"+db_user+"' password='"+db_pass+"'")
+connection = pg.connect(
+    database=database,
+    user=username,
+    password=password,
+    host=hostname
+)
 # funcion query database
 
 
@@ -58,7 +64,7 @@ def run(query, params):
 
 def on_connect(client, userdata, flags, rc):
     print("Connection to Broker {}:{} Successfully!".format(_host, _port))
-    client.subscribe(("ems/#", 1))
+    client.subscribe(("ems/enegry/namdinh", 1))
 
 # The callback for when a PUBLISH message is received from the server.
 

@@ -324,3 +324,27 @@ export const refeshPowerSolar02Failed =(error)=>({
         error,
     }
 });
+
+
+// Action request calculator enegry
+export const refeshCalculatorEnegry =(params={})=>({
+    type:deviceTypes.REFESH_CALCULATOR_ENEGRY,
+    payload:{
+        params,
+       
+    }
+});
+
+export const refeshCalculatorEnegrySuccess = (data) => ({
+    type: deviceTypes.REFESH_CALCULATOR_ENEGRY_SUCCESS,
+    payload:{
+        data,
+    }
+});
+
+export const refeshCalculatorEnegryFailed =(error)=>({
+    type:deviceTypes.REFESH_CALCULATOR_ENEGRY_FAILED,
+    payload:{
+        error,
+    }
+});

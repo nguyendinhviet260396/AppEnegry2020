@@ -1,6 +1,7 @@
 import * as types from './../constants/prices';
 const inittialState = {
   listPrice: [],
+  listPriceNew:[]
 };
 
 const priceReducer = (state = inittialState, action) => {
@@ -35,6 +36,23 @@ const priceReducer = (state = inittialState, action) => {
       };
     }
     case types.ADD_PRICE_FAILED: {
+      return {
+        ...state,
+      };
+    }
+    case types.FILTER_FRICE_NEW: {
+      return {
+        ...state,
+      };
+    }
+    case types.FILTER_FRICE_NEW_SUCCESS: {
+      const { data } = action.payload;
+      return {
+        ...state,
+       listPriceNew: data,
+      };
+    }
+    case types.FILTER_FRICE_NEW_FAILED: {
       return {
         ...state,
       };

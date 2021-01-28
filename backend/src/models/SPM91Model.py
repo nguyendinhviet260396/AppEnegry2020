@@ -81,11 +81,99 @@ class SPM91Model(db.Model):
         if len(df) > 0:
             df['power'] = (df['power']/1000).round(2)
             df['enegry'] = (df['enegry']).round(2)
-            df = df.groupby(pd.Grouper(key='timestamp',freq='5min')).first().reset_index()
+            df = df.groupby(pd.Grouper(key='timestamp',
+                                       freq='5min')).first().reset_index()
             df['enegry'] = df.enegry - df.enegry.shift()
             df = df.fillna(0)
             df['timestamp'] = df['timestamp'].astype(str)
             df_new = pd.concat([df_new, df])
+        return df_new
+
+    @staticmethod
+    def getenegrybytoday(from_date, to_date, value):
+        df_new = pd.DataFrame([])
+        query = """
+            SELECT timestamp,power,enegry
+            FROM spm91table
+            WHERE timestamp BETWEEN '%s' AND '%s' AND device_id = '%s'
+            """ % (from_date, to_date, value)
+        df = pd.read_sql(query, con=connection)
+        # if len(df) > 0:
+        #     _freq = str(int(to_date.split()[1].split(":")[0])*3600+int(to_date.split()[
+        #                 1].split(":")[1])*60+int(to_date.split()[1].split(":")[2]))+"S"
+        #     if _freq != " ":
+        #         print(_freq)
+        #         df = df.groupby(pd.Grouper(key='timestamp',
+        #                                    freq=_freq)).first().reset_index()
+        #         df['enegry'] = df.enegry - df.enegry.shift()
+        #         df['enegry'] = (df['enegry']).round(3)
+        #         df = df.fillna(0)
+        #         df['timestamp'] = df['timestamp'].astype(str)
+        #         df = df.iloc[[1]]
+        #         df_new = pd.concat([df_new, df])
+        #         df_new = df_new[['timestamp', 'enegry']]
+        return df
+
+    @staticmethod
+    def getenegrybyyesterday(from_date, to_date, value):
+        df_new = pd.DataFrame([])
+        query = """
+            SELECT timestamp,power,enegry
+            FROM spm91table
+            WHERE timestamp BETWEEN '%s' AND '%s' AND device_id = '%s'
+            """ % (from_date, to_date, value)
+        df = pd.read_sql(query, con=connection)
+        # if len(df) > 0:
+        #     df = df.groupby(pd.Grouper(key='timestamp',
+        #                                freq='86399S')).first().reset_index()
+        #     df['enegry'] = df.enegry - \
+        #         df.enegry.shift()
+        #     df['enegry'] = (df['enegry']).round(3)
+        #     df = df.fillna(0)
+        #     df['timestamp'] = df['timestamp'].astype(str)
+        #     df = df.iloc[[1]]
+        #     df_new = pd.concat([df_new, df])
+        #     df_new = df_new[['timestamp', 'enegry']]
+        return df_new
+
+    @staticmethod
+    def getenegrybyweek(from_date, to_date, value):
+        df_new = pd.DataFrame([])
+        query = """
+            SELECT timestamp,power,enegry
+            FROM spm91table
+            WHERE timestamp BETWEEN '%s' AND '%s' AND device_id = '%s'
+            """ % (from_date, to_date, value)
+        df = pd.read_sql(query, con=connection)
+        if len(df) > 0:
+            df = df.groupby(pd.Grouper(key='timestamp',
+                                       freq='7D')).first().reset_index()
+            df['enegry'] = df.enegry - df.enegry.shift()
+            df['enegry'] = (df['enegry']).round(3)
+            df = df.fillna(0)
+            df['timestamp'] = df['timestamp'].astype(str)
+            df_new = pd.concat([df_new, df])
+            df_new = df_new[['timestamp', 'enegry']]
+        return df_new
+
+    @staticmethod
+    def getenegrybymothly(from_date, to_date, value):
+        df_new = pd.DataFrame([])
+        query = """
+            SELECT timestamp,power,enegry
+            FROM spm91table
+            WHERE timestamp BETWEEN '%s' AND '%s' AND device_id = '%s'
+            """ % (from_date, to_date, value)
+        df = pd.read_sql(query, con=connection)
+        if len(df) > 0:
+            df = df.groupby(pd.Grouper(key='timestamp', freq='M')
+                            ).first().reset_index()
+            df['enegry'] = df.enegry - df.enegry.shift()
+            df['enegry'] = (df['enegry']).round(2)
+            df = df.fillna(0)
+            df['timestamp'] = df['timestamp'].astype(str)
+            df_new = pd.concat([df_new, df])
+            df_new = df_new[['timestamp', 'enegry']]
         return df_new
 
     def __repr(self):

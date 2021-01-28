@@ -51,3 +51,30 @@ export const refeshpriceSuccess = data => {
     },
   };
 };
+
+
+/** refesh price list api */
+export const filterPriceNew = (params = {}) => {
+  return {
+    type: priceConstants.FILTER_FRICE_NEW,
+    payload: {
+      params,
+    },
+  };
+};
+export const filterPriceNewFailed = error => {
+  return {
+    type: priceConstants.FILTER_FRICE_NEW_FAILED,
+    payload: {
+      error,
+    },
+  };
+};
+export const filterPriceNewSuccess = data => {
+  return {
+    type: priceConstants.FILTER_FRICE_NEW_SUCCESS,
+    payload: {
+      data,
+    },
+  };
+};

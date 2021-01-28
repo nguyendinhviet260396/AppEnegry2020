@@ -22,6 +22,8 @@ import {
   refeshpriceSuccess,
   addpriceFailed,
   addpriceSuccess,
+  filterPriceNewSuccess,
+  filterPriceNewFailed,
 } from './../actions/prices';
 import {
   fetchListAnalyticsFailed,
@@ -121,7 +123,6 @@ function* watchFetchListAlarmAction() {
     console.log(params);
     const resp = yield call(getList, 'api/v1/alarm', '');
     const { status, data } = resp;
-    console.log(data);
     if (status === STATUS_CODE.SUCCESS) {
       yield put(fetchListAlarmSuccess(data));
     } else {
@@ -183,7 +184,6 @@ function* addListPrice({ payload }) {
   const { params } = payload;
   const resp = yield call(addPrice, 'api/v1/price/add', params);
   const { status, data } = resp;
-  console.log(data)
   if (status === STATUS_CODE.SUCCESS) {
     yield put(addpriceSuccess(data));
   } else {
@@ -191,6 +191,17 @@ function* addListPrice({ payload }) {
   }
   yield delay(100);
   yield put(hideLoading());
+}
+function* fiterPriceNew({ payload }) {
+  const { params } = payload;
+  const resp = yield call(getListPrice, 'api/v1/price/getlast', params);
+  const { status, data } = resp;
+  if (status === STATUS_CODE.SUCCESS) {
+    yield put(filterPriceNewSuccess(data));
+  } else {
+    yield put(filterPriceNewFailed(data));
+  }
+  yield delay(100);
 }
 
 function* loginSaga({ payload }) {
@@ -334,7 +345,6 @@ function* deleteUserlogSaga({ payload }) {
 function* analyticsSaga({ payload }) {
   const { params } = payload;
   yield put(showLoading());
-  console.log(params);
   const resp = yield call(getListAnalytics, 'api/v1/main/analytics', params);
   const { status, data } = resp;
   if (status === STATUS_CODE.SUCCESS && data.lenght !== 0) {
@@ -393,7 +403,6 @@ function* refeshPowerfishLakeArea({ payload }) {
   const { params } = payload;
   const resp = yield call(getListData, 'api/v1/spm91/getlast5min', { params });
   const { status, data } = resp;
-  console.log(data);
   if (status === STATUS_CODE.SUCCESS && data.lenght !== 0) {
     yield put(refeshPowerFishLakeAreaSuccess(data));
   } else {
@@ -520,6 +529,7 @@ function* rootSaga() {
   yield takeLatest(alarmTypes.ADD_EMAIL_ALARM, addeEmailAlarm);
   yield takeLatest(priceTypes.REFESH_PRICE, refeshListPriceAction);
   yield takeLatest(priceTypes.ADD_PRICE, addListPrice);
+  yield takeLatest(priceTypes.FILTER_FRICE_NEW, fiterPriceNew);
   yield takeLatest(alarmTypes.FILTER_ALARM, filterAlarmSaga);
   yield takeLatest(authTypes.AUTH_LOGIN, loginSaga);
   yield takeLatest(authTypes.AUTH_SIGNUP, signupSaga);

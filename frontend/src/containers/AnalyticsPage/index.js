@@ -15,10 +15,6 @@ import * as analyticsActions from './../../actions/analytics';
 import styles from './styles';
 
 class Analytics extends Component {
-    componentDidMount(){
-        
-    }
-    
     handleCloseForm=()=>{
     }
     handleSubmitForm = data => {
@@ -35,7 +31,7 @@ class Analytics extends Component {
             return (<Redirect to={'/'}/>)
         }
         return(
-                <div className="pr-3 pl-3 pt-1">
+                <div className="pr-3 pl-3 pt-5">
                     <form onSubmit={handleSubmit(this.handleSubmitForm)}>
                         <Grid container spacing={1} className="mr-3 p-2">
                             <Grid item xs={12} style={{borderBottom: '2px solid #00CC00'}}>

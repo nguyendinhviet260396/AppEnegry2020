@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import * as deviceActions from './../../actions/devices';
 import * as weatherActions from './../../actions/weather';
+import * as priceActions from './../../actions/prices';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import EvStationIcon from '@material-ui/icons/EvStation';
-import EventIcon from '@material-ui/icons/Event';
 import WbCloudyIcon from '@material-ui/icons/WbCloudy';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import OpacityIcon from '@material-ui/icons/Opacity';
@@ -16,6 +16,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import AreaChart from './../../components/AreaChart/index';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import TodayIcon from '@material-ui/icons/Today';
 import GradeIcon from '@material-ui/icons/Grade';
 import LooksIcon from '@material-ui/icons/Looks';
 import SpeedIcon from '@material-ui/icons/Speed';
@@ -24,11 +25,27 @@ import RealTimeColumn from './../../components/RealTimeColumn';
 import { Redirect } from 'react-router-dom';
 import './main.css';
 
+// function format money
+function formatCash(value) {
+  value = value.toString();
+  return value
+    .split('')
+    .reverse()
+    .reduce((prev, next, index) => {
+      return (index % 3 ? next : next + ',') + prev;
+    });
+}
+
 class AdminHomePage extends Component {
   componentDidMount() {
     const interval = setInterval(() => {
-      const { deviceActionsCreators, weatherActionsCreators } = this.props;
+      const {
+        deviceActionsCreators,
+        weatherActionsCreators,
+        priceActionsCreators,
+      } = this.props;
       const { refeshWeather } = weatherActionsCreators;
+      const { filterPriceNew } = priceActionsCreators;
       const {
         refeshMainLast,
         refeshMainEnegry,
@@ -36,7 +53,10 @@ class AdminHomePage extends Component {
         refeshMainEnegryHourly,
         refeshMainEnegryWeekly,
         refeshMainEnegryMonthly,
+        refeshCalculatorEnegry,
       } = deviceActionsCreators;
+      filterPriceNew();
+      refeshCalculatorEnegry();
       refeshMainLast('');
       refeshMainEnegry('');
       refeshMainEnegryDayly('');
@@ -58,6 +78,8 @@ class AdminHomePage extends Component {
       listMainEnegryWeekly,
       listMainEnegryMonthly,
       redirectToReferrer,
+      listPriceNew,
+      listCalculatorEnegry,
     } = this.props;
     if (
       redirectToReferrer === false &&
@@ -92,7 +114,6 @@ class AdminHomePage extends Component {
           <Grid container spacing={1}>
             <Grid item xs={12} style={{ marginRight: '4%', marginLeft: '4%' }}>
               <div style={{ marginTop: '5px', fontSize: '1rem' }}>
-                
                 Thời tiết hôm nay:
                 {listWeather.length !== 0
                   ? listWeather[0].name + ' <---> ' + listWeather[0].country
@@ -122,7 +143,6 @@ class AdminHomePage extends Component {
                   <tbody>
                     <tr>
                       <td>
-                        
                         <WhatshotIcon style={{ color: '#FF0000' }} />
                         Nhiệt độ:
                       </td>
@@ -133,7 +153,6 @@ class AdminHomePage extends Component {
                     </tr>
                     <tr>
                       <td>
-                        
                         <OpacityIcon style={{ color: '#00CC33' }} />
                         Độ ẩm:
                       </td>
@@ -156,7 +175,6 @@ class AdminHomePage extends Component {
                     </tr>
                     <tr>
                       <td>
-                        
                         <AccessAlarmIcon style={{ color: '#00CC33' }} />
                         Mặt trời mọc:
                       </td>
@@ -169,7 +187,6 @@ class AdminHomePage extends Component {
                     </tr>
                     <tr>
                       <td>
-                        
                         <AccessAlarmIcon style={{ color: '#FF0000' }} />
                         Mặt trời lặn:
                       </td>
@@ -200,7 +217,6 @@ class AdminHomePage extends Component {
             </Grid>
             <Grid item xs={12} style={{ marginRight: '4%', marginLeft: '4%' }}>
               <div style={{ marginTop: '5px', fontSize: '1rem' }}>
-                
                 Tính toán năng lượng:
               </div>
             </Grid>
@@ -226,7 +242,6 @@ class AdminHomePage extends Component {
                   <tbody>
                     <tr>
                       <td>
-                        
                         <EvStationIcon style={{ color: '#00CC33' }} />
                         Năng lượng tạo ra:
                       </td>
@@ -242,7 +257,6 @@ class AdminHomePage extends Component {
                     </tr>
                     <tr>
                       <td>
-                        
                         <EvStationIcon style={{ color: '#00CC33' }} />
                         Năng lượng tiêu thụ:
                       </td>
@@ -275,7 +289,6 @@ class AdminHomePage extends Component {
             </Grid>
             <Grid item xs={12} style={{ marginRight: '4%', marginLeft: '4%' }}>
               <div style={{ marginTop: '5px', fontSize: '1rem' }}>
-                
                 Tính toán doanh thu:
               </div>
             </Grid>
@@ -295,42 +308,80 @@ class AdminHomePage extends Component {
                     color: '#111',
                     fontSize: '1rem',
                     borderRadius: '10px',
-                    marginBottom: '20%',
                   }}
                 >
                   <tbody>
                     <tr>
                       <td>
-                        
-                        <EventIcon style={{ color: '#FF0000' }} />
+                        {' '}
+                        <TodayIcon
+                          style={{ color: '#00CC33', fontSize: 'inherit' }}
+                        />
                         Ngày:
                       </td>
-                      <td>{'NaN'}</td>
+                      <td>
+                        {formatCash(
+                          (listPriceNew.length !== 0) &
+                            (listCalculatorEnegry.length !== 0)
+                            ? listPriceNew[0].solarprice *
+                                listCalculatorEnegry[0].enegry_today
+                            : 'NaN',
+                        )}
+                      </td>
                       <td>VNĐ</td>
                     </tr>
                     <tr>
                       <td>
-                        
-                        <EventIcon style={{ color: '#FF0000' }} />
+                        <TodayIcon
+                          style={{ color: '#00CC33', fontSize: 'inherit' }}
+                        />
                         Tuần:
                       </td>
-                      <td>{'NaN'}</td>
+                      <td>
+                        {formatCash(
+                          (listPriceNew.length !== 0) &
+                            (listCalculatorEnegry.length !== 0)
+                            ? listPriceNew[0].solarprice *
+                                listCalculatorEnegry[0].enegry_week
+                            : 'NaN',
+                        )}
+                      </td>
                       <td>VNĐ</td>
                     </tr>
                     <tr>
                       <td>
-                        <EventIcon style={{ color: '#FF0000' }} />
+                        <TodayIcon
+                          style={{ color: '#00CC33', fontSize: 'inherit' }}
+                        />
                         Tháng:
                       </td>
-                      <td>{'NaN'}</td>
+                      <td>
+                        {formatCash(
+                          (listPriceNew.length !== 0) &
+                            (listCalculatorEnegry.length !== 0)
+                            ? listPriceNew[0].solarprice *
+                                listCalculatorEnegry[0].enegry_month
+                            : 'NaN',
+                        )}
+                      </td>
                       <td>VNĐ</td>
                     </tr>
                     <tr>
                       <td>
-                        <EventIcon style={{ color: '#FF0000' }} />
+                        <TodayIcon
+                          style={{ color: '#00CC33', fontSize: 'inherit' }}
+                        />
                         Năm:
                       </td>
-                      <td>{'NaN'}</td>
+                      <td>
+                        {formatCash(
+                          (listPriceNew.length !== 0) &
+                            (listCalculatorEnegry.length !== 0)
+                            ? listPriceNew[0].solarprice *
+                                listCalculatorEnegry[0].enegry_year
+                            : 'NaN',
+                        )}
+                      </td>
                       <td>VNĐ</td>
                     </tr>
                   </tbody>
@@ -568,7 +619,6 @@ class AdminHomePage extends Component {
                 textAlign: 'center',
               }}
             >
-              
               Tổng quan năng lượng mặt trời
             </div>
           </Grid>
@@ -679,6 +729,8 @@ AdminHomePage.propTypes = {
   listMainEnegryDayly: PropTypes.array,
   listMainEnegryWeekly: PropTypes.array,
   listMainEnegryMonthly: PropTypes.array,
+  listPriceNew: PropTypes.array,
+  listCalculatorEnegry: PropTypes.array,
   redirectToReferrer: PropTypes.bool,
   weatherActionsCreators: PropTypes.shape({
     refeshWeather: PropTypes.func,
@@ -697,6 +749,8 @@ const mapStateToProps = state => {
     listMainEnegryWeekly: state.devices.listMainEnegryWeekly,
     listMainEnegryMonthly: state.devices.listMainEnegryMonthly,
     redirectToReferrer: state.auth.redirectToReferrer,
+    listPriceNew: state.prices.listPriceNew,
+    listCalculatorEnegry: state.devices.listCalculatorEnegry,
   };
 };
 
@@ -704,6 +758,7 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     deviceActionsCreators: bindActionCreators(deviceActions, dispatch),
     weatherActionsCreators: bindActionCreators(weatherActions, dispatch),
+    priceActionsCreators: bindActionCreators(priceActions, dispatch),
   };
 };
 export default withStyles(styles)(
