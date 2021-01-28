@@ -83,7 +83,6 @@ def getdata():
         dataSelect = {}
         for x in range(0, len(df_new)):
             dataSelect[df_new[x]["flag"]] = int(df_new[x]['value'])
-        print(len(dataSelect))
         if len(dataSelect) == 69:
             # add data in database SPM91table
             query = """

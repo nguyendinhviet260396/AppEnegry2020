@@ -26,7 +26,7 @@ class DetailSolar1 extends Component {
       const { refeshWeather } = weatherActionsCreators;
       const { filterPriceNew } = priceActionsCreators;
       filterPriceNew();
-      refeshCalculatorEnegry();
+      refeshCalculatorEnegry('solar_01');
       refeshWeather('Hanoi');
       refeshSolar01('solar_01');
       refeshPowerSolar01('solar_01');

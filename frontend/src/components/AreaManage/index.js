@@ -76,21 +76,21 @@ class AreaManage extends Component {
           <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%'}}>
             <div style={{padding:'5px',fontSize:'1rem',fontWeight:'800'}}></div>
           </Grid>
-          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
-            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Điện áp:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].voltage:"NaN"} V</div>
+          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'25%'}}>
+            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'600'}}><PowerSettingsNewIcon style={{color:'#00CC33',fontSize:'inherit'}} />Điện áp:</div>
+            <div style={{padding:'4vh',fontSize:'2rem',fontWeight:'600',textAlign:'center'}}>{data.length !==0 ? data[0].voltage:"NaN"} V</div>
           </Grid>
-          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
-            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Dòng điện:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].current:"NaN"} A</div>
+          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'25%'}}>
+            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'600'}}><FlashOnIcon style={{color:'#00CC33',fontSize:'inherit'}} />Dòng điện:</div>
+            <div style={{padding:'4vh',fontSize:'2rem',fontWeight:'600',textAlign:'center'}}>{data.length !==0 ? data[0].current:"NaN"} A</div>
           </Grid>
-          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
-            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Công suất:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].power:"NaN"} kW</div>
+          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'25%'}}>
+            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'600'}}><PowerIcon style={{color:'#00CC33',fontSize:'inherit'}} />Công suất:</div>
+            <div style={{padding:'4vh',fontSize:'2rem',fontWeight:'600',textAlign:'center'}}>{data.length !==0 ? data[0].power:"NaN"} kW</div>
           </Grid>
-          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'20%'}}>
-            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'800'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ:</div>
-            <div style={{padding:'10px',fontSize:'2.5rem',fontWeight:'800',textAlign:'center'}}>{data.length !==0 ? data[0].enegry:"NaN"} kWh</div>
+          <Grid item xs={12} style={{borderBottom: '2px solid #00CC00',marginRight:'0.5%',marginLeft:'0.5%',minHeight:'25%'}}>
+            <div style={{padding:'5px',fontSize:'1.5rem',fontWeight:'600'}}><EvStationIcon style={{color:'#00CC33',fontSize:'inherit'}} />Năng lượng tiêu thụ:</div>
+            <div style={{padding:'4vh',fontSize:'2rem',fontWeight:'600',textAlign:'center'}}>{data.length !==0 ? data[0].enegry:"NaN"} kWh</div>
           </Grid>
         </Grid>
     </Grid>

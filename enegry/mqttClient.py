@@ -71,10 +71,9 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     topic = msg.topic
-    content = msg.payload.decode('utf-8')
+    content = msg.payload
     objpayload = json.loads(content)
     if objpayload["sensorDatas"][0]["flag"].find("REG") != -1:
-        print(objpayload["sensorDatas"])
         query = """
              INSERT INTO assets(topic,data,timestamp)
              VALUES (%s,%s,%s)

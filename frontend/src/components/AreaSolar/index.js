@@ -27,6 +27,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import LooksIcon from '@material-ui/icons/Looks';
 import Gauge from '../Gauge';
 import AreaChart from '../AreaChart';
+import RealTimeColumn from '../RealTimeColumn';
 
 // function format money
 function formatCash(value) {
@@ -52,7 +53,11 @@ class AreaSolar extends Component {
       listCalculatorEnegry,
     } = this.props;
     return (
-      <Grid container spacing={1} style={{ width: '100%', paddingTop: '50px' }}>
+      <Grid
+        container
+        spacing={1}
+        style={{ width: '100%', paddingTop: '50px', paddingBottom: '50px' }}
+      >
         <Grid container spacing={1} style={{ maxHeight: '40px' }}>
           <Grid
             item
@@ -227,7 +232,7 @@ class AreaSolar extends Component {
                         </td>
                         <td style={{ maxWidth: '60%' }}>
                           {data.length !== 0
-                            ? (data[0].power / 1000).toFixed(4)
+                            ? (data[0].power / 1000).toFixed(3)
                             : 'NaN'}
                         </td>
                         <td style={{ maxWidth: '20%' }}>kW</td>
@@ -306,7 +311,7 @@ class AreaSolar extends Component {
               <TimelineIcon style={{ color: '#00CC33', fontSize: 'inherit' }} />
               Biểu đồ năng lượng tổng
             </div>
-            <AreaChart data={datapower.length !== 0 ? datapower[1] : []} />
+            <RealTimeColumn data={datapower.length !== 0 ? datapower[1] : []} />
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -495,7 +500,7 @@ class AreaSolar extends Component {
                     </td>
                     <td>
                       {listCalculatorEnegry.length !== 0
-                        ? listCalculatorEnegry[0].enegry_week
+                        ? listCalculatorEnegry[0].enegry_weekly
                         : 'NaN'}
                     </td>
                     <td>kWh</td>
@@ -509,7 +514,21 @@ class AreaSolar extends Component {
                     </td>
                     <td>
                       {listCalculatorEnegry.length !== 0
-                        ? listCalculatorEnegry[0].enegry_month
+                        ? listCalculatorEnegry[0].enery_month
+                        : 'NaN'}
+                    </td>
+                    <td>kWh</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <EvStationIcon
+                        style={{ color: '#00CC33', fontSize: 'inherit' }}
+                      />
+                      Năng lượng tạo ra năm nay:
+                    </td>
+                    <td>
+                      {listCalculatorEnegry.length !== 0
+                        ? listCalculatorEnegry[0].enegry_year
                         : 'NaN'}
                     </td>
                     <td>kWh</td>
@@ -575,7 +594,7 @@ class AreaSolar extends Component {
                         (listPriceNew.length !== 0) &
                           (listCalculatorEnegry.length !== 0)
                           ? listPriceNew[0].solarprice *
-                              listCalculatorEnegry[0].enegry_week
+                              listCalculatorEnegry[0].enegry_weekly
                           : 'NaN',
                       )}
                     </td>
@@ -593,7 +612,7 @@ class AreaSolar extends Component {
                         (listPriceNew.length !== 0) &
                           (listCalculatorEnegry.length !== 0)
                           ? listPriceNew[0].solarprice *
-                              listCalculatorEnegry[0].enegry_month
+                              listCalculatorEnegry[0].enery_month
                           : 'NaN',
                       )}
                     </td>

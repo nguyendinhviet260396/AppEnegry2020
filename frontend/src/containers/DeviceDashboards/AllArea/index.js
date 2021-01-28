@@ -138,7 +138,7 @@ class AllArea extends Component {
                       </td>
                       <td>
                         {listHouseArea.length !== 0
-                          ? listHouseArea[0].totalactivepower
+                          ? ((listHouseArea[0].totalactivepower)/1000).toFixed(3)
                           : 'NaN'}
                       </td>
                       <td>kW</td>
@@ -223,7 +223,7 @@ class AllArea extends Component {
                       </td>
                       <td>
                         {listFishLake.length !== 0
-                          ? listFishLake[0].power
+                          ? ((listFishLake[0].power)/1000).toFixed(3)
                           : 'NaN'}
                       </td>
                       <td>kW</td>
@@ -330,7 +330,7 @@ class AllArea extends Component {
                       </td>
                       <td>
                         {listFishLake.length !== 0
-                          ? listFishLake[0].power
+                          ? ((listFishLake[0].power)/1000).toFixed(3)
                           : 'NaN'}
                       </td>
                       <td>kW</td>

@@ -76,8 +76,7 @@ class MainData:
             """ % (from_date, to_date)
         df = pd.read_sql(query, con=connection)
         if len(df) > 0:
-            df = df.groupby(pd.Grouper(key='timestamp',
-                                       freq='3559S')).first().reset_index()
+            df = df.loc[[0, len(df)-1]]
             df['totalactiveennegry'] = df['totalactiveennegry'].fillna(0)
             df['totalactiveennegry'] = df.totalactiveennegry - \
                 df.totalactiveennegry.shift()
@@ -101,20 +100,14 @@ class MainData:
             """ % (from_date, to_date)
         df = pd.read_sql(query, con=connection)
         if len(df) > 0:
-            _freq = str(int(to_date.split()[1].split(":")[0])*3600+int(to_date.split()[
-                        1].split(":")[1])*60+int(to_date.split()[1].split(":")[2]))+"S"
-            if _freq != " ":
-                print(_freq)
-                df = df.groupby(pd.Grouper(key='timestamp',
-                                           freq=_freq)).first().reset_index()
-                df['totalactiveennegry'] = df.totalactiveennegry - \
-                    df.totalactiveennegry.shift()
-                df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)
-                df = df.fillna(0)
-                df['timestamp'] = df['timestamp'].astype(str)
-                df = df.iloc[[1]]
-                df_new = pd.concat([df_new, df])
-                df_new = df_new[['timestamp', 'totalactiveennegry']]
+            df = df.loc[[0, len(df)-1]]
+            df['totalactiveennegry'] = df.totalactiveennegry -df.totalactiveennegry.shift()
+            df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)
+            df = df.fillna(0)
+            df['timestamp'] = df['timestamp'].astype(str)
+            df = df.iloc[[1]]
+            df_new = pd.concat([df_new, df])
+            df_new = df_new[['timestamp', 'totalactiveennegry']]
         return df_new
 
     @staticmethod
@@ -127,8 +120,7 @@ class MainData:
             """ % (from_date, to_date)
         df = pd.read_sql(query, con=connection)
         if len(df) > 0:
-            df = df.groupby(pd.Grouper(key='timestamp',
-                                       freq='86399S')).first().reset_index()
+            df = df.loc[[0, len(df)-1]]
             df['totalactiveennegry'] = df.totalactiveennegry - \
                 df.totalactiveennegry.shift()
             df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)
@@ -149,8 +141,7 @@ class MainData:
             """ % (from_date, to_date)
         df = pd.read_sql(query, con=connection)
         if len(df) > 0:
-            df = df.groupby(pd.Grouper(key='timestamp',
-                                       freq='7D')).first().reset_index()
+            df = df.loc[[0, len(df)-1]]
             df['totalactiveennegry'] = df.totalactiveennegry - \
                 df.totalactiveennegry.shift()
             df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)
@@ -170,8 +161,7 @@ class MainData:
             """ % (from_date, to_date)
         df = pd.read_sql(query, con=connection)
         if len(df) > 0:
-            df = df.groupby(pd.Grouper(key='timestamp', freq='M')
-                            ).first().reset_index()
+            df = df.loc[[0, len(df)-1]]
             df['totalactiveennegry'] = df.totalactiveennegry - \
                 df.totalactiveennegry.shift()
             df['totalactiveennegry'] = (df['totalactiveennegry']).round(2)

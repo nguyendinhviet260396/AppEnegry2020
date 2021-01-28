@@ -105,6 +105,8 @@ import {
   refeshHouseAreaFailed,
   refeshPowerHouseAreaSuccess,
   refeshPowerHouseAreaFailed,
+  refeshCalculatorEnegrySuccess,
+  refeshCalculatorEnegryFailed,
 } from '../actions/devices';
 /**
  * B1: dispatch action fetchTask
@@ -520,7 +522,17 @@ function* refeshMainEnegryMonthlySaga({ payload }) {
     yield put(refeshMainEnegryMonthlyFailed(data));
   }
 }
-
+// refesh enegry calculator spm91 
+function* refeshenegrycalculator({ payload }) {
+  const {params} = payload;
+  const resp = yield call(getListData, 'api/v1/spm91/getcaculatorenegry', { params });
+  const { status, data } = resp;
+  if (status === STATUS_CODE.SUCCESS && data.lenght !== 0) {
+    yield put(refeshCalculatorEnegrySuccess(data));
+  } else {
+    yield put(refeshCalculatorEnegryFailed(data));
+  }
+}
 function* rootSaga() {
   yield fork(watchFetchListAlarmAction);
   yield fork(watchFetchListUserLogAction);
@@ -573,6 +585,7 @@ function* rootSaga() {
     refeshPowerSolar02Area,
   );
   yield takeLatest(weatherTypes.REFESH_WEATHER, refeshWeatherSaga);
+  yield takeLatest(deviceTypes.REFESH_CALCULATOR_ENEGRY,refeshenegrycalculator);
 }
 
 export default rootSaga;

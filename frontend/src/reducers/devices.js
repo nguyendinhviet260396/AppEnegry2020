@@ -15,15 +15,7 @@ const initialState = {
   listMainEnegryDayly: [],
   listMainEnegryWeekly: [],
   listMainEnegryMonthly: [],
-  listCalculatorEnegry: [
-    {
-      enegry_today: 142,
-      enegry_yesterday: 245,
-      enegry_week: 578,
-      enegry_month:846,
-      enegry_year: 5846,
-    },
-  ],
+  listCalculatorEnegry: [],
 };
 const deviceReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -285,9 +277,10 @@ const deviceReducer = (state = initialState, action) => {
     }
     case types.REFESH_CALCULATOR_ENEGRY_SUCCESS: {
       const { data } = action.payload;
+      console.log([data])
       return {
         ...state,
-        listCalculatorEnegry: data,
+        listCalculatorEnegry: [data],
       };
     }
     case types.REFESH_CALCULATOR_ENEGRY_FAILED: {

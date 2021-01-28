@@ -40,6 +40,7 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 
+
 def on_message(client, userdata, msg):
     topic = msg.topic
     content = msg.payload.decode('utf-8')
@@ -48,11 +49,11 @@ def on_message(client, userdata, msg):
     if device == "all_area":
         query = """
             INSERT INTO spm93table(device_id,voltage_pa,voltage_pb,voltage_pc,current_pa,current_pb,current_pc,frequency,totalapparentpower,totalactiveennegry,
-            totalreactiveennegry,activepower_pa,activepower_pb,activepower_pc,totalactivepower,reactivepower_pa,reactivepower_pb,reactivepower_pc,totalreactivepower,timestamp) 
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            totalreactiveennegry,activepower_pa,activepower_pb,activepower_pc,totalactivepower,reactivepower_pa,reactivepower_pb,reactivepower_pc,totalreactivepower,totalpowerfactor,timestamp) 
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """
         params = (objpayload["device_id"], objpayload["voltage_pa"], objpayload["voltage_pb"], objpayload["voltage_pc"], objpayload["current_pa"], objpayload["current_pb"], objpayload["current_pc"], objpayload["frequency"], objpayload["totalapparentpower"], objpayload["totalactiveennegry"], objpayload["totalreactiveennegry"],
-                  objpayload["activepower_pa"], objpayload["activepower_pb"], objpayload["activepower_pc"], objpayload["totalactivepower"], objpayload["reactivepower_pa"], objpayload["reactivepower_pb"], objpayload["reactivepower_pc"], objpayload["totalreactivepower"], datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                  objpayload["activepower_pa"], objpayload["activepower_pb"], objpayload["activepower_pc"], objpayload["totalactivepower"], objpayload["reactivepower_pa"], objpayload["reactivepower_pb"], objpayload["reactivepower_pc"], objpayload["totalreactivepower"], 1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         if objpayload["voltage_pa"] > 210:
             send_email(str(objpayload))
     else:

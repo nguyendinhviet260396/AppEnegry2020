@@ -346,7 +346,6 @@ class ConfigSystem extends Component {
     );
   }
 }
-
 ConfigSystem.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,

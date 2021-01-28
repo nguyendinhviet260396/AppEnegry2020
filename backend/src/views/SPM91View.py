@@ -15,7 +15,7 @@ def getlasthour():
 
 def gettoday():
     today = datetime.now()
-    return today.strftime("%Y-%m-%d 00:00:00"), today.strftime("%Y-%m-%d %H:%M:%S")
+    return today.strftime("%Y-%m-%d 00:00:00"), today.strftime("%Y-%m-%d 23:59:59")
 
 
 def getyesterday():
@@ -27,7 +27,7 @@ def getlastweek():
     checkday = (datetime.now().isoweekday()) % 7
     lastsunday = datetime.now() - timedelta(days=checkday)
     lastweekmonday = lastsunday - timedelta(days=6)
-    return lastweekmonday, lastsunday
+    return lastweekmonday.strftime("%Y-%m-%d 00:00:00"), lastsunday.strftime("%Y-%m-%d 23:59:59")
 
 
 def getlastmonth():
@@ -37,8 +37,13 @@ def getlastmonth():
 
 
 def getthismonth():
-    today = datetime.now() - datetime.timedelta(minutes=10)
+    today = datetime.now()
     return today.strftime("%Y-%m-01 00:00:00"), today.strftime("%Y-%m-%d 23:59:59")
+
+
+def getthisyear():
+    today = datetime.now()
+    return today.strftime("%Y-01-01 00:00:00"), today.strftime("%Y-12-31 23:59:59")
 
 
 # get realtime data
@@ -79,21 +84,57 @@ def getlast5min():
         df_new.append(df_enegry)
     return custom_response(df_new, 200)
 
+
 @spm91_api.route('/getcaculatorenegry', methods=['GET'])
 def caculatorenegry():
-  value = request.args.get('params')
-  print(value)
-  # e_yes = SPM91Model.getenegrybyyesterday(getyesterday(), value)
-  # print(e_yes)
-  from_date, to_date = gettoday()
-  e_tod = SPM91Model.getenegrybytoday(from_date, to_date, value)
-  print(e_tod)
-    # e_week = SPM91Model.getenegrybyweek(getlastweek(), value)
-    # print(e_week)
-    # e_month = SPM91Model.getenegrybymothly(getlastmonth(),value)
-    # print(e_month)
+    value = request.args.get('params')
+    data = {}
+    # enegry yesterday
+    from_date, to_date = getyesterday()
+    e_yes = SPM91Model.getenegrybyyesterday(from_date, to_date, value)
+    e_yes = e_yes.to_dict(orient='records')
+    if len(e_yes) > 0:
+        data["enegry_yesterday"] = e_yes[0]["enegry"]
+    else:
+        data["enegry_yesterday"] = None
+    # enegry to day
+    from_date, to_date = gettoday()
+    e_tod = SPM91Model.getenegrybytoday(from_date, to_date, value)
+    e_tod = e_tod.to_dict(orient='records')
+    if len(e_tod) > 0:
+        data["enegry_today"] = e_tod[0]["enegry"]
+    else:
+        data["enegry_today"] = None
+    # enegry to day
 
-  return custom_response("df_new", 200)
+    from_date, to_date = getlastweek()
+    e_week = SPM91Model.getenegrybyweek(from_date, to_date, value)
+    e_week = e_week.to_dict(orient='records')
+    if len(e_week) > 0:
+        data["enegry_weekly"] = e_week[0]["enegry"]
+    else:
+        data["enegry_weekly"] = None
+
+    # enegry to day
+
+    from_date, to_date = getthismonth()
+    e_month = SPM91Model.getenegrybymothly(from_date, to_date, value)
+    e_month = e_month.to_dict(orient='records')
+    if len(e_month) > 0:
+        data["enery_month"] = e_month[0]["enegry"]
+    else:
+        data["enery_month"] = None
+    # enegry to day
+
+    from_date, to_date = getthisyear()
+    e_year = SPM91Model.getenegrybyyearly(from_date, to_date, value)
+    e_year = e_year.to_dict(orient='records')
+    if len(e_year):
+        data["enegry_year"] = e_year[0]["enegry"]
+    else:
+        data["enegry_year"] = None
+
+    return custom_response(data, 200)
 
 
 def custom_response(res, status_code):

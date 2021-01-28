@@ -56,7 +56,7 @@ class AdminHomePage extends Component {
         refeshCalculatorEnegry,
       } = deviceActionsCreators;
       filterPriceNew();
-      refeshCalculatorEnegry();
+      refeshCalculatorEnegry('solar_01');
       refeshMainLast('');
       refeshMainEnegry('');
       refeshMainEnegryDayly('');
